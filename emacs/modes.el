@@ -4,11 +4,8 @@
 ; allows shift and arrows for selection
 (require 'pc-select)
 
-;; still not sure if I like this
-(require 'pager)
-(local-set-key [next] 'pager-page-down)
-(local-set-key [prior] 'pager-page-up)
-
+; Finally found this.  page/updown can be undone
+(setq scroll-preserve-screen-position t)
 
 ;; slime
 (require 'slime)
