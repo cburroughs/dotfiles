@@ -1,19 +1,28 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
+; TODO: why does color-theme not fully load?
 ; TODO: figure out java editing stuff
 ; TOOD: recursive byte-compile
-; TODO: figure out if gentoo, uname -a to string
 ; TODO: rpol xml minor mode
+
+; My .emacs "file".  All this stuff that has acumilated is probably
+; under the GPL or public domian.
+
+; Goal: Runs under emacs-23 on gentoo and ubuntu
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 
 (defvar *emacs-load-start* (current-time)) ; Find out how long this takes
 
+; For now I want things to work
+(defun my-gentoo? ()
+   (string-match "gentoo" (shell-command-to-string "uname -a")))
+
 ;; load gentoo installed stuff
 ;; assume if gentoo using gentoo kernel
-;(if (string-match "gentoo" (shell-command "uname -a")) ;; need to make it work
-(load "/usr/share/emacs/site-lisp/site-gentoo")
+(when (my-gentoo?)
+    (load "/usr/share/emacs/site-lisp/site-gentoo"))
 
 ;; Need to set up path for elisp files
 (defun add-path (p)

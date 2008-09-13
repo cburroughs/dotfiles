@@ -19,7 +19,8 @@
 (if window-system
     (progn
       (require 'color-theme)
-      (color-theme-initialize) ; gentoo wants, ubuntu hates
+      (when (my-gentoo?)
+        (color-theme-initialize)) ; gentoo wants, ubuntu hates
       (color-theme-clarity)
       (global-hl-line-mode 1)
       (set-face-background 'hl-line "gray18")))
