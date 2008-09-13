@@ -24,7 +24,6 @@
 (iswitchb-mode 1)
 
 ;; tabbar is pretty awesome
-
 (require 'tabbar)
 (tabbar-mode t)
 (global-set-key [(C-S-iso-lefttab)] 'tabbar-backward) ; why funy binding?
