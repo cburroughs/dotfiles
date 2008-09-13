@@ -1,6 +1,10 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
+; TODO: figure out java editing stuff
+; TOOD: recursive byte-compile
+; TODO: figure out if gentoo, uname -a to string
+
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 
 (defvar *emacs-load-start* (current-time)) ; Find out how long this takes
@@ -18,36 +22,20 @@
 (add-path "~/emacs/site-lisp/")
 
 ; If I ever use customize crap I don't want it pooping on this file
+; I assume this is automatically loaded
 (setq custom-file "~/emacs/.emacs-custom.el")
 (load custom-file 'noerror)
 
 ; load the files with the rest of my info
+; try ti put in order of least likely to break
 (load-library "key-bindings")
+(load-library "efuncs")
+(load-library "misc")
 (load-library "pretty")
-(load-library "efuncs.el")
 (load-library "modes")
 
-
 ;; --------------------------
-;; Misc
-
-;make the y or n suffice for a yes or no question
-(fset 'yes-or-no-p 'y-or-n-p)
-
-
-;; copy-paste should work with other X clients
-(setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-
-;; change spelling
-(setq-default ispell-program-name "aspell")
-
-;; use spaces instead of tabs
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-
-
+;; Putting Files places
 
 ;; copied from the internet
 ;; http://snarfed.org/space/gnu%20emacs%20backup%20files
@@ -78,6 +66,8 @@
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq semanticdb-default-save-directory "/tmp/")
+
+(setq make-backup-files t)
 
 
 ;; end -- so we measure the time here
