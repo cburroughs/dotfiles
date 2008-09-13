@@ -4,6 +4,7 @@
 ; TODO: figure out java editing stuff
 ; TOOD: recursive byte-compile
 ; TODO: figure out if gentoo, uname -a to string
+; TODO: rpol xml minor mode
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 

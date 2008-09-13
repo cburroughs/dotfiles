@@ -7,6 +7,13 @@
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
+;; looking into 
+;; (add-hook 'speedbar-load-hook
+;;    '(lambda ()
+;;    (setq speedbar-update-speed 5
+;;      speedbar-track-mouse-flag t
+;;      speedbar-activity-change-focus t)))
+
 ;; slime
 (require 'slime)
 (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
@@ -71,7 +78,8 @@
 (setq org-agenda-include-diary t)
 (setq org-agenda-include-all-todo t)
 (setq org-deadline-warning-days 14)
-(setq org-agenda-files (list "~/emacs/org/home.org"))
+;; TODO make this more general between computers
+(setq org-agenda-files (list "~/Documents/org/home.org"))
 
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
