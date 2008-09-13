@@ -23,26 +23,20 @@
 ;; --------------------------
 ;; Misc
 
+;make the y or n suffice for a yes or no question
+(fset 'yes-or-no-p 'y-or-n-p)
+
+
+;; copy-paste should work with other X clients
+(setq x-select-enable-clipboard t)
+(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+
 ;; change spelling
 (setq-default ispell-program-name "aspell")
-
-;; boo splash screens
-(setq inhibit-startup-message t)
-
-;; defaults to showing parens
-(show-paren-mode t)
-
-; awesome fonts only with emacs 23!
-(if (string-match "23\." (emacs-version))
-    (set-default-font "Bitstream Vera Sans Mono-10"))
 
 ;; use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
-
-(set-scroll-bar-mode 'right)
-
-(setq frame-title-format '(buffer-file-name "%b -- %f" ( "%b" ) ) )
 
 ;; from steve yegge
 (defun wc-w ()
