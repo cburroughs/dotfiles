@@ -78,7 +78,7 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "/tmp/emacs_backups/" (user-login-name) "/"))
+(defvar backup-dir (concat "/tmp/" (user-login-name) "/emacs_backups/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq semanticdb-default-save-directory "/tmp/")
@@ -111,3 +111,9 @@
           (rename-buffer new-name) 	 
           (set-visited-file-name new-name) 	 
           (set-buffer-modified-p nil))))))
+
+;convert a buffer from dos ^M end of lines to unix end of lines
+(defun dos2unix ()
+  (interactive)
+    (goto-char (point-min))
+      (while (search-forward "\r" nil t) (replace-match "")))
