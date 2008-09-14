@@ -5,6 +5,7 @@
 ; TODO: figure out java editing stuff
 ; TOOD: recursive byte-compile
 ; TODO: rpol xml minor mode
+; TODO: A happy round of commenting.
 
 ; My .emacs "file".  All this stuff that has acumilated is probably
 ; under the GPL or public domian.

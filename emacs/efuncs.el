@@ -66,3 +66,29 @@
       (while (search-forward "\r" nil t) (replace-match "")))
 
 
+
+; TODO: Investigate these
+;http://dotfiles.org/~coder_/.emacs
+;; {{{ Custom Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; An interactive version of the query-replace-regexp function  that lets you
+;; see your regexp search before executing it (Safety first!)
+(defun iquery-forward-replace-regexp ()
+  "Interactive Regexp Replace Forwards"
+  (interactive)
+  (setq lineno (line-number-at-pos (point)))
+  (isearch-forward-regexp)
+  (goto-line lineno)
+  (setq replace (read-from-minibuffer (concat "Replace regexp " (first regexp-search-ring) " with: ")))
+  (while (re-search-forward (first regexp-search-ring) nil t)
+        (replace-match replace)))
+
+;; Same as above, but for backwards
+(defun iquery-backward-replace-regexp ()
+  "Interactive Regexp Replace Backwards"
+  (interactive)
+  (setq lineno (line-number-at-pos (point)))
+  (isearch-backward-regexp)
+  (goto-line lineno)
+  (setq replace (read-from-minibuffer (concat "Replace regexp " (first regexp-search-ring) " with: ")))
+  (while (re-search-backward (first regexp-search-ring) nil t)
+        (replace-match replace)))

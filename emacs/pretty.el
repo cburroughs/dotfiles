@@ -26,7 +26,14 @@
       (set-face-background 'hl-line "gray18")))
 
 ; awesome fonts only with emacs 23!
-; TODO: What if the system does not have this font?  What about Deaja vu?
+; TODO: What if the system does not have this font?  
 (if (string-match "23\." (emacs-version))
-    (set-default-font "Bitstream Vera Sans Mono-10"))
+    (if (my-gentoo?)
+        (set-default-font "DejaVu Sans Mono-10")
+      (set-default-font "Bitstream Vera Sans Mono-10")))
+
+
+; TODO: look into something like this
+;(setq initial-frame-alist '((top . 1) (height . 63)))
+
 
