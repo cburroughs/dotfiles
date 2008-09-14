@@ -14,6 +14,7 @@
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 
+;; See http://a-nickels-worth.blogspot.com/2007/11/effective-emacs.html
 (defvar *emacs-load-start* (current-time)) ; Find out how long this takes
 
 ; For now I want things to work
