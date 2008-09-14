@@ -33,7 +33,7 @@
       (set-default-font "Bitstream Vera Sans Mono-10")))
 
 
-; TODO: look into something like this
-;(setq initial-frame-alist '((top . 1) (height . 63)))
+; Start nice and tall, but should still be 80 char wide
+(setq initial-frame-alist '((top . 1) (height . 63)))
 
 

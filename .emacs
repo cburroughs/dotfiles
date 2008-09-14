@@ -3,13 +3,13 @@
 
 ; TODO: why does color-theme not fully load?
 ; TODO: figure out java editing stuff
-; TOOD: recursive byte-compile
 ; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
-; TODO: Reduce the use of compile (effictive dot.emacs)
+; TODO: Reduce the use of require (effictive dot.emacs)
 ; TODO: Don't alt-tab to *buffers*
 ; TODO: use Alt-n to switch 'tabs'
-; TODO: deploy script.
+; ToDO/GOAL: less than 1s load time
+
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
@@ -20,7 +20,9 @@
 
 ;; See http://a-nickels-worth.blogspot.com/2007/11/effective-emacs.html
 (defvar *emacs-load-start* (current-time)) ; Find out how long this takes
-
+; Progress:
+; Originally: 3s
+; Pre-compiled: 2s
 
 ; For now I want things to work
 (defun my-gentoo? ()
