@@ -2,18 +2,20 @@
 ;; My dot emacs
 
 ; TODO: why does color-theme not fully load?
-; TODO: figure out java editing stuff
+; TODO: figure out java-annotation support
 ; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
 ; TODO: Reduce the use of require (effictive dot.emacs)
 ; TODO: use Alt-n to switch 'tabs'
-; ToDO/GOAL: less than 1s load time
-
+; TODO/GOAL: less than 1s load time
+; TODO: Make jdee work
+; TODO: evaluate ecb
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
 
 ; Goal: Runs under emacs-23 on gentoo and ubuntu
+; TODO: There is no good reason for it not to work in emacs 22
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 

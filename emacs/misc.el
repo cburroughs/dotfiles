@@ -28,4 +28,5 @@
                            try-complete-lisp-symbol-partially
                            try-complete-lisp-symbol))
 
-
+; Try to avoid giving buffers dumb names
+(require 'uniquify)
