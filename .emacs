@@ -6,7 +6,6 @@
 ; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
 ; TODO: Reduce the use of require (effictive dot.emacs)
-; TODO: Don't alt-tab to *buffers*
 ; TODO: use Alt-n to switch 'tabs'
 ; ToDO/GOAL: less than 1s load time
 
