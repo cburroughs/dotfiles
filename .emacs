@@ -6,9 +6,13 @@
 ; TOOD: recursive byte-compile
 ; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
+; TODO: Reduce the use of compile (effictive dot.emacs)
+; TODO: Don't alt-tab to *buffers*
+; TODO: use Alt-n to switch 'tabs'
+; TODO: deploy script.
 
-; My .emacs "file".  All this stuff that has acumilated is probably
-; under the GPL or public domian.
+; My .emacs "file".  All this stuff that has acumilated and borrowed
+; is probably under the GPL or public domian.
 
 ; Goal: Runs under emacs-23 on gentoo and ubuntu
 
@@ -16,6 +20,7 @@
 
 ;; See http://a-nickels-worth.blogspot.com/2007/11/effective-emacs.html
 (defvar *emacs-load-start* (current-time)) ; Find out how long this takes
+
 
 ; For now I want things to work
 (defun my-gentoo? ()
@@ -32,6 +37,12 @@
 			
 (add-path "~/emacs/")
 (add-path "~/emacs/site-lisp/")
+
+; It is easy enough to byte compile everything, so we might as well
+; The 0 option makes an .elc file even if one is not yet present
+(byte-recompile-directory "~/emacs/" 0)
+
+
 
 ; If I ever use customize crap I don't want it pooping on this file
 ; I assume this is automatically loaded
