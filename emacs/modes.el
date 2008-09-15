@@ -91,7 +91,10 @@
 (setq org-agenda-include-all-todo t)
 (setq org-deadline-warning-days 14)
 ;; TODO make this more general between computers
-(setq org-agenda-files (list "~/Documents/org/home.org"))
+(if (my-gentoo?)
+    (setq org-agenda-files (list "~/Documents/org/home.org"))
+  (setq org-agenda-file (list "~/Documents/org/cs.org")))
+  
 
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
