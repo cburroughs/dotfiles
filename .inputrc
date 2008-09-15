@@ -1,0 +1,18 @@
+# Chris Burroughs
+
+# Try to make bash backwards-kill-word act like emacs.  Switch bash defaults.
+
+# DOES NOT WORK
+
+$include /etc/inputrc
+
+
+#backward-kill-word (M-Rubout)
+# Kill the word behind point.  Word boundaries are the same as those
+# used by backward-word.
+"\C-w": backward-kill-word
+
+#       unix-word-rubout (C-w)
+#Kill the word behind point, using white space as a word bound‐ ary.
+# The killed text is saved on the kill-ring.
+M-Rubout: unix-word-rubout 
