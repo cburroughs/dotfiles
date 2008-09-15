@@ -93,8 +93,7 @@
 ;; TODO make this more general between computers
 (if (my-gentoo?)
     (setq org-agenda-files (list "~/Documents/org/home.org"))
-  (setq org-agenda-file (list "~/Documents/org/cs.org")))
-  
+  (setq org-agenda-files (list "~/Documents/org/cs.org")))
 
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
