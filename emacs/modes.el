@@ -1,3 +1,4 @@
+
 ; Chris Burroughs
 ; Modes I use and their custimization.
 
@@ -15,10 +16,12 @@
 ;;      speedbar-activity-change-focus t)))
 
 ;; slime
-(require 'slime)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-(setq inferior-lisp-program "sbcl") 
+; slime is only set up on my gentoo box
+(when (my-gentoo?)
+  (require 'slime)
+  (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+  (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+  (setq inferior-lisp-program "sbcl"))
 
 ;; new js2
 (autoload 'js2-mode "js2" nil t)
