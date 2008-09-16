@@ -10,6 +10,7 @@
 ; TODO/GOAL: less than 1s load time
 ; TODO: Make jdee work
 ; TODO: evaluate ecb
+; TODO: dictionary integration (thesaurus would be super awesome too).
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
