@@ -11,6 +11,7 @@
 ; TODO: Make jdee work
 ; TODO: evaluate ecb
 ; TODO: func to resize to max screen width (across monitors)
+; TODO: Do I live vi dot mode?
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.

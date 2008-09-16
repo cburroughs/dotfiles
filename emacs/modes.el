@@ -135,3 +135,7 @@
            (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
            (add-to-list 'interpreter-mode-alist '("python" . python-mode)))
 
+
+; dot files
+(autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
