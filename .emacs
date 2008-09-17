@@ -12,6 +12,7 @@
 ; TODO: evaluate ecb
 ; TODO: func to resize to max screen width (across monitors)
 ; TODO: Do I live vi dot mode?
+; TODO: What does pc-select etc mode not work in ubuntu land?
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
