@@ -1,3 +1,4 @@
+
 ; Chris Burroughs
 ; Modes I use and their custimization.
 
@@ -15,10 +16,12 @@
 ;;      speedbar-activity-change-focus t)))
 
 ;; slime
-(require 'slime)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-(setq inferior-lisp-program "sbcl") 
+; slime is only set up on my gentoo box
+(when (my-gentoo?)
+  (require 'slime)
+  (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+  (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+  (setq inferior-lisp-program "sbcl"))
 
 ;; new js2
 (autoload 'js2-mode "js2" nil t)
@@ -88,7 +91,9 @@
 (setq org-agenda-include-all-todo t)
 (setq org-deadline-warning-days 14)
 ;; TODO make this more general between computers
-(setq org-agenda-files (list "~/Documents/org/home.org"))
+(if (my-gentoo?)
+    (setq org-agenda-files (list "~/Documents/org/home.org"))
+  (setq org-agenda-files (list "~/Documents/org/cs.org")))
 
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
@@ -122,3 +127,15 @@
   (java-mode-indent-annotations-setup))
 (add-hook 'java-mode-hook 'my-java-mode-hook)
 
+
+;; Python mode for ubuntu.  (has working indentation)
+;; TODO: this really should not be needed
+(when (not (my-gentoo?))
+           (autoload 'python-mode "python-mode" "Python Mode." t)
+           (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+           (add-to-list 'interpreter-mode-alist '("python" . python-mode)))
+
+
+; dot files
+(autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))

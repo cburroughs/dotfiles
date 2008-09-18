@@ -1,6 +1,7 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
+; TODO: this is a placeholder todo
 ; TODO: why does color-theme not fully load?
 ; TODO: figure out java-annotation support
 ; TODO: rpol xml minor mode
@@ -11,6 +12,8 @@
 ; TODO: Make jdee work
 ; TODO: evaluate ecb
 ; TODO: dictionary integration (thesaurus would be super awesome too).
+; TODO: func to resize to max screen width (across monitors)
+; TODO: Do I live vi dot mode?
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
