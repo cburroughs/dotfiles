@@ -28,3 +28,7 @@
 (global-set-key "\M-h" 'backward-char)
 (global-set-key "\M-l" 'forward-char)
 
+
+; For when I get confused
+(global-set-key "\M-p" 'previous-line)
+(global-set-key "\M-n" 'next-line)
