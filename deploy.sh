@@ -9,3 +9,11 @@ cp -r emacs ~/
 cp .inputrc ~
 cp .bash_custom ~
 cp .git-completion.sh ~
+
+if   `grep -q bash_custom  ~/.bashrc`
+then
+    `true`
+else
+    echo "" >> ~/.bashrc
+    echo "source ~/.bash_custom" >> ~/.bashrc
+fi
