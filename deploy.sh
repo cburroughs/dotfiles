@@ -8,3 +8,4 @@ cp -r emacs ~/
 
 cp .inputrc ~
 cp .bash_custom ~
+cp .git-completion.sh ~

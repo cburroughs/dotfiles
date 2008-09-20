@@ -58,3 +58,25 @@ fi
 # other
 bind "set completion-ignore-case on" 
 function common { history | awk '{print $9}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr ;}
+
+
+# git stuff
+source ~/.git-completion.sh
+
+
+# don't know if use_color is defined outside of gentoo land
+if ${use_color} ; then
+        if [[ ${EUID} == 0 ]] ; then
+                PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W$(__git_ps1 " (%s)") \$\[\033[00m\] '
+        else
+                PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w$(__git_ps1 " (%s)") \$\[\033[00m\] '
+        fi
+else
+        if [[ ${EUID} == 0 ]] ; then
+                # show root@ when we don't have colors
+                PS1='\u@\h \W \$ '
+        else
+                PS1='\u@\h \w \$ '
+        fi
+fi
+
