@@ -1,0 +1,60 @@
+# I am going to experiment with doing this differently than most
+# people.  Instead of having my own .bashrc I will use the .bashrc
+# that the system provides and source this file.  This could cause
+# conflicts.
+
+# TODO: git custom
+# TODO: max promt size /home/foo/.../bar/bax
+
+# Enable history appending instead of overwriting.  #139609
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Make sure this is sourced
+export INPUTRC='~/.inputrc'
+
+# Switch to be likes emacs
+bind '\C-w:backward-kill-word'
+bind 'Meta-Rubout: unix-word-rubout'
+
+# def variables
+export SVN_EDITOR='emacs -nw'
+export GIT_EDITOR='emacs -nw'
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export PAGER=less
+
+# aliases
+alias ll='ls -lh'
+alias mkdir='mkdir -p'
+alias du='du -h'
+alias py='python'
+
+# made up commands
+mkcd() {
+    mkdir $1 && cd $1
+}
+
+# cd directly to a dir and list contents
+cdls() {
+  if [ "$1" ]
+  then builtin cd "$1" && ll
+  else builtin cd && ll
+  fi
+}
+
+if [[ -f /etc/gentoo-release ]] ; then
+    explainuseflag() {
+        sed -ne "s,^\([^ ]*:\)\?$1 - ,,p" \
+            /usr/portage/profiles/use.desc \
+            /usr/portage/profiles/use.local.desc
+    }
+fi
+
+
+# other
+bind "set completion-ignore-case on" 
+function common { history | awk '{print $9}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr ;}
