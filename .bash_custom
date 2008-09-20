@@ -1,3 +1,4 @@
+# -*- mode: sh; -*-
 # I am going to experiment with doing this differently than most
 # people.  Instead of having my own .bashrc I will use the .bashrc
 # that the system provides and source this file.  This could cause
@@ -57,6 +58,8 @@ fi
 
 # other
 bind "set completion-ignore-case on" 
+
+# does not seem to work
 function common { history | awk '{print $9}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr ;}
 
 
