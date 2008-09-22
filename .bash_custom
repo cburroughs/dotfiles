@@ -26,7 +26,8 @@ export SVN_EDITOR='emacs -nw'
 export GIT_EDITOR='emacs -nw'
 export HISTSIZE=10000
 export HISTFILESIZE=10000
-export PAGER=less
+export HISTTIMEFORMAT='%Y-%m-%d_%H:%M:%S '
+export PAGER=less -R
 
 # aliases
 alias ll='ls -lh'
