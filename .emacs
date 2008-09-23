@@ -16,6 +16,9 @@
 ; TODO: Do I live vi dot mode?
 ; TODO: What does pc-select etc mode not work in ubuntu land?
 ; TODO; order of uniqeify is not to my liking.
+; TODO: url encode region
+;; (require 'mm-url)
+;; (mm-url-form-encode-xwfu "hello+world")
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
