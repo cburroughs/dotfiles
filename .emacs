@@ -40,8 +40,7 @@
 
 ;; load gentoo installed stuff
 ;; assume if gentoo using gentoo kernel
-(when (my-gentoo?)
-    (load "/usr/share/emacs/site-lisp/site-gentoo"))
+(require 'site-gentoo nil t)
 
 ;; Need to set up path for elisp files
 (defun add-path (p)
