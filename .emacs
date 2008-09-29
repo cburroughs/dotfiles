@@ -19,6 +19,7 @@
 ; TODO: url encode region
 ;; (require 'mm-url)
 ;; (mm-url-form-encode-xwfu "hello+world")
+;; TODO: more insert date options
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
