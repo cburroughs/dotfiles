@@ -137,3 +137,9 @@
 ; dot files
 (autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
+
+;; markdown-mode
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+(setq auto-mode-alist
+      (cons '("\\.text" . markdown-mode) auto-mode-alist))
