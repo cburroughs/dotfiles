@@ -21,6 +21,7 @@
 ;; (mm-url-form-encode-xwfu "hello+world")
 ;; TODO: more insert date options
 ;; TODO: bind f7 to ispell-buffer
+;; TODO: investigate pymacs and ropemacs
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
