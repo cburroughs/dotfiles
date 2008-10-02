@@ -6,7 +6,7 @@
 
 # TODO: git custom
 # TODO: max promt size /home/foo/.../bar/bax
-# TODO: emacs shortcut aliases
+# TODO: look into cool PS1 alternatives
 
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
@@ -35,6 +35,8 @@ alias ll='ls -lh'
 alias mkdir='mkdir -p'
 alias du='du -h'
 alias py='python'
+alias e='emacs'
+alias es='emacs-snapshot'
 
 # made up commands
 mkcd() {
