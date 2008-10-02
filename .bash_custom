@@ -6,6 +6,7 @@
 
 # TODO: git custom
 # TODO: max promt size /home/foo/.../bar/bax
+# TODO: emacs shortcut aliases
 
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
