@@ -32,3 +32,7 @@
 ; For when I get confused
 (global-set-key "\M-p" 'previous-line)
 (global-set-key "\M-n" 'next-line)
+
+; spell checking
+(global-set-key [f7] 'ispell-buffer)
+(global-set-key [Shift-f7] 'ispell-comments-and-strings)
