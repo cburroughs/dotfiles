@@ -21,6 +21,7 @@
 ;; (mm-url-form-encode-xwfu "hello+world")
 ;; TODO: more insert date options
 ;; TODO: investigate pymacs and ropemacs
+; TODO: ansi-term default to bash without confirm
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
