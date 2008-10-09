@@ -36,4 +36,3 @@
 ; Start nice and tall, but should still be 80 char wide
 (setq initial-frame-alist '((top . 1) (height . 63)))
 
-

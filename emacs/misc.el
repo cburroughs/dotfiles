@@ -36,3 +36,9 @@
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+
+;; default to firefox in new tab
+(setq browse-url-default-browser 'browse-url-firefox-program)
+(setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
+
+

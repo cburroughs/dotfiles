@@ -36,3 +36,7 @@
 ; spell checking
 (global-set-key [f7] 'ispell-buffer)
 (global-set-key [Shift-f7] 'ispell-comments-and-strings)
+
+; hey the keyboard does say open on that key
+(global-set-key [f5] 'browse-url-at-point)
+
