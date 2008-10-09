@@ -101,3 +101,9 @@
   (setq replace (read-from-minibuffer (concat "Replace regexp " (first regexp-search-ring) " with: ")))
   (while (re-search-backward (first regexp-search-ring) nil t)
         (replace-match replace)))
+
+;; I just want bash anyway
+(defun bash ()
+  "Hey I just want to run bash"
+  (interactive)
+  (ansi-term "/bin/bash"))
