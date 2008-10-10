@@ -134,7 +134,7 @@
 
 ; thanks #eamcs!
 (defun apply-function-to-region (beg end fn)
-  "Replace the given region with the result of apply the function to it."
+  "Replace the given region with the result of applying the function to it."
     (save-excursion
       (let ((buf-str (buffer-substring-no-properties beg end)))
         (delete-region beg end)
