@@ -15,9 +15,6 @@
 ; TODO: Do I live vi dot mode?
 ; TODO: What does pc-select etc mode not work in ubuntu land?
 ; TODO; order of uniqeify is not to my liking.
-; TODO: url encode region
-;; (require 'mm-url)
-;; (mm-url-form-encode-xwfu "hello+world")
 ;; TODO: more insert date options
 ;; TODO: investigate pymacs and ropemacs
 ; TODO: look into running emacsclient for terminal stuff

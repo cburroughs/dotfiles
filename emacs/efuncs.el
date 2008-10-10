@@ -131,3 +131,21 @@
 	 (fix-frame-horizontal-size width)
        (error
 	(error "Cannot resize window or frame horizontally"))))))
+
+; thanks #eamcs!
+(defun apply-function-to-region (beg end fn)
+  "Replace the given region with the result of apply the function to it."
+    (save-excursion
+      (let ((buf-str (buffer-substring-no-properties beg end)))
+        (delete-region beg end)
+        (insert (funcall fn buf-str)))))
+
+(defun url-encode-region (beg end)
+  "url encode the selected region"
+  (interactive "r")
+  (funcall 'apply-function-to-region beg end 'url-hexify-string))
+
+(defun url-decode-region (beg end)
+  "url decode the selected region"
+  (interactive "r")
+  (funcall 'apply-function-to-region beg end 'url-unhex-string))
