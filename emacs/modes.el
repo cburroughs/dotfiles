@@ -96,6 +96,11 @@
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
   '(progn
+     (when window-system ; would prefer to do based on if color loaded
+       (progn ; implicit?
+         (autoload 'color-theme-colorful-obsolescence
+           "color-theme-colorful-obsolescence" nil t)
+         (color-theme-colorful-obsolescence)))
      (define-key org-agenda-mode-map "\C-n" 'next-line)
      (define-key org-agenda-keymap "\C-n" 'next-line)
      (define-key org-agenda-mode-map "\C-p" 'previous-line)
