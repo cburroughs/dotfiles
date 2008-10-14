@@ -19,6 +19,8 @@
 ;; TODO: investigate pymacs and ropemacs
 ; TODO: look into running emacsclient for terminal stuff
 ; TODO: open in firefox (new tab?)
+; TODO: color-theme for org mode when opened directly
+
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
