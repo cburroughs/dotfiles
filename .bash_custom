@@ -35,6 +35,7 @@ alias ll='ls -lh'
 alias mkdir='mkdir -p'
 alias du='du -h'
 alias py='python'
+alias ipy='ipython'
 alias e='emacs'
 alias es='emacs-snapshot'
 
