@@ -139,6 +139,17 @@
            (add-to-list 'interpreter-mode-alist '("python" . python-mode)))
 
 
+(require 'pycomplete)
+;(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+(autoload 'pymacs-load "pymacs" nil t)
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+;(setq interpreter-mode-alist(cons '("python" . python-mode)
+;                             interpreter-mode-alist))
+
+
 ; dot files
 (autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
