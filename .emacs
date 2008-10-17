@@ -20,6 +20,7 @@
 ; TODO: look into running emacsclient for terminal stuff
 ; TODO: open in firefox (new tab?)
 ; TODO: color-theme for org mode when opened directly
+; TODO: add pycomplete to hippie-expand as well
 
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
