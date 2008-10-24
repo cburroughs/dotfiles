@@ -40,6 +40,7 @@ alias py='python'
 alias ipy='ipython'
 alias e='emacs'
 alias es='emacs-snapshot'
+alias nano='nano -w'
 
 # made up commands
 mkcd() {
