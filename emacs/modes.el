@@ -138,9 +138,10 @@
            (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
            (add-to-list 'interpreter-mode-alist '("python" . python-mode)))
 
-(when (not (string-match "site-lisp" (getenv "PYTHONPATH")))
-  (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH")
-                               ":" (expand-file-name "~/emacs/site-lisp"))))
+(when (getenv "PYTHONPATH")
+  (when (not (string-match "site-lisp" (getenv "PYTHONPATH")))
+    (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH")
+                                 ":" (expand-file-name "~/emacs/site-lisp")))))
 
 (eval-after-load "python-mode"
   '(require 'pycomplete))
