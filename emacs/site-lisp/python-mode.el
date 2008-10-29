@@ -2,14 +2,14 @@
 
 ;; Copyright (C) 1992,1993,1994  Tim Peters
 
-;; Author: 2003-2004 http://sf.net/projects/python-mode
+;; Author: 2003-2007 http://sf.net/projects/python-mode
 ;;         1995-2002 Barry A. Warsaw
 ;;         1992-1994 Tim Peters
 ;; Maintainer: python-mode@python.org
 ;; Created:    Feb 1992
 ;; Keywords:   python languages oop
 
-(defconst py-version "$Revision: 4.75 $"
+(defconst py-version "$Revision$"
   "`python-mode' version number.")
 
 ;; This software is provided as-is, without express or implied
@@ -402,6 +402,11 @@ support for features needed by `python-mode'.")
   "Face for builtins like TypeError, object, open, and exec.")
 (make-face 'py-builtins-face)
 
+;; XXX, TODO, and FIXME comments and such
+(defvar py-XXX-tag-face 'py-XXX-tag-face
+  "Face for XXX, TODO, and FIXME tags")
+(make-face 'py-XXX-tag-face)
+
 (defun py-font-lock-mode-hook ()
   (or (face-differs-from-default-p 'py-pseudo-keyword-face)
       (copy-face 'font-lock-keyword-face 'py-pseudo-keyword-face))
@@ -409,6 +414,8 @@ support for features needed by `python-mode'.")
       (copy-face 'font-lock-keyword-face 'py-builtins-face))
   (or (face-differs-from-default-p 'py-decorators-face)
       (copy-face 'py-pseudo-keyword-face 'py-decorators-face))
+  (or (face-differs-from-default-p 'py-XXX-tag-face)
+      (copy-face 'font-lock-comment-face 'py-XXX-tag-face))
   )
 (add-hook 'font-lock-mode-hook 'py-font-lock-mode-hook)
 
@@ -416,53 +423,55 @@ support for features needed by `python-mode'.")
   (let ((kw1 (mapconcat 'identity
 			'("and"      "assert"   "break"   "class"
 			  "continue" "def"      "del"     "elif"
-			  "else"     "except"   "exec"    "for"
+			  "else"     "except"   "for"     "None"
 			  "from"     "global"   "if"      "import"
 			  "in"       "is"       "lambda"  "not"
-			  "or"       "pass"     "print"   "raise"
-			  "return"   "while"    "yield"
+			  "or"       "pass"     "raise"   "as"
+			  "return"   "while"    "with"    "yield"
 			  )
 			"\\|"))
 	(kw2 (mapconcat 'identity
 			'("else:" "except:" "finally:" "try:")
 			"\\|"))
 	(kw3 (mapconcat 'identity
-			;; Don't include True, False, None, or
-			;; Ellipsis in this list, since they are
-			;; already defined as pseudo keywords.
+			;; Don't include Ellipsis in this list, since it is
+			;; already defined as a pseudo keyword.
 			'("__debug__"
-			  "__import__" "__name__" "abs" "apply" "basestring"
-			  "bool" "buffer" "callable" "chr" "classmethod"
-			  "cmp" "coerce" "compile" "complex" "copyright"
-			  "delattr" "dict" "dir" "divmod"
-			  "enumerate" "eval" "execfile" "exit" "file"
-			  "filter" "float" "getattr" "globals" "hasattr"
-			  "hash" "hex" "id" "input" "int" "intern"
-			  "isinstance" "issubclass" "iter" "len" "license"
-			  "list" "locals" "long" "map" "max" "min" "object"
-			  "oct" "open" "ord" "pow" "property" "range"
-			  "raw_input" "reduce" "reload" "repr" "round"
-			  "setattr" "slice" "staticmethod" "str" "sum"
-			  "super" "tuple" "type" "unichr" "unicode" "vars"
-			  "xrange" "zip")
+			  "__import__" "__name__" "abs" "all" "any" "apply"
+			  "basestring" "bin" "bool" "buffer" "bytearray"
+			  "callable" "chr" "classmethod" "cmp" "coerce"
+			  "compile" "complex" "copyright" "credits"
+			  "delattr" "dict" "dir" "divmod" "enumerate" "eval"
+			  "exec" "execfile" "exit" "file" "filter" "float"
+			  "format" "getattr" "globals" "hasattr" "hash" "help"
+			  "hex" "id" "input" "int" "intern" "isinstance"
+			  "issubclass" "iter" "len" "license" "list" "locals"
+			  "long" "map" "max" "memoryview" "min" "next"
+			  "object" "oct" "open" "ord" "pow" "print" "property"
+			  "quit" "range" "raw_input" "reduce" "reload" "repr"
+			  "round" "set" "setattr" "slice" "sorted"
+			  "staticmethod" "str" "sum" "super" "tuple" "type"
+			  "unichr" "unicode" "vars" "xrange" "zip")
 			"\\|"))
 	(kw4 (mapconcat 'identity
 			;; Exceptions and warnings
 			'("ArithmeticError" "AssertionError"
-			  "AttributeError" "DeprecationWarning" "EOFError"
+			  "AttributeError" "BaseException" "BufferError"
+			  "BytesWarning" "DeprecationWarning" "EOFError"
 			  "EnvironmentError" "Exception"
-			  "FloatingPointError" "FutureWarning" "IOError"
-			  "ImportError" "IndentationError" "IndexError"
+			  "FloatingPointError" "FutureWarning" "GeneratorExit"
+			  "IOError" "ImportError" "ImportWarning"
+			  "IndentationError" "IndexError"
 			  "KeyError" "KeyboardInterrupt" "LookupError"
 			  "MemoryError" "NameError" "NotImplemented"
 			  "NotImplementedError" "OSError" "OverflowError"
-			  "OverflowWarning" "PendingDeprecationWarning"
-			  "ReferenceError" "RuntimeError" "RuntimeWarning"
-			  "StandardError" "StopIteration" "SyntaxError"
-			  "SyntaxWarning" "SystemError" "SystemExit"
-			  "TabError" "TypeError" "UnboundLocalError"
-			  "UnicodeDecodeError" "UnicodeEncodeError"
-			  "UnicodeError" "UnicodeTranslateError"
+			  "PendingDeprecationWarning" "ReferenceError"
+			  "RuntimeError" "RuntimeWarning" "StandardError"
+			  "StopIteration" "SyntaxError" "SyntaxWarning"
+			  "SystemError" "SystemExit" "TabError" "TypeError"
+			  "UnboundLocalError" "UnicodeDecodeError"
+			  "UnicodeEncodeError" "UnicodeError"
+			  "UnicodeTranslateError" "UnicodeWarning"
 			  "UserWarning" "ValueError" "Warning"
 			  "ZeroDivisionError")
 			"\\|"))
@@ -479,17 +488,16 @@ support for features needed by `python-mode'.")
      (cons (concat "\\<\\(" kw2 "\\)[ \n\t(]") 1)
      ;; Exceptions
      (list (concat "\\<\\(" kw4 "\\)[ \n\t:,(]") 1 'py-builtins-face)
-     ;; `as' but only in "import foo as bar"
-     '("[ \t]*\\(\\<from\\>.*\\)?\\<import\\>.*\\<\\(as\\)\\>" . 2)
-
      ;; classes
      '("\\<class[ \t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)" 1 font-lock-type-face)
      ;; functions
      '("\\<def[ \t]+\\([a-zA-Z_]+[a-zA-Z0-9_]*\\)"
        1 font-lock-function-name-face)
      ;; pseudo-keywords
-     '("\\<\\(self\\|None\\|True\\|False\\|Ellipsis\\)\\>"
+     '("\\<\\(self\\|Ellipsis\\|True\\|False\\)\\>"
        1 py-pseudo-keyword-face)
+     ;; XXX, TODO, and FIXME tags
+     '("XXX\\|TODO\\|FIXME" 0 py-XXX-tag-face t)
      ))
   "Additional expressions to highlight in Python mode.")
 (put 'python-mode 'font-lock-defaults '(python-font-lock-keywords))
@@ -2144,39 +2152,23 @@ dedenting."
        ((py-continuation-line-p)
 	(let ((startpos (point))
 	      (open-bracket-pos (py-nesting-level))
-	      endpos searching found state)
+	      endpos searching found state cind cline)
 	  (if open-bracket-pos
 	      (progn
-		;; align with first item in list; else a normal
-		;; indent beyond the line with the open bracket
-		(goto-char (1+ open-bracket-pos)) ; just beyond bracket
-		;; is the first list item on the same line?
-		(skip-chars-forward " \t")
-		(if (null (memq (following-char) '(?\n ?# ?\\)))
-					; yes, so line up with it
-		    (current-column)
-		  ;; first list item on another line, or doesn't exist yet
-		  (forward-line 1)
-		  (while (and (< (point) startpos)
-			      (looking-at "[ \t]*[#\n\\\\]")) ; skip noise
-		    (forward-line 1))
-		  (if (and (< (point) startpos)
-			   (/= startpos
-			       (save-excursion
-				 (goto-char (1+ open-bracket-pos))
-				 (forward-comment (point-max))
-				 (point))))
-		      ;; again mimic the first list item
-		      (current-indentation)
-		    ;; else they're about to enter the first item
-		    (goto-char open-bracket-pos)
-		    (setq placeholder (point))
-		    (py-goto-initial-line)
-		    (py-goto-beginning-of-tqs
-		     (save-excursion (nth 3 (parse-partial-sexp
-					     placeholder (point)))))
-		    (+ (current-indentation) py-indent-offset))))
-
+		(setq endpos (py-point 'bol))
+		(py-goto-initial-line)
+		(setq cind (current-indentation))
+		(setq cline cind)
+		(dolist (bp 
+			 (nth 9 (save-excursion
+				  (parse-partial-sexp (point) endpos)))
+			 cind)
+		  (if (search-forward "\n" bp t) (setq cline cind))
+		  (goto-char (1+ bp))
+		  (skip-chars-forward " \t")
+		  (setq cind (if (memq (following-char) '(?\n ?# ?\\))
+				 (+ cline py-indent-offset)
+			       (current-column)))))
 	    ;; else on backslash continuation line
 	    (forward-line -1)
 	    (if (py-continuation-line-p) ; on at least 3rd line in block
@@ -3877,32 +3869,35 @@ and initial `#'s.
 If point is inside a string, narrow to that string and fill.
 "
   (interactive "P")
-  (let* ((bod (py-point 'bod))
-	 (pps (parse-partial-sexp bod (point))))
-    (cond
-     ;; are we inside a comment or on a line with only whitespace before
-     ;; the comment start?
-     ((or (nth 4 pps)
-	  (save-excursion (beginning-of-line) (looking-at "[ \t]*#")))
-      (py-fill-comment justify))
-     ;; are we inside a string?
-     ((nth 3 pps)
-      (py-fill-string (nth 8 pps)))
-     ;; are we at the opening quote of a string, or in the indentation?
-     ((save-excursion
-	(forward-word 1)
-	(eq (py-in-literal) 'string))
-      (save-excursion
-	(py-fill-string (py-point 'boi))))
-     ;; are we at or after the closing quote of a string?
-     ((save-excursion
-	(backward-word 1)
-	(eq (py-in-literal) 'string))
-      (save-excursion
-	(py-fill-string (py-point 'boi))))
-     ;; otherwise use the default
-     (t
-      (fill-paragraph justify)))))
+  ;; fill-paragraph will narrow incorrectly
+  (save-restriction
+    (widen)
+    (let* ((bod (py-point 'bod))
+	   (pps (parse-partial-sexp bod (point))))
+      (cond
+       ;; are we inside a comment or on a line with only whitespace before
+       ;; the comment start?
+       ((or (nth 4 pps)
+	    (save-excursion (beginning-of-line) (looking-at "[ \t]*#")))
+	(py-fill-comment justify))
+       ;; are we inside a string?
+       ((nth 3 pps)
+	(py-fill-string (nth 8 pps)))
+       ;; are we at the opening quote of a string, or in the indentation?
+       ((save-excursion
+	  (forward-word 1)
+	  (eq (py-in-literal) 'string))
+	(save-excursion
+	  (py-fill-string (py-point 'boi))))
+       ;; are we at or after the closing quote of a string?
+       ((save-excursion
+	  (backward-word 1)
+	  (eq (py-in-literal) 'string))
+	(save-excursion
+	  (py-fill-string (py-point 'boi))))
+       ;; otherwise use the default
+       (t
+	(fill-paragraph justify))))))
 
 
 
