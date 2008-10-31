@@ -24,6 +24,7 @@
 ; TODO: what to do about env not being sourced by gui launcher
 ; TODO: can tabbars be made to horizonaly scroll
 ; TODO: spell check not comments (ie for svn commit messages)
+; TODO: ++ -- font size functions
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
