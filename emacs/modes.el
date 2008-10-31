@@ -166,5 +166,4 @@
 (setq auto-mode-alist
       (cons '("\\.mdown" . markdown-mode) auto-mode-alist))
 
-;; vertical line to fight away the evil long lines
-(require 'vline)
+
