@@ -378,7 +378,8 @@
                 "\\|"                   ; |a
                 "\\["
                 "\\)"                   ; >a
-                "+"
+                ;"+"
+                ; hack around: http://www.nabble.com/performance-hang-bug-in-regex.c-td19264524.html
                 "\\)"                   ; >4
                 "\\(\\]\\]\\)"          ; =5
                 )
