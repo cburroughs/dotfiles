@@ -41,6 +41,7 @@ alias ipy='ipython'
 alias e='emacs'
 alias es='emacs-snapshot'
 alias nano='nano -w'
+alias grep='grep --color'
 
 # made up commands
 mkcd() {
