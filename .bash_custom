@@ -64,6 +64,8 @@ if [[ -f /etc/gentoo-release ]] ; then
     }
 fi
 
+svndiff () { svn diff "${@}" | colordiff | less -R; }
+
 
 # other
 bind "set completion-ignore-case on" 
