@@ -167,3 +167,5 @@
       (cons '("\\.mdown" . markdown-mode) auto-mode-alist))
 
 
+;; Save a list of recent files visited.
+(recentf-mode 1)
