@@ -173,7 +173,7 @@
 ;; I always end up switching to the better mode anyway
 (add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . nxhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . nxhtml-mode)
+(add-to-list 'auto-mode-alist '("\\.rhtml$" . nxhtml-mode))
 
 ;; colorize diffs.
 (eval-after-load 'diff-mode
