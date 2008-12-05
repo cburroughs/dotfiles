@@ -5,6 +5,11 @@
 ; allows shift and arrows for selection
 (require 'pc-select)
 
+;; more paren highlighting goodness
+;; todo: add more colors
+(require 'highlight-parentheses)
+(highlight-parentheses-mode)
+
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
