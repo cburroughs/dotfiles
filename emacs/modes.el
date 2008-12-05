@@ -81,6 +81,7 @@
 ;; -------------
 ; org mode stuff
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+; Should this stuff all done only after loading org-mode
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
@@ -98,17 +99,20 @@
   '(progn
      (when window-system ; would prefer to do based on if color loaded
        (progn ; implicit?
-         (autoload 'color-theme-colorful-obsolescence
-           "color-theme-colorful-obsolescence" nil t)
+         ; For reasons I do not understand this does *not* work if you
+         ; open the org-file with emacs on the cmd line
+         (load "color-theme-colorful-obsolescence")
          (color-theme-colorful-obsolescence)))
-     (define-key org-agenda-mode-map "\C-n" 'next-line)
-     (define-key org-agenda-keymap "\C-n" 'next-line)
-     (define-key org-agenda-mode-map "\C-p" 'previous-line)
-     (define-key org-agenda-keymap "\C-p" 'previous-line)
+     ; These give errors and seem to be unnecessary
+     ;(define-key org-agenda-mode-map "\C-n" 'next-line)
+     ;(define-key org-agenda-keymap "\C-n" 'next-line)
+     ;(define-key org-agenda-mode-map "\C-p" 'previous-line)
+     ;(define-key org-agenda-keymap "\C-p" 'previous-line)
+     ; Arn't these redundant given I alreay set them?
      (define-key global-map "\C-cl" 'org-store-link)
      (define-key global-map "\C-ca" 'org-agenda)
      (define-key global-map [(control shift tab)] 'tabbar-backward)
-     (define-key global-map[(control tab)]       'tabbar-forward)))
+     (define-key global-map [(control tab)]       'tabbar-forward)))
 
 
 ;; Better twiki editing for work
