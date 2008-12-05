@@ -193,3 +193,10 @@
 ;; TODO: easy way to change this the unreadable style common in java code
 (require 'highlight-80+)
 (highlight-80+-mode)
+
+;; might as well use emacs crazy powerful kill-ring
+(autoload 'kill-ring-search "kill-ring-search"
+  "Search the kill ring in the minibuffer."
+  (interactive))
+
+(global-set-key "\M-\C-y" 'kill-ring-search)
