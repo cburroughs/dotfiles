@@ -191,4 +191,5 @@
      (set-face-foreground 'diff-removed "firebrick2")))
 
 ;; TODO: easy way to change this the unreadable style common in java code
-(require 'highlight-80+-mode)
+(require 'highlight-80+)
+(highlight-80+-mode)
