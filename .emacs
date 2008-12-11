@@ -27,6 +27,8 @@
 ; TODO: ++ -- font size functions
 ; TODO: can hl parens/80+ modes be global?
 ; TODO: document things I expect the package manager to install
+; todo: 'customize' ecb
+
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
