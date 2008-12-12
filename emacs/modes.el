@@ -9,6 +9,9 @@
 ;; todo: add more colors
 (require 'highlight-parentheses)
 (highlight-parentheses-mode)
+(add-hook 'after-change-major-mode-hook
+          (lambda () (highlight-parentheses-mode 1)))
+
 
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
