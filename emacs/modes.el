@@ -194,8 +194,13 @@
      (set-face-foreground 'diff-removed "firebrick2")))
 
 ;; TODO: easy way to change this the unreadable style common in java code
+;; Probably don't want this on by default but useful if I start
+;; coding in maximized windows
 (require 'highlight-80+)
-(highlight-80+-mode)
+;(highlight-80+-mode)
+(add-hook 'after-change-major-mode-hook
+          (lambda () (highlight-80+-mode 1)))
+
 
 ;; might as well use emacs crazy powerful kill-ring
 (autoload 'kill-ring-search "kill-ring-search"
