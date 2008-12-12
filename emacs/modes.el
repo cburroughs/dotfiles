@@ -211,7 +211,6 @@
   "Set highlight-80+-mode length to 100. Is the enough for the java beast? "
   (iteractive)
   (setq highlight-80+-columns 100))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;; might as well use emacs crazy powerful kill-ring
@@ -220,3 +219,9 @@
   (interactive))
 
 (global-set-key "\M-\C-y" 'kill-ring-search)
+
+
+;; not sure what I want to do with this yet.
+;; Sometimes it is nice to move about by visible/screen lines.
+;;(require 'visible-lines)
+
