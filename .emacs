@@ -25,7 +25,6 @@
 ; TODO: can tabbars be made to horizonaly scroll
 ; TODO: spell check not comments (ie for svn commit messages)
 ; TODO: ++ -- font size functions
-; TODO: can hl parens/80+ modes be global?
 ; TODO: document things I expect the package manager to install
 ; todo: 'customize' ecb
 

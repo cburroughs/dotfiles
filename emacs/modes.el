@@ -201,6 +201,18 @@
 (add-hook 'after-change-major-mode-hook
           (lambda () (highlight-80+-mode 1)))
 
+;; These do not work
+(defun hl80 ()
+  "Set highlight-80+-mode length to 80. "
+  (iteractive)
+  (setq highlight-80+-columns 80))
+
+(defun hl100 ()
+  "Set highlight-80+-mode length to 100. Is the enough for the java beast? "
+  (iteractive)
+  (setq highlight-80+-columns 100))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 ;; might as well use emacs crazy powerful kill-ring
 (autoload 'kill-ring-search "kill-ring-search"
