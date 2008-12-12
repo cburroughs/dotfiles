@@ -197,9 +197,11 @@
 ;; Probably don't want this on by default but useful if I start
 ;; coding in maximized windows
 (require 'highlight-80+)
-;(highlight-80+-mode)
-(add-hook 'after-change-major-mode-hook
-          (lambda () (highlight-80+-mode 1)))
+(defun enable-highlight-80+ ()
+  (interactive)
+  (highlight-80+-mode)
+  (add-hook 'after-change-major-mode-hook
+            (lambda () (highlight-80+-mode 1))))
 
 ;; These do not work
 (defun hl80 ()
