@@ -4,6 +4,8 @@
 
 ; allows shift and arrows for selection
 (require 'pc-select)
+(transient-mark-mode t) ; redundant, still does not work in ubuntu
+(delete-selection-mode t) ; delete selected text
 
 ;; more paren highlighting goodness
 ;; todo: add more colors
