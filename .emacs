@@ -24,7 +24,6 @@
 ; TODO: what to do about env not being sourced by gui launcher
 ; TODO: can tabbars be made to horizonaly scroll
 ; TODO: spell check not comments (ie for svn commit messages)
-; TODO: ++ -- font size functions
 ; TODO: document things I expect the package manager to install
 ; todo: 'customize' ecb
 
