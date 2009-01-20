@@ -5,14 +5,14 @@
 ; TODO: figure out java-annotation support
 ; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
-; TODO: Reduce the use of require (effictive dot.emacs)
+; TODO: Reduce the use of require (effective dot.emacs)
 ; TODO: use Alt-n to switch 'tabs'
 ; TODO/GOAL: less than 1s load time
 ; TODO: Make jdee work
 ; TODO: evaluate ecb
 ; TODO: dictionary integration (thesaurus would be super awesome too).
 ; TODO: func to resize to max screen width (across monitors)
-; TODO: Do I live vi dot mode?
+; TODO: Do I like vi dot mode?
 ; TODO: What does pc-select etc mode not work in ubuntu land?
 ;; TODO: more insert date options
 ;; TODO: investigate pymacs and ropemacs
@@ -22,13 +22,13 @@
 ; TODO: add pycomplete to hippie-expand as well
 ; TODO: better way to set PYTHONPATH so gui launcher figures it out
 ; TODO: what to do about env not being sourced by gui launcher
-; TODO: can tabbars be made to horizonaly scroll
+; TODO: can tabbars be made to horizontally scroll
 ; TODO: spell check not comments (ie for svn commit messages)
 ; TODO: document things I expect the package manager to install
 ; todo: 'customize' ecb
 ; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ; todo: turn off hl-p in vc annotate mode
-; todo: get tags of somesort working, they seem awesome
+; todo: get tags of some sort working, they seem awesome
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
