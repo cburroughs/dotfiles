@@ -29,6 +29,7 @@
 ; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ; todo: turn off hl-p in vc annotate mode
 ; todo: get tags of some sort working, they seem awesome
+; todo: js-comint code review
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
