@@ -133,3 +133,6 @@
 ;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
 ;; app-emacs/slime
+
+;; Other:
+;; tidy
