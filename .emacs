@@ -71,12 +71,13 @@
 (load custom-file 'noerror)
 
 ; load the files with the rest of my info
-; try ti put in order of least likely to break
+; try to put in order of least likely to break
 (load-library "key-bindings")
 (load-library "efuncs")
 (load-library "misc")
 (load-library "pretty")
 (load-library "modes")
+(load-library "external")
 
 ;; --------------------------
 ;; Putting Files places
