@@ -236,3 +236,9 @@
 ;; Sometimes it is nice to move about by visible/screen lines.
 ;;(require 'visible-lines)
 
+
+;; Yeah for actionscript
+(autoload 'actionscript-mode "actionscript-mode")
+(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+(add-hook 'actionscript-mode-hook '(lambda () 
+                                     (setq c-basic-offset 4)))
