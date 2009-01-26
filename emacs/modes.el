@@ -193,8 +193,11 @@
 
 ;; I always end up switching to the better mode anyway
 (add-to-list 'auto-mode-alist '("\\.xml$" . nxml-mode))
-(add-to-list 'auto-mode-alist '("\\.html$" . nxhtml-mode))
-(add-to-list 'auto-mode-alist '("\\.rhtml$" . nxhtml-mode))
+
+;; blah, ubuntu land lacks packages :-(
+(when (my-gentoo?)
+  (add-to-list 'auto-mode-alist '("\\.html$" . nxhtml-mode))
+  (add-to-list 'auto-mode-alist '("\\.rhtml$" . nxhtml-mode)))
 
 ;; colorize diffs.
 (eval-after-load 'diff-mode
