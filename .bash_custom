@@ -49,6 +49,8 @@ alias e='emacs'
 alias es='emacs-snapshot'
 alias nano='nano -w'
 alias grep='grep --color'
+alias fgrep='fgrep --color'
+alias egrep='egrep --color'
 
 # made up commands
 mkcd() {
