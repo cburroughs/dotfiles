@@ -38,6 +38,9 @@
 ;; tweaks from http://github.com/technomancy/emacs-starter-kit/tree/master
 (eval-after-load 'js2-mode
   '(progn
+     ;; my customization
+     (setq js2-mirror-mode nil)
+
       ;; Cosmetics
      ;; Why does this not work?
      (font-lock-add-keywords
