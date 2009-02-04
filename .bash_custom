@@ -48,7 +48,7 @@ alias ipy='ipython'
 alias e='emacs'
 alias es='emacs-snapshot'
 alias nano='nano -w'
-alias grep='grep --color'
+alias grep='grep --color --exclude-dir=".svn"'
 alias fgrep='fgrep --color'
 alias egrep='egrep --color'
 
