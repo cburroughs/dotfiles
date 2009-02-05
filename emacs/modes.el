@@ -270,6 +270,7 @@
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
       (cons '("\\.mdown" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 
 ;; Save a list of recent files visited.
