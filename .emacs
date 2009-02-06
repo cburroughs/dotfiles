@@ -32,6 +32,7 @@
 ; todo: js-comint code review
 ; todo: look into nXhtml
 ; todo: why does haxe mode have recursive load errors when compiled?
+; todo: make it so color-theme and slime don't screw each other up
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
