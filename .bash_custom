@@ -49,8 +49,8 @@ alias e='emacs'
 alias es='emacs-snapshot'
 alias nano='nano -w'
 alias grep='grep --color --exclude-dir=".svn"'
-alias fgrep='fgrep --color'
-alias egrep='egrep --color'
+alias fgrep='fgrep --color --exclude-dir=".svn"'
+alias egrep='egrep --color --exclude-dir=".svn"'
 
 # made up commands
 mkcd() {
