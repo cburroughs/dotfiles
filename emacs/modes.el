@@ -352,3 +352,8 @@
 ;;              (setq fill-column 80)
 ;;              (local-set-key [(return)] 'newline-and-indent))))
 
+
+
+;; far-search, finally something that searches across buffers!
+;; http://github.com/aemoncannon/far-search-mode/tree/master
+(require 'far-search)
