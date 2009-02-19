@@ -34,6 +34,7 @@
 ; todo: why does haxe mode have recursive load errors when compiled?
 ; todo: make it so color-theme and slime don't screw each other up
 ; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
+; todo: http://emacs-fu.blogspot.com/2009/02/transparent-emacs.html , needs newer emacs snapshot?
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
