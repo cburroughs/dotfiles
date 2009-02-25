@@ -35,6 +35,7 @@
 ; todo: make it so color-theme and slime don't screw each other up
 ; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
 ; todo: http://emacs-fu.blogspot.com/2009/02/transparent-emacs.html , needs newer emacs snapshot?
+; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
