@@ -149,3 +149,13 @@
   "url decode the selected region"
   (interactive "r")
   (funcall 'apply-function-to-region beg end 'url-unhex-string))
+
+
+;; http://sami.samhuri.net/2007/6/23/emacs-for-textmate-junkies/
+(defun surround-region-with-tag (tag-name beg end)
+  (interactive "sTag name: \nr")
+  (save-excursion
+    (goto-char beg)
+    (insert "<" tag-name ">")
+    (goto-char (+ end 2 (length tag-name)))
+    (insert "</" tag-name ">")))
