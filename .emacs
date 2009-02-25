@@ -36,6 +36,7 @@
 ; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
 ; todo: http://emacs-fu.blogspot.com/2009/02/transparent-emacs.html , needs newer emacs snapshot?
 ; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
+; todo: next time I am hacking lisp code I really should look at paredit
 
 ; My .emacs "file".  All this stuff that has acumilated and borrowed
 ; is probably under the GPL or public domian.
