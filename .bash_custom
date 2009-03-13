@@ -51,6 +51,7 @@ alias nano='nano -w'
 alias grep='grep --color --exclude-dir=".svn"'
 alias fgrep='fgrep --color --exclude-dir=".svn"'
 alias egrep='egrep --color --exclude-dir=".svn"'
+alias epoch='date +%s'
 
 # made up commands
 mkcd() {
