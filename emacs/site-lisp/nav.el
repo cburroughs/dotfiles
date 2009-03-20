@@ -3,9 +3,11 @@
 ;; Copyright 2009 Google Inc. All Rights Reserved.
 ;;
 ;; Author: issactrotts@google.com
+;; Version 26
 ;;
 
 ;;; License:
+;;
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
 ;; You may obtain a copy of the License at
@@ -32,40 +34,43 @@
 ;; will be closed to make sure the nav window shows up correctly.
 
 ;;; Key Bindings
-;;   Enter/Return: Open file or directory under cursor
 ;;
-;;   1: Open file under cursor in 1st other window
-;;   2: Open file under cursor in 2nd other window
+;;   Enter/Return: Open file or directory under cursor.
 ;;
-;;   c: Copy file or directory under cursor
-;;   d: Delete file or directory under cursor (asks to confirm first)
-;;   e: Edit current directory in dired
-;;   f: Recursively find files whose names or contents match some regexp
-;;   g: Recursively grep for some regexp
-;;   j: Jump to another directory
-;;   m: Move or rename file or directory
-;;   n: Make new directory
-;;   p: Pop directory stack to go back to the directory where you just were
-;;   q: Quit nav
-;;   r: Refresh
-;;   s: Start a shell in an emacs window in the current directory
+;;   1: Open file under cursor in 1st other window.
+;;   2: Open file under cursor in 2nd other window.
+;;
+;;   c: Copy file or directory under cursor.
+;;   d: Delete file or directory under cursor (asks to confirm first).
+;;   e: Edit current directory in dired.
+;;   f: Recursively find files whose names or contents match some regexp.
+;;   g: Recursively grep for some regexp.
+;;   j: Jump to another directory.
+;;   m: Move or rename file or directory.
+;;   n: Make new directory.
+;;   p: Pop directory stack to go back to the directory where you just were.
+;;   q: Quit nav.
+;;   r: Refresh.
+;;   s: Start a shell in an emacs window in the current directory.
 ;;   t: Start a terminal in an emacs window in the current directory.
-;;      This allows programs like vi and less to run
-;;   u: Go up to parent directory
-;;   !: Run shell command
-;;   [: Rotate non-nav windows counter clockwise
-;;   ]: Rotate non-nav windows clockwise
+;;      This allows programs like vi and less to run. Exit with C-d C-d.
+;;   u: Go up to parent directory.
+;;   !: Run shell command.
+;;   [: Rotate non-nav windows counter clockwise.
+;;   ]: Rotate non-nav windows clockwise.
 ;;
-;;   :: Go into debug mode (should only be needed if you are hacking nav.el)
+;;   :: Go into debug mode (should only be needed if you are hacking nav.el).
 ;;
 
 ;;; History:
+;;
 ;; See http://code.google.com/p/emacs-nav/source/list
 ;;
 
 ;;; Code:
 
 (require 'cl)
+
 
 (defgroup nav nil
   "A lightweight file/directory navigator."
@@ -94,6 +99,38 @@ This is used if only one window besides the Nav window is visible."
   :type 'boolean
   :group 'nav)
 
+
+(defun nav-make-mode-map ()
+  "Creates and returns a mode map with nav's key bindings."
+  (let ((keymap (make-sparse-keymap)))
+    (define-key keymap [enter] 'nav-open-file-under-cursor)
+    (define-key keymap [return] 'nav-open-file-under-cursor) ; for Macs
+    (define-key keymap "1" 'nav-open-file-other-window-1)
+    (define-key keymap "2" 'nav-open-file-other-window-2)
+    (define-key keymap "c" 'nav-copy-file-or-dir)
+    (define-key keymap "d" 'nav-delete-file-or-dir)
+    (define-key keymap "e" 'nav-invoke-dired)
+    (define-key keymap "f" 'nav-find-files)
+    (define-key keymap "g" 'nav-recursive-grep)
+    (define-key keymap "j" 'nav-jump-to-dir)
+    (define-key keymap "m" 'nav-move-file)
+    (define-key keymap "n" 'nav-make-new-directory)
+    (define-key keymap "p" 'nav-pop-dir)
+    (define-key keymap "q" 'nav-quit)
+    (define-key keymap "r" 'nav-refresh)
+    (define-key keymap "s" 'nav-shell)
+    (define-key keymap "t" 'nav-term)
+    (define-key keymap "u" 'nav-go-up-one-dir)
+    (define-key keymap "[" 'nav-rotate-windows-ccw)
+    (define-key keymap "]" 'nav-rotate-windows-cw)
+    (define-key keymap "!" 'nav-shell-command)
+    (define-key keymap ":" 'nav-turn-off-keys-and-be-writable)
+    (define-key keymap [(control ?x) (control ?f)] 'find-file-other-window)
+    keymap))
+
+
+(defvar nav-mode-map (nav-make-mode-map))
+
 (defvar nav-dir-stack '())
 
 (defconst nav-shell-buffer-name "*nav-shell*"
@@ -104,7 +141,7 @@ This is used if only one window besides the Nav window is visible."
   "Name of the buffer where nav shows directory contents.")
 
 (defconst nav-buffer-name-for-find-results "*nav-find*"
-  "Name of the buffer where nav shows results of its find command (f key).")
+  "Name of the buffer where nav shows results of its find command ('f' key).")
 
 
 (defun nav-join (sep string-list)
@@ -130,29 +167,24 @@ This is used if only one window besides the Nav window is visible."
     (nav-filter-out-boring-filenames paths (cons "/$" nav-boring-file-regexps))))
 
 
-(defun nav-kill-buffer-if-exists (bufname)
-  (condition-case err
-      (kill-buffer bufname)
-    (error nil)))
-
-
 (defun nav-dir-files-or-nil (dirname)
-  "Returns a list of files in a directory, or nil if it is not a
-directory or is not accessible."
+  "Returns a list of files in DIRNAME. 
+If DIRNAME is not a directory or is not accessible, returns nil."
   (condition-case err
       (directory-files dirname)
     (file-error nil)))
 
 
-;; Changes to a different directory and pushes it onto the stack.
 (defun nav-cd (dirname)
+  "Changes to a different directory and pushes it onto the stack."
   (let ((dirname (file-name-as-directory (file-truename dirname))))
     (setq default-directory dirname)
     (nav-show-dir dirname)))
 
 
 (defun nav-open-file (filename)
-  (interactive "sFilename:")
+  "Opens a file or directory from Nav."
+  (interactive "FFilename:")
   (if (file-directory-p filename)
       (nav-push-dir filename)
     (if (file-exists-p filename)
@@ -160,32 +192,32 @@ directory or is not accessible."
 
 
 (defun nav-open-file-under-cursor ()
+  "Finds the file undert the cursor in the window not containing Nav."
   (interactive)
-  (let ((filename (get-cur-line-str)))
+  (let ((filename (nav-get-cur-line-str)))
     (nav-open-file filename)))
 
 
 (defun nav-go-up-one-dir ()
+  "Points Nav to ../."
   (interactive)
   (nav-push-dir ".."))
 
 
 (defun nav-push-dir (dirname)
-  (push (file-truename dirname) nav-dir-stack)
+  (push (file-truename default-directory) nav-dir-stack)
   (nav-cd dirname))
 
 
 (defun nav-pop-dir ()
+  "Goes to the previous directory in Nav's history.
+This works like a web browser's back button."
   (interactive)
-  (let ((dir (if (> (length nav-dir-stack) 1)
-                 (progn
-                   (pop nav-dir-stack)
-                   (car nav-dir-stack))
-               ".")))
+  (let ((dir (or (pop nav-dir-stack) ".")))
     (nav-cd dir)))
 
 
-(defun get-cur-line-str ()
+(defun nav-get-cur-line-str ()
   (buffer-substring-no-properties (point-at-bol)
                                   (point-at-eol)))
 
@@ -206,29 +238,31 @@ directory or is not accessible."
 
 
 (defun nav-replace-buffer-contents (new-contents should-make-filenames-clickable)
-  (let ((saved-line-number (nav-line-number-at-pos (point))))
-    (setq buffer-read-only nil)
+  (let ((saved-line-number (nav-line-number-at-pos (point)))
+        ;; Setting inhibit-read-only to t here lets us edit the buffer
+        ;; in this let-block.
+        (inhibit-read-only t))
     (erase-buffer)
     (insert new-contents)
     (font-lock-fontify-buffer)
     (if should-make-filenames-clickable
         (nav-make-filenames-clickable))
-    (setq buffer-read-only t)
     (goto-line saved-line-number)))
 
 
 (defun nav-make-filenames-clickable ()
   (condition-case err
-      (dotimes (i (count-lines 1 (point-max)))
-        (let ((line-num (+ i 1)))
-          (goto-line line-num)
+      (save-excursion
+        (goto-line 1)
+        (dotimes (i (count-lines 1 (point-max)))
           (let ((start (line-beginning-position))
                 (end (line-end-position)))
             (make-button start end
                          'action (lambda (button)
                                    (nav-open-file (button-label button)))
                          'follow-link t
-                         'help-echo ""))))
+                         'help-echo ""))
+          (forward-line 1)))
     (error 
      ;; This can happen for versions of emacs that don't have
      ;; make-button defined.
@@ -278,22 +312,27 @@ and delete files, etc."
 
 
 (defun nav-open-file-other-window (k)
-  (let ((filename (get-cur-line-str))
+  (let ((filename (nav-get-cur-line-str))
         (dirname (nav-get-working-dir)))
     (other-window k)
     (find-file (concat dirname "/" filename))))
 
 
 (defun nav-open-file-other-window-1 ()
+  "Opens the file under the cursor in the first other window.
+This is equivalent to just pressing the [enter] key. 
+See nav-open-file-other-window-2."
   (interactive)
   (nav-open-file-other-window 1))
 
 
 (defun nav-open-file-other-window-2 ()
+  "Opens the file under the cursor in the second other window.
+If there is no second other window, Nav will create one."
   (interactive)
   (when (= 2 (length (window-list)))
     (other-window 1)
-    (if (eql nav-split-window-direction 'horizontal)
+    (if (eq nav-split-window-direction 'horizontal)
         (split-window-horizontally)
       (split-window-vertically))
     (select-window (nav-get-window nav-buffer-name)))
@@ -309,14 +348,15 @@ and delete files, etc."
     nav-win))
 
 
-(defun nav-window-width ()
+(defun nav-outer-width ()
   (let* ((edges (window-edges (nav-get-window nav-buffer-name)))
          (left (nth 0 edges))
          (right (nth 2 edges)))
-    (- right left 1)))
+    (- right left)))
 
 
 (defun nav-refresh ()
+  "Resizes the Nav window to its original size and updates its contents."
   (interactive)
   (nav-set-window-width nav-width)
   (nav-show-dir "."))
@@ -340,7 +380,7 @@ and delete files, etc."
     (when window
       (when nav-resize-frame-p
         (set-frame-width (selected-frame) 
-                         (- (frame-width) (nav-window-width))))
+                         (- (frame-width) (nav-outer-width))))
       (delete-window window)))
   (kill-buffer nav-buffer-name))
 
@@ -360,19 +400,21 @@ as f6 to this function."
     (other-window 1)
     (save-current-buffer
       (find-file temp-filename)
-      (insert (nav-join "\n" file-paths))
+      (insert (nav-join "\0" file-paths))
       (save-buffer))
     (select-window (nav-get-window nav-buffer-name))
-    (format "cat %s | xargs grep -inH '%s'" temp-filename pattern)))
+    (format "cat %s | xargs -0 grep -inH '%s'" temp-filename pattern)))
 
 
 (defun nav-recursive-grep (pattern)
+  "Greps for a regular expression in '.' and all subdirectories."
   (interactive "sPattern to recursively grep for: ")
   (grep (nav-make-recursive-grep-command pattern))
   (other-window 1))
 
 
 (defun nav-jump-to-dir (dirname)
+  "Shows a specified directory in Nav."
   (interactive "fDirectory: ")
   (nav-push-dir dirname))
 
@@ -389,8 +431,9 @@ as f6 to this function."
 
 
 (defun nav-delete-file-or-dir ()
+  "Deletes a file or directory."
   (interactive)
-  (let ((filename (get-cur-line-str)))
+  (let ((filename (nav-get-cur-line-str)))
     (if (file-directory-p filename)
         (if (yes-or-no-p (format "Really delete directory %s ?" filename))
             (progn
@@ -403,16 +446,18 @@ as f6 to this function."
 
 
 (defun nav-ok-to-overwrite (target-name)
-  "Returns true if the target doesn't exist, is a directory, or
-if the user says it's ok."
+  "Returns non-nil if it's ok to overwrite or create a file.
+That is, if a file with the given name doesn't exist, is a
+directory, or if the user says it's ok."
   (or (not (file-exists-p target-name))
       (file-directory-p target-name)
       (y-or-n-p (format "Really overwrite %s ? " target-name))))
 
 
 (defun nav-copy-file-or-dir (target-name)
+  "Copies a file or directory."
   (interactive "sCopy to: ")
-  (let ((filename (get-cur-line-str)))
+  (let ((filename (nav-get-cur-line-str)))
     (if (nav-this-is-a-microsoft-os)
 	(copy-file filename target-name)
       (if (nav-ok-to-overwrite target-name)
@@ -423,8 +468,9 @@ if the user says it's ok."
 
 
 (defun nav-move-file (new-name)
+  "Moves a file."
   (interactive "sNew name or directory: ")
-  (let ((old-name (get-cur-line-str)))
+  (let ((old-name (nav-get-cur-line-str)))
     (if (nav-this-is-a-microsoft-os)
 	(rename-file old-name new-name)
       (if (nav-ok-to-overwrite new-name)
@@ -447,6 +493,7 @@ if the user says it's ok."
 
 
 (defun nav-find-files (pattern)
+  "Finds files whose names match a regular expression, in '.' and all subdirs."
   (interactive "sPattern: ")
   (let* ((filenames (nav-get-non-boring-filenames-recursively "."))
          (names-matching-pattern
@@ -471,6 +518,7 @@ if the user says it's ok."
 
 
 (defun nav-make-new-directory (name)
+  "Creates a new directory."
   (interactive "sMake directory: ")
   (make-directory name)
   (nav-refresh))
@@ -479,7 +527,7 @@ if the user says it's ok."
 (defun nav-shell ()
   "Starts up a shell on the current nav directory."
   (interactive)
-  (nav-kill-buffer-if-exists nav-shell-buffer-name)
+  (ignore-errors (kill-buffer nav-shell-buffer-name)) 
   (shell nav-shell-buffer-name))
 
 
@@ -519,8 +567,9 @@ if the user says it's ok."
 
 
 (defun nav-rotate-windows (next-i)
-  "Cyclically permutes the windows other than the nav window, either clockwise
-or counter-clockwise depending on the passed-in function next-i."
+  "Cyclically permutes the windows other than the nav window.
+The permutation is either clockwise or counter-clockwise
+depending on the passed-in function next-i."
   (let* ((win-list (nav-get-other-windows))
          (win-vec (apply 'vector win-list))
          (buf-list (mapcar 'window-buffer win-list))
@@ -536,23 +585,19 @@ or counter-clockwise depending on the passed-in function next-i."
   (let* ((dir-path (file-name-as-directory dir-path))
          (paths (list dir-path)))
     (dolist (file-name (directory-files dir-path))
-      (if (not (or (string= "." file-name)
-                   (string= ".." file-name)))
-          (progn
+      (when (not (or (string= "." file-name)
+                     (string= ".." file-name)))
             (let ((file-path (format "%s%s" dir-path file-name)))
-              (if (file-directory-p file-path)
+              (if (and (file-directory-p file-path)
+                       (not (file-symlink-p file-path)))
                   (let ((more-paths (nav-get-paths (format "%s/" file-path))))
                     (setq paths (append (reverse more-paths) paths)))
-                (push file-path paths))))))
+                (push file-path paths)))))
     (reverse paths)))
 
 
-(defun nav-set-up-highlighting ()
-  (turn-on-font-lock)
-  (font-lock-add-keywords 'nav-mode '(("^.*/$" . font-lock-type-face))))
-
-
 (defun nav-shell-command (command)
+  "Runs a shell command and then refreshes the Nav window."
   (interactive "sShell command: ")
   (shell-command command)
   (nav-refresh))
@@ -561,7 +606,7 @@ or counter-clockwise depending on the passed-in function next-i."
 (defun nav-resize-frame ()
   "Widens the frame to fit Nav without shrinking the editing space."
   (set-frame-width (selected-frame) 
-                   (+ (frame-width) (nav-window-width)))
+                   (+ (frame-width) (nav-outer-width)))
   ;; set-frame-width resizes the nav window; set it back
   (nav-set-window-width nav-width))
 
@@ -572,53 +617,27 @@ or counter-clockwise depending on the passed-in function next-i."
  It's more IDEish than dired, not as heavy weight as speedbar."
   (nav-set-window-width nav-width)
   (setq mode-name "Navigation")
-  (nav-set-key-bindings nav-mode-map)
   (use-local-map nav-mode-map)
-  (nav-set-up-highlighting)
+  (turn-on-font-lock)
+  (font-lock-add-keywords 'nav-mode '(("^.*/$" . font-lock-type-face)))
   (nav-refresh))  
 
 
-(defun nav-set-key-bindings (bindings)
-  (define-key bindings "\n" 'nav-open-file-under-cursor) ; enter key
-  (define-key bindings "\r" 'nav-open-file-under-cursor) ; return key for Macs
-  (define-key bindings "1" 'nav-open-file-other-window-1)
-  (define-key bindings "2" 'nav-open-file-other-window-2)
-  (define-key bindings "c" 'nav-copy-file-or-dir)
-  (define-key bindings "d" 'nav-delete-file-or-dir)
-  (define-key bindings "e" 'nav-invoke-dired)
-  (define-key bindings "f" 'nav-find-files)
-  (define-key bindings "g" 'nav-recursive-grep)
-  (define-key bindings "j" 'nav-jump-to-dir)
-  (define-key bindings "m" 'nav-move-file)
-  (define-key bindings "n" 'nav-make-new-directory)
-  (define-key bindings "p" 'nav-pop-dir)
-  (define-key bindings "q" 'nav-quit)
-  (define-key bindings "r" 'nav-refresh)
-  (define-key bindings "s" 'nav-shell)
-  (define-key bindings "t" 'nav-term)
-  (define-key bindings "u" 'nav-go-up-one-dir)
-  (define-key bindings "[" 'nav-rotate-windows-ccw)
-  (define-key bindings "]" 'nav-rotate-windows-cw)
-  (define-key bindings "!" 'nav-shell-command)
-  (define-key bindings ":" 'nav-turn-off-keys-and-be-writable)
-  (define-key bindings "\C-x\C-f" 'find-file-other-window))
-
-
+;; For ELPA, the Emacs Lisp Package Archive
+;;;###autoload
 (defun nav ()
   "Run nav-mode in a narrow window on the left side."
   (interactive)
   (delete-other-windows)
   (split-window-horizontally)
   (other-window 1)
-  (nav-kill-buffer-if-exists nav-buffer-name)
+  (ignore-errors (kill-buffer nav-buffer-name))
   (pop-to-buffer nav-buffer-name nil)
   (set-window-dedicated-p (selected-window) t)
   (nav-mode)
   (when nav-resize-frame-p
     (nav-resize-frame)))
 
-
-(provide 'nav)
 
 (provide 'nav)
 
