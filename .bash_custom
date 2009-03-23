@@ -94,7 +94,7 @@ function extract() {
            *.rar )                ee "unrar x" "$x"   ;;
            *.gz )                ee "gunzip" "$x"    ;;
            *.tar )                ee "tar xvf" "$x"   ;;
-           *.zip )                ee "unzip" "$x"     ;;
+           *.zip | *.jar )                ee "unzip" "$x"     ;;
            *.Z )                ee "uncompress" "$x" ;;
            *.7z )                ee "7z x" "$x"      ;;
        esac
