@@ -62,10 +62,10 @@ mkcd() {
 
 # cd directly to a dir and list contents
 cdls() {
-  if [ "$1" ]
-  then builtin cd "$1" && ll
-  else builtin cd && ll
-  fi
+    if [ "$1" ]
+    then builtin cd "$1" && ll
+    else builtin cd && ll
+    fi
 }
 
 if [[ -f /etc/gentoo-release ]] ; then
@@ -81,24 +81,24 @@ svndiff () { svn diff "${@}" | colordiff | less -R; }
 
 # http://www.shell-fu.org/lister.php?id=375
 function extract() {
-   ee() { # echo and execute
-       echo "$@"
-       $1 "$2"
-   }
-   for x in "$@"; do
-       [[ -f $x ]] || continue
-       case "$x" in
-           *.tar.bz2 | *.tgz )    ee "tar xvjf" "$x"    ;;
-           *.tar.gz | *.tbz2 ) ee "tar xvzf" "$x"    ;;
-           *.bz2 )                ee "bunzip2" "$x"    ;;
-           *.rar )                ee "unrar x" "$x"   ;;
-           *.gz )                ee "gunzip" "$x"    ;;
-           *.tar )                ee "tar xvf" "$x"   ;;
-           *.zip | *.jar )                ee "unzip" "$x"     ;;
-           *.Z )                ee "uncompress" "$x" ;;
-           *.7z )                ee "7z x" "$x"      ;;
-       esac
-   done
+    ee() { # echo and execute
+        echo "$@"
+        $1 "$2"
+    }
+    for x in "$@"; do
+        [[ -f $x ]] || continue
+        case "$x" in
+            *.tar.bz2 | *.tgz )    ee "tar xvjf" "$x"    ;;
+            *.tar.gz | *.tbz2 ) ee "tar xvzf" "$x"    ;;
+            *.bz2 )                ee "bunzip2" "$x"    ;;
+            *.rar )                ee "unrar x" "$x"   ;;
+            *.gz )                ee "gunzip" "$x"    ;;
+            *.tar )                ee "tar xvf" "$x"   ;;
+            *.zip | *.jar )                ee "unzip" "$x"     ;;
+            *.Z )                ee "uncompress" "$x" ;;
+            *.7z )                ee "7z x" "$x"      ;;
+        esac
+    done
 }
 
 
@@ -127,17 +127,17 @@ source ~/.git-completion.sh
 
 # don't know if use_color is defined outside of gentoo land
 if ${use_color} ; then
-        if [[ ${EUID} == 0 ]] ; then
-                PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W$(__git_ps1 " (%s)") \$\[\033[00m\] '
-        else
-                PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w$(__git_ps1 " (%s)") \$\[\033[00m\] '
-        fi
+    if [[ ${EUID} == 0 ]] ; then
+        PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W$(__git_ps1 " (%s)") \$\[\033[00m\] '
+    else
+        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w$(__git_ps1 " (%s)") \$\[\033[00m\] '
+    fi
 else
-        if [[ ${EUID} == 0 ]] ; then
+    if [[ ${EUID} == 0 ]] ; then
                 # show root@ when we don't have colors
-                PS1='\u@\h \W \$ '
-        else
-                PS1='\u@\h \w \$ '
-        fi
+        PS1='\u@\h \W \$ '
+    else
+        PS1='\u@\h \w \$ '
+    fi
 fi
 
