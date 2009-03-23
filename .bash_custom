@@ -52,6 +52,8 @@ alias grep='grep --color --exclude-dir=".svn"'
 alias fgrep='fgrep --color --exclude-dir=".svn"'
 alias egrep='egrep --color --exclude-dir=".svn"'
 alias epoch='date +%s'
+# from: http://www.shell-fu.org/lister.php?id=54
+alias webshare='python -m SimpleHTTPServer'
 
 # made up commands
 mkcd() {
