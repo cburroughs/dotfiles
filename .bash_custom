@@ -102,6 +102,18 @@ function extract() {
 }
 
 
+# .. - Does a 'cd ..'
+# .. 3 - Does a 'cd ../../..'
+# http://www.shell-fu.org/lister.php?id=550
+function .. (){
+    local arg=${1:-1};
+    while [ $arg -gt 0 ]; do
+        cd .. >&/dev/null;
+        arg=$(($arg - 1));
+    done
+}
+
+
 # other
 bind "set completion-ignore-case on" 
 
