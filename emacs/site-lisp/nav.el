@@ -2,8 +2,8 @@
 ;;
 ;; Copyright 2009 Google Inc. All Rights Reserved.
 ;;
-;; Author: issactrotts@google.com
-;; Version 31
+;; Author: issactrotts@google.com (Issac Trotts)
+;; Version 34
 ;;
 
 ;;; License:
@@ -108,7 +108,7 @@ This is used if only one window besides the Nav window is visible."
     (define-key keymap "1" 'nav-open-file-other-window-1)
     (define-key keymap "2" 'nav-open-file-other-window-2)
     (define-key keymap "c" 'nav-copy-file-or-dir)
-    (define-key keymap "d" 'nav-delete-file-or-dir)
+    (define-key keymap "d" 'nav-delete-file-or-dir-on-this-line)
     (define-key keymap "e" 'nav-invoke-dired)
     (define-key keymap "f" 'nav-find-files)
     (define-key keymap "g" 'nav-recursive-grep)
@@ -129,9 +129,15 @@ This is used if only one window besides the Nav window is visible."
     keymap))
 
 
-(defvar nav-mode-map (nav-make-mode-map))
+;; I use setq instead of defvar here so we can just use M-x
+;; eval-buffer instead of restarting emacs or other junk after
+;; changing the nav mode map.
+(setq nav-mode-map (nav-make-mode-map))
 
 (defvar nav-dir-stack '())
+
+(defvar nav-map-dir-to-line-number (make-hash-table :test 'equal)
+  "Hash table from dir paths to most recent cursor pos in them.")
 
 (defconst nav-shell-buffer-name "*nav-shell*"
   "Name of the buffer used for the command line shell spawned by
@@ -175,11 +181,24 @@ If DIRNAME is not a directory or is not accessible, returns nil."
     (file-error nil)))
 
 
+(defun nav-get-line-for-cur-dir ()
+  (gethash (nav-get-working-dir) nav-map-dir-to-line-number))
+
+
 (defun nav-cd (dirname)
   "Changes to a different directory and pushes it onto the stack."
   (let ((dirname (file-name-as-directory (file-truename dirname))))
+    ;; Update line number hash table.
+    (let ((line-num (nav-line-number-at-pos (point))))
+      (puthash (nav-get-working-dir) line-num nav-map-dir-to-line-number))
+
     (setq default-directory dirname)
-    (nav-show-dir dirname)))
+    (nav-show-dir dirname)
+    
+    ;; Remember what line we were on last time we visited this directory.
+    (let ((line-num (nav-get-line-for-cur-dir)))
+      (when line-num
+        (goto-line line-num)))))
 
 
 (defun nav-open-file (filename)
@@ -391,13 +410,16 @@ If there is no second other window, Nav will create one."
   (kill-buffer nav-buffer-name))
 
 
+(defun nav-is-open ()
+  "Returns non-nil if Nav is open."
+  (nav-get-window nav-buffer-name))
+
+
 (defun nav-toggle ()
-  "Toggles whether Nav is active. It is useful to bind a key such
-as f6 to this function."
+  "Toggles whether Nav is active.
+Synonymous with the (nav) function."
   (interactive)
-  (if (nav-get-window nav-buffer-name)
-      (nav-quit)
-    (nav)))
+  (nav))
 
 
 (defun nav-make-recursive-grep-command (pattern)
@@ -436,17 +458,24 @@ as f6 to this function."
     (format "rm -rf '%s'" dirname)))
 
 
-(defun nav-delete-file-or-dir ()
+(defun nav-delete-file-or-dir (filename)
+  (if (and (file-directory-p filename)
+           (not (file-symlink-p (directory-file-name filename))))
+      (when (yes-or-no-p (format "Really delete directory %s ?" filename))
+        (shell-command (nav-make-remove-dir-command filename))
+        (nav-refresh))
+      ;; We first use directory-file-name to strip the trailing slash
+      ;; if it's a symlink to a directory.
+      (let ((filename (directory-file-name filename)))
+        (when (y-or-n-p (format "Really delete file %s ? " filename))
+          (delete-file filename)
+          (nav-refresh)))))
+
+
+(defun nav-delete-file-or-dir-on-this-line ()
   "Deletes a file or directory."
   (interactive)
-  (let ((filename (nav-get-cur-line-str)))
-    (if (file-directory-p filename)
-        (when (yes-or-no-p (format "Really delete directory %s ?" filename))
-	      (shell-command (nav-make-remove-dir-command filename))
-              (nav-refresh))
-      (when (y-or-n-p (format "Really delete file %s ? " filename))
-            (delete-file filename)
-            (nav-refresh)))))
+  (nav-delete-file-or-dir (nav-get-cur-line-str)))
 
 
 (defun nav-ok-to-overwrite (target-name)
@@ -637,15 +666,17 @@ depending on the passed-in function next-i."
 (defun nav ()
   "Run nav-mode in a narrow window on the left side."
   (interactive)
-  (delete-other-windows)
-  (split-window-horizontally)
-  (other-window 1)
-  (ignore-errors (kill-buffer nav-buffer-name))
-  (pop-to-buffer nav-buffer-name nil)
-  (set-window-dedicated-p (selected-window) t)
-  (nav-mode)
-  (when nav-resize-frame-p
-    (nav-resize-frame)))
+  (if (nav-is-open)
+      (nav-quit)
+    (delete-other-windows)
+    (split-window-horizontally)
+    (other-window 1)
+    (ignore-errors (kill-buffer nav-buffer-name))
+    (pop-to-buffer nav-buffer-name nil)
+    (set-window-dedicated-p (selected-window) t)
+    (nav-mode)
+    (when nav-resize-frame-p
+      (nav-resize-frame))))
 
 
 (provide 'nav)
