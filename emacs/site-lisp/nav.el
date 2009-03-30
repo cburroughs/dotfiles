@@ -3,7 +3,7 @@
 ;; Copyright 2009 Google Inc. All Rights Reserved.
 ;;
 ;; Author: issactrotts@google.com (Issac Trotts)
-;; Version 34
+;; Version: 40
 ;;
 
 ;;; License:
@@ -58,8 +58,6 @@
 ;;   !: Run shell command.
 ;;   [: Rotate non-nav windows counter clockwise.
 ;;   ]: Rotate non-nav windows clockwise.
-;;
-;;   :: Go into debug mode (should only be needed if you are hacking nav.el).
 ;;
 
 ;;; History:
@@ -329,8 +327,7 @@ This works like a web browser's back button."
 
 
 (defun nav-invoke-dired ()
-  "Invokes dired on the current directory so the user can rename
-and delete files, etc."
+  "Invokes dired on the current directory."
   (interactive)
   (other-window 1)
   (dired (nav-get-working-dir)))
@@ -345,6 +342,7 @@ and delete files, etc."
 
 (defun nav-open-file-other-window-1 ()
   "Opens the file under the cursor in the first other window.
+
 This is equivalent to just pressing the [enter] key. 
 See nav-open-file-other-window-2."
   (interactive)
@@ -353,6 +351,7 @@ See nav-open-file-other-window-2."
 
 (defun nav-open-file-other-window-2 ()
   "Opens the file under the cursor in the second other window.
+
 If there is no second other window, Nav will create one."
   (interactive)
   (when (= 2 (length (window-list)))
@@ -381,25 +380,37 @@ If there is no second other window, Nav will create one."
 
 
 (defun nav-refresh ()
-  "Resizes the Nav window to its original size and updates its contents."
+  "Resizes Nav window to original size, updates its contents."
   (interactive)
   (nav-set-window-width nav-width)
   (nav-show-dir "."))
 
 
-(defun nav-turn-off-keys-and-be-writable ()
+(defun nav-equalize-window-widths ()
+  "Equalizes the widths of top-level windows if top split is horizontal."
   (interactive)
-  (use-local-map (make-sparse-keymap))
-  (setq buffer-read-only nil))
-
-
-(defun nav-turn-on-keys-and-be-read-only ()
-  (interactive)
-  (use-local-map (nav-make-key-bindings))
-  (setq buffer-read-only t))
+  (let ((root (car (window-tree))))
+    (when (listp root)
+      ;; The root window is split.
+      (let ((split-is-vertical (car root)))
+        (when (not split-is-vertical)
+          (let* ((edges (cadr root))
+                 (left (nth 0 edges))
+                 (right (nth 2 edges))
+                 (total-width (+ (- right left) 1))
+                 (top-windows (cddr root))
+                 (num-windows (length top-windows))
+                 (avg-width (/ total-width num-windows))
+                 (saved-window (selected-window)))
+            (dolist (window top-windows)
+              (when (window-live-p window)
+                (select-window window)
+                (nav-set-window-width avg-width)))
+            (select-window saved-window)))))))
 
 
 (defun nav-quit ()
+  "Exits Nav."
   (interactive)
   (let ((window	(get-buffer-window nav-buffer-name)))
     (when window
@@ -407,7 +418,8 @@ If there is no second other window, Nav will create one."
         (set-frame-width (selected-frame) 
                          (- (frame-width) (nav-outer-width))))
       (delete-window window)))
-  (kill-buffer nav-buffer-name))
+  (kill-buffer nav-buffer-name)
+  (nav-equalize-window-widths))
 
 
 (defun nav-is-open ()
@@ -417,6 +429,7 @@ If there is no second other window, Nav will create one."
 
 (defun nav-toggle ()
   "Toggles whether Nav is active.
+
 Synonymous with the (nav) function."
   (interactive)
   (nav))
@@ -429,7 +442,8 @@ Synonymous with the (nav) function."
     (save-current-buffer
       (find-file temp-filename)
       (insert (nav-join "\0" file-paths))
-      (save-buffer))
+      (save-buffer)
+      (kill-buffer (current-buffer)))
     (select-window (nav-get-window nav-buffer-name))
     (format "cat %s | xargs -0 grep -inH '%s'" temp-filename pattern)))
 
@@ -480,6 +494,7 @@ Synonymous with the (nav) function."
 
 (defun nav-ok-to-overwrite (target-name)
   "Returns non-nil if it's ok to overwrite or create a file.
+
 That is, if a file with the given name doesn't exist, is a
 directory, or if the user says it's ok."
   (or (not (file-exists-p target-name))
@@ -502,12 +517,9 @@ directory, or if the user says it's ok."
 
 (defun nav-move-file (new-name)
   "Moves a file."
-  (interactive "sNew name or directory: ")
+  (interactive "FNew name or directory: ")
   (let ((old-name (nav-get-cur-line-str)))
-    (if (nav-this-is-a-microsoft-os)
-	(rename-file old-name new-name)
-      (if (nav-ok-to-overwrite new-name)
-	  (shell-command (format "mv %s %s" old-name new-name)))))
+    (rename-file old-name new-name))
   (nav-refresh))
 
 
@@ -569,8 +581,9 @@ directory, or if the user says it's ok."
 
 
 (defun nav-term ()
-  "Starts up a term on the current nav directory, unless there is already a
-*terminal* buffer in which case it is reused."
+  "Starts up a term on the current nav directory.
+
+If there is already a *terminal* buffer then it is reused."
   (interactive)
   (let ((nav-temp-file "*nav-temp*"))
     (find-file-other-window nav-temp-file)
@@ -605,6 +618,7 @@ directory, or if the user says it's ok."
 
 (defun nav-rotate-windows (next-i)
   "Cyclically permutes the windows other than the nav window.
+
 The permutation is either clockwise or counter-clockwise
 depending on the passed-in function next-i."
   (let* ((win-list (nav-get-other-windows))
