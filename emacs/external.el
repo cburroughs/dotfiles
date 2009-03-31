@@ -6,3 +6,5 @@
 (autoload 'tidy-parse-config-file "tidy" "Parse the `tidy-config-file'" t)
 (autoload 'tidy-save-settings "tidy" "Save settings to `tidy-config-file'" t)
 
+;; use mzscheme, obviously it must be installed
+(setq scheme-program-name "mzscheme")
