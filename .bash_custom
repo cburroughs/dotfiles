@@ -29,9 +29,11 @@ if  [ `which emacs-snapshot` ]
 then
     export SVN_EDITOR='emacs-snapshot -nw'
     export GIT_EDITOR='emacs-snapshot -nw'
+    export EDITOR='emacs-snapshot -nw'
 else
     export SVN_EDITOR='emacs -nw'
     export GIT_EDITOR='emacs -nw'
+    export EDITOR='emacs -nw'
 fi
 
 export HISTSIZE=10000
