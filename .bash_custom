@@ -8,6 +8,7 @@
 # TODO: git custom
 # TODO: max promt size /home/foo/.../bar/bax
 # TODO: look into cool PS1 alternatives
+# TODO: eix colors https://projects.gentooexperimental.org/eix/wiki/FAQ
 
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
