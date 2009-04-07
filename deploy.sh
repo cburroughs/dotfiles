@@ -10,6 +10,8 @@ cp .inputrc ~
 cp .bash_custom ~
 cp .git-completion.sh ~
 
+cp ipythonrc-csb ~/.ipython/
+
 if   `grep -q bash_custom  ~/.bashrc`
 then
     `true`
