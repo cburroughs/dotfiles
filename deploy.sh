@@ -11,6 +11,7 @@ cp .bash_custom ~
 cp .git-completion.sh ~
 
 cp ipythonrc-csb ~/.ipython/
+cp ipy-virtualenv.py ~/.ipython/
 
 if   `grep -q bash_custom  ~/.bashrc`
 then

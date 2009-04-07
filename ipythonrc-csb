@@ -13,3 +13,6 @@ alias ls ls --color=auto
 # readline pref
 readline_parse_and_bind "\C-w": backward-kill-word
 readline_parse_and_bind "Meta-Rubout": unix-word-rubout
+
+# play nice with virtualenv
+execfile ~/.ipython/ipy-virtualenv.py
