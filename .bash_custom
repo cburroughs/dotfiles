@@ -117,6 +117,9 @@ function .. (){
     done
 }
 
+function addtopythonpath() {
+    export PYTHONPATH=$PYTHONPATH:`pwd`
+}
 
 # other
 bind "set completion-ignore-case on" 
