@@ -3,7 +3,7 @@
 ;; Copyright 2009 Google Inc. All Rights Reserved.
 ;;
 ;; Author: issactrotts@google.com (Issac Trotts)
-;; Version: 40
+;; Version: 42
 ;;
 
 ;;; License:
@@ -292,15 +292,21 @@ This works like a web browser's back button."
      'failed)))
 
 
+(defun nav-string< (s1 s2)
+  "Tells whether S1 comes lexically before S2, ignoring case."
+  (string< (downcase s1) (downcase s2)))
+
+
 (defun nav-show-dir (dir)
-  (let ((new-contents '("../")))
+  (let ((new-contents '()))
     (dolist (filename (nav-non-boring-directory-files dir))
       (let ((line (concat "\n" filename
                           (if (file-directory-p filename)
                               "/"
                             ""))))
         (push line new-contents)))
-    (let ((new-contents (nav-join "" (reverse new-contents))))
+    (let* ((new-contents (sort new-contents 'nav-string<))
+           (new-contents (nav-join "" (cons "../" new-contents))))
       (nav-replace-buffer-contents new-contents t))
     (setq mode-line-format (concat "nav: " (nav-dir-suffix (file-truename dir)) "/"))
     (force-mode-line-update)))
@@ -544,8 +550,10 @@ directory, or if the user says it's ok."
          (names-matching-pattern
           (remove-if-not (lambda (name) (string-match pattern name)) filenames))
          (names-matching-pattern
-          (nav-append-slashes-to-dir-names names-matching-pattern)))
+          (nav-append-slashes-to-dir-names names-matching-pattern))
+	 (saved-directory default-directory))
     (pop-to-buffer nav-buffer-name-for-find-results nil)
+    (setq default-directory saved-directory)
     (if names-matching-pattern
         (nav-show-find-results names-matching-pattern)
         (nav-replace-buffer-contents
