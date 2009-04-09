@@ -159,3 +159,23 @@
     (insert "<" tag-name ">")
     (goto-char (+ end 2 (length tag-name)))
     (insert "</" tag-name ">")))
+
+; http://bc.tech.coop/blog/docs/clojure-emacs.el
+(defun check-region-parens ()
+  "Check if parentheses in the region are balanced. Signals a
+scan-error if not."
+  (interactive)
+  (save-restriction
+    (save-excursion
+      (let ((deactivate-mark nil))
+        (condition-case c
+            (progn
+              (narrow-to-region (region-beginning) (region-end))
+              (goto-char (point-min))
+              (while (/= 0 (- (point)
+                              (forward-list))))
+              t)
+          (scan-error (signal 'scan-error 
+                              '("Region parentheses not balanced"))))))))
+
+
