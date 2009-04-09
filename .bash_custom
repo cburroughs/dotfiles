@@ -117,9 +117,16 @@ function .. (){
     done
 }
 
-function addtopythonpath() {
+function pythonpath-add() {
     export PYTHONPATH=$PYTHONPATH:`pwd`
 }
+
+
+# imperfect
+function pythonpath-reset() {
+    export PYTHONPATH=:~/emacs/site-lisp
+}
+
 
 # other
 bind "set completion-ignore-case on" 
