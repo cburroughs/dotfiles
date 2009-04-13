@@ -128,6 +128,12 @@ function pythonpath-reset() {
 }
 
 
+#bah, stupid lack of readline support and ubunutu lack of masking
+if ! `which jython`; then
+    alias jython='rlwrap /home/chris/local_install/jython2.5b3/jython'
+fi
+
+
 # other
 bind "set completion-ignore-case on" 
 
