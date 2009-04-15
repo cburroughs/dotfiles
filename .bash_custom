@@ -42,6 +42,7 @@ export HISTTIMEFORMAT='%Y-%m-%d_%H:%M:%S '
 export PAGER='less -R'
 #do we really want these in site-lisp?
 export PYTHONPATH=$PYTHONPATH:~/emacs/site-lisp
+export PYTHONPATH_BACK=$PYTHONPATH
 
 # aliases
 alias ll='ls -lh'
@@ -124,7 +125,7 @@ function pythonpath-add() {
 
 # imperfect
 function pythonpath-reset() {
-    export PYTHONPATH=:~/emacs/site-lisp
+    export PYTHONPATH=$PYTHONPATH_BACK
 }
 
 
