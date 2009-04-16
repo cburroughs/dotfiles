@@ -359,3 +359,9 @@
 (require 'far-search)
 
 (require 'nav)
+
+
+;; arc stuff from http://github.com/nex3/dotfiles/
+(add-to-list 'auto-mode-alist '("\\.arc$" . arc))
+; TODO: inferior arc
+
