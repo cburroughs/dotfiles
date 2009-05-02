@@ -1,31 +1,28 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
-; TODO: why does color-theme not fully load?
+; TODO: why does color-theme not fully load? (appear to loose colors on xwindow resize)
 ; TODO: figure out java-annotation support
-; TODO: rpol xml minor mode
 ; TODO: A happy round of commenting.
 ; TODO: Reduce the use of require (effective dot.emacs)
 ; TODO: use Alt-n to switch 'tabs'
 ; TODO/GOAL: less than 1s load time
 ; TODO: Make jdee work
-; TODO: evaluate ecb
-; TODO: dictionary integration (thesaurus would be super awesome too).
+; TODO: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
 ; TODO: func to resize to max screen width (across monitors)
 ; TODO: Do I like vi dot mode?
 ; TODO: What does pc-select etc mode not work in ubuntu land?
-;; TODO: more insert date options
-;; TODO: investigate pymacs and ropemacs
+; TODO: more insert date options
+; TODO: investigate ropemacs
 ; TODO: look into running emacsclient for terminal stuff
 ; TODO: open in firefox (new tab?)
 ; TODO: color-theme for org mode when opened directly
 ; TODO: add pycomplete to hippie-expand as well
 ; TODO: better way to set PYTHONPATH so gui launcher figures it out
 ; TODO: what to do about env not being sourced by gui launcher
-; TODO: can tabbars be made to horizontally scroll
+; TODO: can tabbars be made to horizontally scroll?
 ; TODO: spell check not comments (ie for svn commit messages)
-; TODO: document things I expect the package manager to install
-; todo: 'customize' ecb
+; TODO: document things I expect the package manager to install (partially done)
 ; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ; todo: turn off hl-p in vc annotate mode
 ; todo: get tags of some sort working, they seem awesome
@@ -40,8 +37,9 @@
 ; todo: integrate ecb with smart-split
 ; todo: http://www.neilvandyke.org/quack/
 
-; My .emacs "file".  All this stuff that has acumilated and borrowed
-; is probably under the GPL or public domian.
+; My .emacs "file".  All this stuff that has been accumulated and
+; borrowed is probably under the GPL or public domain.  But to be
+; sure, check the notice in each file.
 
 ; Goal: Runs under emacs-23 on gentoo and ubuntu
 ; TODO: There is no good reason for it not to work in emacs 22
