@@ -29,7 +29,7 @@
 ; TODO: What if the system does not have this font?  
 (if (string-match "23\." (emacs-version))
     (if (my-gentoo?)
-        (set-default-font "DejaVu Sans Mono-10")
+        (set-frame-font "DejaVu Sans Mono-10")
       (set-frame-font "Bitstream Vera Sans Mono-10")))
 
 
