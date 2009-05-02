@@ -25,7 +25,7 @@ bind '\C-w:backward-kill-word'
 bind 'Meta-Rubout: unix-word-rubout'
 
 # def variables
-if  [ `which emacs-snapshot` ]
+if  [ `which emacs-snapshot 2> /dev/null` ]
 then
     export SVN_EDITOR='emacs-snapshot -nw'
     export GIT_EDITOR='emacs-snapshot -nw'
@@ -131,7 +131,7 @@ function pythonpath-reset() {
 
 
 #bah, stupid lack of readline support and ubunutu lack of masking
-if ! `which jython`; then
+if ! `which jython 2> /dev/null`; then
     alias jython='rlwrap /home/chris/local_install/jython2.5b3/jython'
 fi
 
