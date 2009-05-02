@@ -53,6 +53,7 @@ alias ipy='ipython --profile csb'
 alias e='emacs'
 alias es='emacs-snapshot'
 alias nano='nano -w'
+# note that exclude-dir is only available in versions >= 2.5.3 
 alias grep='grep --color --exclude-dir=".svn"'
 alias fgrep='fgrep --color --exclude-dir=".svn"'
 alias egrep='egrep --color --exclude-dir=".svn"'
