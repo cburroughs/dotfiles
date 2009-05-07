@@ -366,3 +366,11 @@
 (add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
 ; TODO: inferior arc
 
+
+;; whitespace
+(require 'show-wspace)
+(defun show-white-spacee ()
+    (iteractive)
+    (show-ws-toggle-show-hard-spaces)
+    (show-ws-toggle-show-tabs)
+    (show-ws-toggle-show-trailing-whitespace))
