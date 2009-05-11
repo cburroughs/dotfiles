@@ -1,2 +1,3 @@
 # Sharing bytecompiled files woudld be dumb
 *.elc
+*.pyc
