@@ -36,6 +36,7 @@
 ; todo: next time I am hacking lisp code I really should look at paredit
 ; todo: integrate ecb with smart-split
 ; todo: http://www.neilvandyke.org/quack/
+; todo: a simple trac wiki highlighting mode
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
