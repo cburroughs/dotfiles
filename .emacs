@@ -37,6 +37,7 @@
 ; todo: integrate ecb with smart-split
 ; todo: http://www.neilvandyke.org/quack/
 ; todo: a simple trac wiki highlighting mode
+; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
