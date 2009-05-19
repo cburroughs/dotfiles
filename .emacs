@@ -38,6 +38,7 @@
 ; todo: http://www.neilvandyke.org/quack/
 ; todo: a simple trac wiki highlighting mode
 ; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
+; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
