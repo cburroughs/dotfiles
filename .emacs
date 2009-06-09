@@ -89,6 +89,7 @@
 (load-library "misc")
 (load-library "pretty")
 (load-library "modes")
+(load-library "prog-modes")
 (load-library "external")
 
 ;; --------------------------
