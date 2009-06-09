@@ -1,8 +1,7 @@
+;; Chris Burroughs
+;; Modes I use and their custimization.
 
-; Chris Burroughs
-; Modes I use and their custimization.
-
-; allows shift and arrows for selection
+;; allows shift and arrows for selection
 (require 'pc-select)
 (transient-mark-mode t) ; redundant, still does not work in ubuntu
 (delete-selection-mode t) ; delete selected text

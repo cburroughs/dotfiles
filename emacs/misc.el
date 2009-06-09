@@ -4,7 +4,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; copy-paste should work with other X clients
-; duh; only do this when you have x
+;; duh; only do this when you have x
 (when window-system
   (setq x-select-enable-clipboard t)
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
@@ -16,7 +16,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-; prefer hippie-expand over deavrez
+;; prefer hippie-expand over deavrez
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; http://trey-jackson.blogspot.com/2007/12/emacs-tip-5-hippie-expand.html
@@ -30,7 +30,7 @@
                            try-complete-lisp-symbol-partially
                            try-complete-lisp-symbol))
 
-; Try to avoid giving buffers dumb names
+;; Try to avoid giving buffers dumb names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")

@@ -15,7 +15,7 @@
 (setq frame-title-format '(buffer-file-name "%b -- %f" ( "%b" ) ) )
 
 ;app-emacs/color-theme
-; select a color theme and highlight current line if in not in term
+;; select a color theme and highlight current line if in not in term
 (if window-system
     (progn
       (require 'color-theme)
@@ -33,7 +33,7 @@
       (set-frame-font "Bitstream Vera Sans Mono-10")))
 
 
-; Start nice and tall, but should still be 80 char wide
+;; Start nice and tall, but should still be 80 char wide
 (setq initial-frame-alist '((top . 1) (height . 63)))
 
 

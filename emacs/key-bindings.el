@@ -1,7 +1,7 @@
 ;; Chris Burroughs
-; General Custom keybindings
+;; General Custom keybindings
 
-; in case of old emacs versions
+;; in case of old emacs versions
 (global-set-key "\M-g" 'goto-line)
 
 ;; Item 2: Invoke M-x without the Alt key
@@ -15,29 +15,29 @@
 ;; Item 9: Master Emacs's regular expressions
 (defalias 'qrr 'query-replace-regexp)
 
-; Need to force this some times?
+;; Need to force this some times?
 (global-set-key "\C-c\C-c" 'comment-region) 
 
-; cua-like
+;; cua-like
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 
-; heresy; like the keybindings of the beas
+;; heresy; like the keybindings of the beas
 (global-set-key "\M-j" 'previous-line)
 (global-set-key "\M-k" 'next-line)
 (global-set-key "\M-h" 'backward-char)
 (global-set-key "\M-l" 'forward-char)
 
 
-; For when I get confused
+;; For when I get confused
 (global-set-key "\M-p" 'previous-line)
 (global-set-key "\M-n" 'next-line)
 
-; spell checking
+;; spell checking
 (global-set-key [f7] 'ispell-buffer)
 (global-set-key [Shift-f7] 'ispell-comments-and-strings)
 
-; hey the keyboard does say open on that key
+;; hey the keyboard does say open on that key
 (global-set-key [f5] 'browse-url-at-point)
 
 ;; move between buffers with meta --> arrow
