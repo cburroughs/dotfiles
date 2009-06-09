@@ -46,3 +46,4 @@
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
 
+;; from esk

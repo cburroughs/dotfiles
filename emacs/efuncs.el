@@ -179,3 +179,25 @@ scan-error if not."
                               '("Region parentheses not balanced"))))))))
 
 
+
+
+;; from esk
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
+
+
+(defun tabify-buffer ()
+  (interactive)
+  (tabify (point-min) (point-max)))
+
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+
+(defun insert-date ()
+  "Insert a time-stamp according to locale's date and time format."
+  (interactive)
+  (insert (format-time-string "%c" (current-time))))

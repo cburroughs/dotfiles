@@ -15,6 +15,23 @@
           (lambda () (highlight-parentheses-mode 1)))
 
 
+;; from esk : display column number in modeline
+(setq column-number-mode t)
+;; from esk: says what it does
+(set-default 'indicate-empty-lines t)
+
+(setq visible-bell t)
+
+(setq diff-switches "-u")
+
+;; Cosmetics
+
+(eval-after-load 'diff-mode
+  '(progn
+     (set-face-foreground 'diff-added "green4")
+     (set-face-foreground 'diff-removed "red3")))
+
+
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 

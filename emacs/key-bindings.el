@@ -43,3 +43,10 @@
 ;; move between buffers with meta --> arrow
 (require 'windmove)
 (windmove-default-keybindings 'meta)
+
+;; esk: Align your code in a pretty way.
+(global-set-key (kbd "C-x \\") 'align-regexp)
+
+;; Indentation help
+(global-set-key (kbd "C-x ^") 'join-line)
+
