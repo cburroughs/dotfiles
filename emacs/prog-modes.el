@@ -1,11 +1,7 @@
 ;; Programming modes in a separate file
 
 
-;; slime
-(require 'slime)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-(setq inferior-lisp-program "sbcl")
+;;; Javascript
 
 ;; new js2
 (autoload 'js2-mode "js2" nil t)
@@ -93,6 +89,37 @@
                             (local-set-key "\C-cl" 'js-load-file-and-go)))
 
 
+;;; Actionscript
+
+(autoload 'actionscript-mode "actionscript-mode")
+(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
+(add-hook 'actionscript-mode-hook '(lambda () 
+                                     (setq c-basic-offset 4)))
+
+;;; Haxe
+
+(require 'haxe-mode)
+(defconst my-haxe-style
+  '("java" (c-offsets-alist . ((case-label . +)
+                               (arglist-intro . +)
+                               (arglist-close . 0)
+                               (cpp-macro . 0))))
+  "My haXe Programming Style")
+(add-hook 'haxe-mode-hook
+          (function (lambda () (c-add-style "haxe" my-haxe-style t))))
+(autoload 'haxe-mode "haxe-mode")
+(add-to-list 'auto-mode-alist '("\\.hx$" . haxe-mode))
+
+;; (add-hook 'haxe-mode-hook
+;;           (function
+;;            (lambda ()
+;;              (setq tab-width 4)
+;;              (setq indent-tabs-mode t)
+;;              (setq fill-column 80)
+;;              (local-set-key [(return)] 'newline-and-indent))))
+
+
+;;; Java
 
 ;; FIXME: have not actually gotten this to work
 ;; annotations indent
@@ -101,6 +128,8 @@
   (java-mode-indent-annotations-setup))
 (add-hook 'java-mode-hook 'my-java-mode-hook)
 
+
+;;; Python
 
 ;; Python mode for ubuntu.  (has working indentation)
 ;; TODO: this really should not be needed
@@ -127,30 +156,24 @@
 ;                             interpreter-mode-alist))
 
 
+;;;; Lisps
 
-;; Yeah for actionscript
-(autoload 'actionscript-mode "actionscript-mode")
-(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-(add-hook 'actionscript-mode-hook '(lambda () 
-                                     (setq c-basic-offset 4)))
+;;; Arc
+;; arc stuff from http://github.com/nex3/dotfiles/
+(autoload 'arc-mode "arc" nil t)
+(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
+; TODO: inferior arc
 
-;; go haxe!
-(require 'haxe-mode)
-(defconst my-haxe-style
-  '("java" (c-offsets-alist . ((case-label . +)
-                               (arglist-intro . +)
-                               (arglist-close . 0)
-                               (cpp-macro . 0))))
-  "My haXe Programming Style")
-(add-hook 'haxe-mode-hook
-          (function (lambda () (c-add-style "haxe" my-haxe-style t))))
-(autoload 'haxe-mode "haxe-mode")
-(add-to-list 'auto-mode-alist '("\\.hx$" . haxe-mode))
 
-;; (add-hook 'haxe-mode-hook
-;;           (function
-;;            (lambda ()
-;;              (setq tab-width 4)
-;;              (setq indent-tabs-mode t)
-;;              (setq fill-column 80)
-;;              (local-set-key [(return)] 'newline-and-indent))))
+;;; Clojure
+
+;;; Common Lisp
+
+;; slime
+(require 'slime)
+(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+(setq inferior-lisp-program "sbcl")
+
+;;; Scheme
+;; see external.el for scheme program name 

@@ -47,6 +47,6 @@
 ;; esk: Align your code in a pretty way.
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
-;; Indentation help
+;; esk: Indentation help
 (global-set-key (kbd "C-x ^") 'join-line)
 

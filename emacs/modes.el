@@ -22,14 +22,7 @@
 (setq visible-bell t)
 
 (setq diff-switches "-u")
-
-;; Cosmetics
-
-(eval-after-load 'diff-mode
-  '(progn
-     (set-face-foreground 'diff-added "green4")
-     (set-face-foreground 'diff-removed "red3")))
-
+(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode))
 
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
@@ -224,10 +217,6 @@
 (require 'nav)
 
 
-;; arc stuff from http://github.com/nex3/dotfiles/
-(autoload 'arc-mode "arc" nil t)
-(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
-; TODO: inferior arc
 
 
 ;; whitespace
