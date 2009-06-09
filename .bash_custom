@@ -10,6 +10,10 @@
 # TODO: look into cool PS1 alternatives
 # TODO: eix colors https://projects.gentooexperimental.org/eix/wiki/FAQ
 
+
+# Include local ~/bin in PATH
+PATH=~/bin/:$PATH
+
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
