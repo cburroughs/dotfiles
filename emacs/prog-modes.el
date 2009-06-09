@@ -28,7 +28,7 @@
  
      (defun js-lambda () (interactive) (insert "function () {\n}")
        (backward-char 5))
-     (add-hook 'js2-mode-hook 'coding-hook)
+     (add-hook 'js2-mode-hook 'coding-hook) ;; FIXME: need from esk
      (define-key js2-mode-map (kbd "C-c l") 'js-lambda)
  
      ;; Fix js2's crazy indentation
@@ -166,6 +166,11 @@
 
 
 ;;; Clojure
+(autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
+(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+;(add-hook 'clojure-mode-hook 
+;          (lambda () (setq inferior-lisp-program "~/bin/clj")))
+;; todo: slime
 
 ;;; Common Lisp
 
@@ -173,7 +178,8 @@
 (require 'slime)
 (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-(setq inferior-lisp-program "sbcl")
+;; todo: how to do this for multiple slime lisps?
+;;(setq inferior-lisp-program "sbcl")
 
 ;;; Scheme
 ;; see external.el for scheme program name 

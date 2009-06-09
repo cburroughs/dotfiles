@@ -13,6 +13,9 @@ cp .git-completion.sh ~
 cp ipythonrc-csb ~/.ipython/
 cp ipy-virtualenv.py ~/.ipython/
 
+mkdir -p ~/bin
+cp bin/* ~/bin
+
 if   `grep -q bash_custom  ~/.bashrc`
 then
     `true`

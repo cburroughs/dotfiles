@@ -1,0 +1,37 @@
+#!/bin/bash
+# -*- mode: sh; -*-
+# Runs Clojure using the classpath specified in the `.clojure` file of the
+# current directory.
+#
+# Mark Reid <http://mark.reid.name>
+# CREATED: 2009-03-29
+# modified by me
+#JAVA=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home/bin/java
+CLJ_DIR=~/local_install/clojure
+CLOJURE=$CLJ_DIR/clojure.jar
+CONTRIB=$CLJ_DIR/clojure-contrib.jar
+JLINE=$CLJ_DIR/jline/jline-0.9.94.jar
+# todo: add lib/ as convention?
+CP=$PWD:$CLOJURE:$JLINE:$CONTRIB
+ 
+# Add extra jars as specified by `.clojure` file
+#if [ -f .clojure ]
+#then
+#  CP=$CP:`cat .clojure`g25
+#fi
+
+# todo: do I want the server vm? 
+JLINE_CMD="jline.ConsoleRunner"
+scriptname=$1
+echo "$1"
+ if [ "$1" == "emacs" ]; then
+     JLINE_CMD=""
+     scriptname=""
+ fi
+
+ if [ -z "$scriptname" ]; then
+     java -server -cp $CP $JLINE_CMD clojure.lang.Repl
+ else
+     scriptname=$1
+     java -server -cp $CP clojure.lang.Script $scriptname -- $*
+ fi
