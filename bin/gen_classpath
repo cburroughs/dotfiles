@@ -12,6 +12,10 @@ def parse_opts(argv):
     parser = OptionParser()
     parser.add_option('-r', action='store_true', dest='recur', default=False,
                       help='Traverse directories looking for jars')
+    parser.add_option('-L', action='store_true', dest='list_only',
+                      default=False,
+                      help='Only list the jars')
+
 
     (opts, args) = parser.parse_args(argv)
     if len(argv) == 0:
@@ -32,7 +36,11 @@ def main(argv):
         for filename in possible_jars:
             jars.append(filename)
 
-    print ':'.join(jars + ['.'])
+    if opts.list_only:
+        for jarpath in jars:
+            print jarpath
+    else:
+        print ':'.join(jars + ['.'])
 
 
 if __name__ == '__main__':
