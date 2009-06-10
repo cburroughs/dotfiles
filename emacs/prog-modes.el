@@ -166,6 +166,7 @@
 
 
 ;;; Clojure
+;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
 (autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 
@@ -175,8 +176,9 @@
 (swank-clojure-config
  (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
  (setq swank-clojure-extra-classpaths
-       (list "/~local_install/clojure/clojure-contrib.jar")))
-
+       (list  "~/local_install/clojure/clojure-contrib.jar"
+       (shell-command-to-string 
+        "gen_classpath -L ~/local_install/clojure/lib"))))
 
 ;; slime
 (eval-after-load "slime"
