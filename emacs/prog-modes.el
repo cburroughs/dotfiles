@@ -178,9 +178,10 @@
  (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
  (setq swank-clojure-extra-classpaths
        (mapcar 'trim-string
-               (list  "~/local_install/clojure/clojure-contrib.jar"
+               (cons "~/local_install/clojure/clojure-contrib.jar"
+                     (split-string
                       (shell-command-to-string
-                       "gen_classpath -L ~/local_install/clojure/lib")))))
+                       "gen_classpath -L ~/local_install/clojure/lib"))))))
 
 
 ;; slime
