@@ -172,13 +172,16 @@
 
 (add-to-list 'load-path "~/prog/github/swank-clojure")
 
+
 (require 'swank-clojure-autoload)
 (swank-clojure-config
  (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
  (setq swank-clojure-extra-classpaths
-       (list  "~/local_install/clojure/clojure-contrib.jar"
-       (shell-command-to-string 
-        "gen_classpath -L ~/local_install/clojure/lib"))))
+       (mapcar 'trim-string
+               (list  "~/local_install/clojure/clojure-contrib.jar"
+                      (shell-command-to-string
+                       "gen_classpath -L ~/local_install/clojure/lib")))))
+
 
 ;; slime
 (eval-after-load "slime"

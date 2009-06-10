@@ -179,7 +179,10 @@ scan-error if not."
                               '("Region parentheses not balanced"))))))))
 
 
-
+;; http://www.math.umd.edu/~halbert/dotemacs.html
+(defun trim-string (str)
+  """ Trim whitespace from st."""
+  (replace-regexp-in-string "\\(^[ \t\n\r]*\\|[ \t\n\r]*$\\)" "" str))
 
 ;; from esk
 (defun untabify-buffer ()
