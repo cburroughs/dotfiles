@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-# Generates a classpath string for the directory
-# todo: recursive
+# Generates a java classpath string for the directory
 
 import sys
 
