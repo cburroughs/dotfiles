@@ -136,7 +136,9 @@
                            (second *emacs-load-start*)))))
 
 
-;; Dependencies I expect the os package manager to take care of
+;;; Dependencies
+
+;; I expect the os package manager to take care of
 
 ;; app-emacs/cedet
 ;; app-emacs/color-theme
@@ -146,7 +148,14 @@
 ;; app-emacs/matlab
 ;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
-;; app-emacs/slime
+
+
+;; I expect to be in in local_install
+
+;;app-emacs/slime ; slime does not
+;; have real releases so every machine will use a different
+;; version. It's a crazy world. Least bad solution is to dump their
+;; cvs tarball in a directory.
 
 ;; Other:
 ;; tidy

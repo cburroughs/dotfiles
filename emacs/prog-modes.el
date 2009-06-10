@@ -172,12 +172,20 @@
 ;          (lambda () (setq inferior-lisp-program "~/bin/clj")))
 ;; todo: slime
 
+
+;; slime
+(eval-after-load "slime"
+  '(progn (slime-setup '(slime-repl))))
+(load-library "~/local_install/slime-2009-06-10/slime.el")
+;(require 'slime)
+(slime-setup)
+
 ;;; Common Lisp
 
 ;; slime
-(require 'slime)
-(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;(require 'slime)
+;(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
+;(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 ;; todo: how to do this for multiple slime lisps?
 ;;(setq inferior-lisp-program "sbcl")
 
