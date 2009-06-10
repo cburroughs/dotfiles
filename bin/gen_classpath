@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+# Generates a classpath string for the directory
+# todo: recursive
+
+import sys
+
+from path import path
+
+def parse_opts(argv):
+    from optparse import OptionParser
+
+    parser = OptionParser()
+    parser.add_option('-r', action='store_true', dest='recur', default=False,
+                      help='Traverse directories looking for jars')
+
+    (opts, args) = parser.parse_args(argv)
+    if len(argv) == 0:
+        parser.print_help()
+    return opts, args
+
+
+def main(argv):
+    (opts, args) = parse_opts(argv)
+    #print opts, args
+    jars = []
+    for dirpath in args:
+        if opts.recur:
+            possible_jars = path(dirpath).walk(pattern='*.jar')
+        else:
+            possible_jars = path(dirpath).files(pattern='*.jar')
+
+        for filename in possible_jars:
+            jars.append(filename)
+
+    print ':'.join(jars + ['.'])
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
