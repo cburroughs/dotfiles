@@ -168,9 +168,14 @@
 ;;; Clojure
 (autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-;(add-hook 'clojure-mode-hook 
-;          (lambda () (setq inferior-lisp-program "~/bin/clj")))
-;; todo: slime
+
+(add-to-list 'load-path "~/prog/github/swank-clojure")
+
+(require 'swank-clojure-autoload)
+(swank-clojure-config
+ (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
+ (setq swank-clojure-extra-classpaths
+       (list "/~local_install/clojure/clojure-contrib.jar")))
 
 
 ;; slime
