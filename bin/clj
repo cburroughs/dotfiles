@@ -11,8 +11,8 @@ CLJ_DIR=~/local_install/clojure
 CLOJURE=$CLJ_DIR/clojure.jar
 CONTRIB=$CLJ_DIR/clojure-contrib.jar
 JLINE=$CLJ_DIR/jline/jline-0.9.94.jar
-# todo: add lib/ as convention?
-CP=$PWD:$CLOJURE:$JLINE:$CONTRIB
+THIRD_PARTY_LIB=`gen_classpath -r ~/local_install/clojure/lib`
+CP=$PWD:$CLOJURE:$JLINE:$CONTRIB:$THIRD_PARTY_LIB
  
 # Add extra jars as specified by `.clojure` file
 #if [ -f .clojure ]
