@@ -41,6 +41,7 @@
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
 ;; todo: eldoc mode
 ;; todo: http://www.emacswiki.org/emacs/PrettyLambda
+;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
