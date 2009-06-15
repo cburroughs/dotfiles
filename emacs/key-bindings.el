@@ -22,11 +22,10 @@
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 
-;; heresy; like the keybindings of the beas
-(global-set-key "\M-j" 'previous-line)
-(global-set-key "\M-k" 'next-line)
-(global-set-key "\M-h" 'backward-char)
-(global-set-key "\M-l" 'forward-char)
+
+;; vi/egro
+(require 'ergo-movement-mode)
+(ergo-movement-mode 1)
 
 
 ;; For when I get confused
