@@ -23,7 +23,10 @@
 (global-set-key [end] 'end-of-buffer)
 
 
-;; vi/egro
+;; almost-vi/ergo
+;;              i      =          C-p
+;;     M-     j k l    =    C-b   C-n   C-f
+
 (require 'ergo-movement-mode)
 (ergo-movement-mode 1)
 
