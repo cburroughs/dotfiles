@@ -67,3 +67,23 @@ fewer than 80 columns."
   '(progn
      (set-face-foreground 'diff-added "green4")
      (set-face-foreground 'diff-removed "red3")))
+
+
+;; todo: composting check?
+(defvar csb-frame-is-transparent nil)
+
+;; todo: (defvar csb-transparency-alpha 88)
+(if (<= emacs-major-version 23)
+    (defun toggle-transparency ()
+      " Toggles a small amount of transparency "
+      (interactive)
+      (if csb-frame-is-transparent
+          (progn
+            (modify-frame-parameters (selected-frame)
+                                     `((alpha . 100)))
+            (setq csb-frame-is-transparent nil))
+        (progn
+          (modify-frame-parameters (selected-frame)
+                                   `((alpha . 88)))
+          (setq csb-frame-is-transparent 't)))))
+
