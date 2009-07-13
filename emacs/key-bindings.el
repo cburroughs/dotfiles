@@ -32,8 +32,8 @@
 
 
 ;; For when I get confused
-(global-set-key "\M-p" 'previous-line)
-(global-set-key "\M-n" 'next-line)
+(global-set-key "\M-p" 'previous-logical-line)
+(global-set-key "\M-n" 'next-logical-line)
 
 ;; spell checking
 (global-set-key [f7] 'ispell-buffer)
