@@ -1,4 +1,3 @@
-
 # -*- mode: sh; -*-
 # I am going to experiment with doing this differently than most
 # people.  Instead of having my own .bashrc I will use the .bashrc
@@ -40,8 +39,9 @@ else
     export EDITOR='emacs -nw'
 fi
 
-export HISTSIZE=10000
-export HISTFILESIZE=10000
+export HISTCONTROL=ignoreboth
+export HISTSIZE=20000
+export HISTFILESIZE=20000
 export HISTTIMEFORMAT='%Y-%m-%d_%H:%M:%S '
 export PAGER='less -R'
 #do we really want these in site-lisp?
