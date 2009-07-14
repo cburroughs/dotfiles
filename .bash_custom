@@ -136,7 +136,7 @@ function pythonpath-reset() {
 
 #bah, stupid lack of readline support and ubunutu lack of masking
 if ! `which jython 2> /dev/null`; then
-    alias jython='/home/chris/local_install/jython2.5rc2/jython'
+    alias jython='/home/chris/local_install/jython2.5.0/jython'
 fi
 
 
