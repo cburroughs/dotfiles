@@ -1,4 +1,4 @@
-;; Programming modes in a separate file
+f;; Programming modes in a separate file
 
 
 ;;; Javascript
@@ -187,7 +187,8 @@
 ;; slime
 (eval-after-load "slime"
   '(progn (slime-setup '(slime-repl))))
-(load-library "~/local_install/slime-2009-06-10/slime.el")
+(if (not (my-gentoo?))
+    (load-library "~/local_install/slime-2009-06-10/slime.el"))
 ;(require 'slime)
 (slime-setup)
 
