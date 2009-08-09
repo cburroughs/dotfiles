@@ -1,4 +1,4 @@
-f;; Programming modes in a separate file
+;; Programming modes in a separate file
 
 
 ;;; Javascript
