@@ -1,4 +1,4 @@
-f;; Programming modes in a separate file
+;; Programming modes in a separate file
 
 
 ;;; Javascript
@@ -209,3 +209,10 @@ f;; Programming modes in a separate file
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
+
+;; The crazy wrod of nxhtml mode
+(defun insert-date-string ()
+  "Load nxhtml mode from it's latest directory of crazyness"
+  (interactive)
+  (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))
