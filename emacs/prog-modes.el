@@ -212,7 +212,7 @@
 
 
 ;; The crazy wrod of nxhtml mode
-(defun insert-date-string ()
+(defun load-nxhtml-mode ()
   "Load nxhtml mode from it's latest directory of crazyness"
   (interactive)
   (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))
