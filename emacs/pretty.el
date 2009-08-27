@@ -30,7 +30,8 @@
 (if (string-match "23\." (emacs-version))
     (if (my-gentoo?)
         (set-frame-font "DejaVu Sans Mono-10")
-      (set-frame-font "Bitstream Vera Sans Mono-10")))
+      (set-frame-font "DejaVu Sans Mono-8")))
+;;      (set-frame-font "Bitstream Vera Sans Mono-10")))
 
 
 ;; Start nice and tall, but should still be 80 char wide
