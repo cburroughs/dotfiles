@@ -42,6 +42,7 @@
 ;; todo: eldoc mode
 ;; todo: http://www.emacswiki.org/emacs/PrettyLambda
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
+;; todo: http://nflath.com/2009/08/cc-and-java-customizations/ for java
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
