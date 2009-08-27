@@ -226,3 +226,13 @@
     (show-ws-toggle-show-hard-spaces)
     (show-ws-toggle-show-tabs)
     (show-ws-toggle-show-trailing-whitespace))
+
+
+;; http://xahlee.org/emacs/command-frequency.html
+;; http://nflath.com/2009/08/command-frequency-mode/
+;; Keep track of commands used, learning is good!
+(setq-default command-frequency-table-file "~/.emacs_frequencies")
+(require 'command-frequency)
+(command-frequency-table-load)
+(command-frequency-mode 1)
+(command-frequency-autosave-mode 1)
