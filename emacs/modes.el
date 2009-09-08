@@ -231,8 +231,9 @@
 ;; http://xahlee.org/emacs/command-frequency.html
 ;; http://nflath.com/2009/08/command-frequency-mode/
 ;; Keep track of commands used, learning is good!
-(setq-default command-frequency-table-file "~/.emacs_frequencies")
-(require 'command-frequency)
-(command-frequency-table-load)
-(command-frequency-mode 1)
-(command-frequency-autosave-mode 1)
+;; todo: how to share this file among instances
+;(setq-default command-frequency-table-file "~/.emacs_frequencies")
+;(require 'command-frequency)
+;(command-frequency-table-load)
+;(command-frequency-mode 1)
+;(command-frequency-autosave-mode 1)
