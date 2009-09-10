@@ -214,6 +214,7 @@
 ;; http://github.com/aemoncannon/far-search-mode/tree/master
 (require 'far-search)
 
+(add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
 (require 'nav)
 
 
