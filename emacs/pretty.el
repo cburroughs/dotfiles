@@ -25,6 +25,12 @@
       (global-hl-line-mode 1)
       (set-face-background 'hl-line "gray18")))
 
+; todo: I could make this prettier
+(defun sun-theme ()
+  (interactive)
+  (color-theme-aalto-light)
+  (global-hl-line-mode 0))
+
 ; awesome fonts only with emacs 23!
 ; TODO: What if the system does not have this font?  
 (if (string-match "23\." (emacs-version))
