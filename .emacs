@@ -107,7 +107,7 @@
 ;; scattered all over the file system!
 ;; but not in temp
 (defvar autosave-dir
- (concat "~/.emacs_auto/autosaves/" (user-login-name) "/"))
+ (concat "~/.emacs_auto/autosaves/"))
 
 (make-directory autosave-dir t)
 
@@ -124,7 +124,7 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "~/.emacs_auto/backups/" (user-login-name) "/"))
+(defvar backup-dir (concat "~/.emacs_auto/backups/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq semanticdb-default-save-directory "/tmp/")
