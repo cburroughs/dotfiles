@@ -73,6 +73,7 @@
 			
 (add-path "~/emacs/")
 (add-path "~/emacs/site-lisp/")
+(add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
 
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
@@ -106,7 +107,7 @@
 ;; scattered all over the file system!
 ;; but not in temp
 (defvar autosave-dir
- (concat "~/.emacs_autosaves/" (user-login-name) "/"))
+ (concat "~/.emacs_auto/autosaves/" (user-login-name) "/"))
 
 (make-directory autosave-dir t)
 
@@ -123,7 +124,7 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "/tmp/" (user-login-name) "/emacs_backups/"))
+(defvar backup-dir (concat "~/.emacs_auto/backups/" (user-login-name) "/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq semanticdb-default-save-directory "/tmp/")
