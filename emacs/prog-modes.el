@@ -170,7 +170,7 @@
 ;; and some READMEs...
 (require 'clojure-mode)
 (add-to-list 'load-path "~/prog/github/swank-clojure/src/emacs")
-
+(require 'swank-clojure)
 
 ;(require 'swank-clojure-autoload)
 ;(swank-clojure-config
