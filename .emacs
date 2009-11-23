@@ -24,6 +24,7 @@
 ;; TODO: spell check not comments (ie for svn commit messages)
 ;; TODO: document things I expect the package manager to install (partially done)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
+;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: turn off hl-p in vc annotate mode
 ;; todo: get tags of some sort working, they seem awesome
 ;; todo: js-comint code review
