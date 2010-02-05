@@ -534,7 +534,7 @@ is bundled up as a function so that you can call it after you've set
     (add-to-list 'load-path (concat clojure-src-root "/slime/contrib"))
     (add-to-list 'load-path (concat clojure-src-root "/swank-clojure"))
 
-    (require 'slime-autoloads)
+    ;(require 'slime-autoloads)
     (require 'swank-clojure-autoload)
 
     (slime-setup '(slime-fancy))

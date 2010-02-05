@@ -41,8 +41,8 @@
 
 
 ;; Start nice and tall, but should still be 80 char wide
-;; TODO: revert to 1 when I figure out why 100% was too tall
-(setq initial-frame-alist '((top . 95) (height . 63)))
+;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
+;(setq initial-frame-alist '((top . 1) (height . 63)))
 
 
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html
