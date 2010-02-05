@@ -154,7 +154,7 @@
 ;; app-emacs/matlab
 ;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
-
+;; jde
 
 ;; I expect to be in in local_install
 
@@ -165,3 +165,4 @@
 
 ;; Other:
 ;; tidy
+;; http://code.google.com/p/m2jdee/ <-- for maven/jde file generation
