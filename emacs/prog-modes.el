@@ -184,12 +184,22 @@
 
 
 ;; slime
-(eval-after-load "slime"
-  '(progn (slime-setup '(slime-repl))))
 (if (not (my-gentoo?))
-    (load-library "~/local_install/slime-2009-11-11/slime.el"))
-;(require 'slime)
-(slime-setup)
+    (progn
+      (eval-after-load "slime"
+        '(progn (slime-setup '(slime-repl))))
+      (load-library "~/local_install/slime-2009-11-11/slime.el")
+      (require 'slime)
+      (slime-setup))
+  (progn
+    (eval-after-load "slime"
+      '(progn (slime-setup '(slime-repl))))
+    
+    (add-to-list 'load-path "~/local_install/slime-2009-09-14/")
+    (require 'slime)
+    (slime-setup)))
+
+
 
 ;;; Common Lisp
 
