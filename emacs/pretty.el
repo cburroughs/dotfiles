@@ -25,16 +25,24 @@
       (global-hl-line-mode 1)
       (set-face-background 'hl-line "gray18")))
 
+; todo: I could make this prettier
+(defun sun-theme ()
+  (interactive)
+  (color-theme-aalto-light)
+  (global-hl-line-mode 0))
+
 ; awesome fonts only with emacs 23!
 ; TODO: What if the system does not have this font?  
 (if (string-match "23\." (emacs-version))
     (if (my-gentoo?)
         (set-frame-font "DejaVu Sans Mono-10")
-      (set-frame-font "Bitstream Vera Sans Mono-10")))
+      (set-frame-font "DejaVu Sans Mono-8")))
+;;      (set-frame-font "Bitstream Vera Sans Mono-10")))
 
 
 ;; Start nice and tall, but should still be 80 char wide
-(setq initial-frame-alist '((top . 1) (height . 63)))
+;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
+;(setq initial-frame-alist '((top . 1) (height . 63)))
 
 
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html

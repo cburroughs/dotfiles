@@ -167,28 +167,27 @@
 
 ;;; Clojure
 ;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
-(autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
-(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+;; and some READMEs...
+(require 'clojure-mode)
+(add-to-list 'load-path "~/prog/github/swank-clojure/src/emacs")
+(require 'swank-clojure)
 
-(add-to-list 'load-path "~/prog/github/swank-clojure")
-
-
-(require 'swank-clojure-autoload)
-(swank-clojure-config
- (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
- (setq swank-clojure-extra-classpaths
-       (mapcar 'trim-string
-               (cons "~/local_install/clojure/clojure-contrib.jar"
-                     (split-string
-                      (shell-command-to-string
-                       "gen_classpath -r -L ~/local_install/clojure/lib"))))))
+;(require 'swank-clojure-autoload)
+;(swank-clojure-config
+; (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
+; (setq swank-clojure-extra-classpaths
+;       (mapcar 'trim-string
+;               (cons "~/local_install/clojure/clojure-contrib.jar"
+;                     (split-string
+;                      (shell-command-to-string
+;                       "gen_classpath -r -L ~/local_install/clojure/lib"))))))
 
 
 ;; slime
 (eval-after-load "slime"
   '(progn (slime-setup '(slime-repl))))
 (if (not (my-gentoo?))
-    (load-library "~/local_install/slime-2009-06-10/slime.el"))
+    (load-library "~/local_install/slime-2009-11-11/slime.el"))
 ;(require 'slime)
 (slime-setup)
 
@@ -209,3 +208,10 @@
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
+
+;; The crazy wrod of nxhtml mode
+(defun load-nxhtml-mode ()
+  "Load nxhtml mode from it's latest directory of crazyness"
+  (interactive)
+  (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))

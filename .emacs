@@ -24,6 +24,7 @@
 ;; TODO: spell check not comments (ie for svn commit messages)
 ;; TODO: document things I expect the package manager to install (partially done)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
+;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: turn off hl-p in vc annotate mode
 ;; todo: get tags of some sort working, they seem awesome
 ;; todo: js-comint code review
@@ -42,6 +43,9 @@
 ;; todo: eldoc mode
 ;; todo: http://www.emacswiki.org/emacs/PrettyLambda
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
+;; todo: http://nflath.com/2009/08/cc-and-java-customizations/ for java
+;; todo: look at this: http://taesoo.org/Opensource/Pylookup
+;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
@@ -72,6 +76,7 @@
 			
 (add-path "~/emacs/")
 (add-path "~/emacs/site-lisp/")
+(add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
 
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
@@ -105,7 +110,7 @@
 ;; scattered all over the file system!
 ;; but not in temp
 (defvar autosave-dir
- (concat "~/.emacs_autosaves/" (user-login-name) "/"))
+ (concat "~/.emacs_auto/autosaves/"))
 
 (make-directory autosave-dir t)
 
@@ -122,7 +127,7 @@
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "/tmp/" (user-login-name) "/emacs_backups/"))
+(defvar backup-dir (concat "~/.emacs_auto/backups/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq semanticdb-default-save-directory "/tmp/")
@@ -149,7 +154,7 @@
 ;; app-emacs/matlab
 ;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
-
+;; jde
 
 ;; I expect to be in in local_install
 
@@ -160,3 +165,4 @@
 
 ;; Other:
 ;; tidy
+;; http://code.google.com/p/m2jdee/ <-- for maven/jde file generation
