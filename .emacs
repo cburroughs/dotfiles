@@ -155,6 +155,7 @@
 ;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
 ;; jde
+;; app-emacs/crontab-mode 
 
 ;; I expect to be in in local_install
 
