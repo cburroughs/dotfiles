@@ -98,8 +98,8 @@ function extract() {
     for x in "$@"; do
         [[ -f $x ]] || continue
         case "$x" in
-            *.tar.bz2 | *.tgz )    ee "tar xvjf" "$x"    ;;
-            *.tar.gz | *.tbz2 ) ee "tar xvzf" "$x"    ;;
+            *.tar.bz2 | *.tbz2 )    ee "tar xvjf" "$x"    ;;
+            *.tar.gz | *.tgz ) ee "tar xvzf" "$x"    ;;
             *.bz2 )                ee "bunzip2" "$x"    ;;
             *.rar )                ee "unrar x" "$x"   ;;
             *.gz )                ee "gunzip" "$x"    ;;
