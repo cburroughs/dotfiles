@@ -128,6 +128,12 @@
   (java-mode-indent-annotations-setup))
 (add-hook 'java-mode-hook 'my-java-mode-hook)
 
+;; strange {} indentation
+(defun mrallen-java-mode ()
+  (interactive)
+  (add-hook 'java-mode-hook 
+            '(lambda () (c-set-offset 'substatement-open 0))))
+
 
 ;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
 (add-hook 
