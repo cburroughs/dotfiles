@@ -129,6 +129,14 @@
 (add-hook 'java-mode-hook 'my-java-mode-hook)
 
 
+;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
+(add-hook 
+ 'java-mode-hook
+ '(lambda () "Treat Java 1.5 @-style annotations as comments."
+    (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
+    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
+
+
 ;;; Python
 
 ;; Python mode for ubuntu.  (has working indentation)
