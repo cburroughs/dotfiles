@@ -80,7 +80,7 @@
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/emacs/" 0)
-(shell-command "rm ~/emacs/site-lisp/haxe-mode.elc")
+(shell-command "rm ~/emacs/site-lisp/haxe-mode.elc") ;; Still heeded?
 
 
 ;; If I ever use customize crap I don't want it pooping on this file

@@ -1,8 +1,8 @@
 ;;; erin.el --- Emacs editing mode for TWiki pages
 
-;; Copyright (C) 2007 Neil W. Van Dyke.  This is free software; you can
+;; Copyright (C) 2007-2009 Neil Van Dyke.  This is free software; you can
 ;; redistribute it and/or modify it under the terms of the GNU General Public
-;; License as published by the Free Software Foundation; either version 2, or
+;; License as published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.  This is distributed in the hope that it
 ;; will be useful, but without any warranty; without even the implied warranty
 ;; of merchantability or fitness for a particular purpose.  See the GNU General
@@ -11,9 +11,9 @@
 ;; write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
-;; Author: Neil Van Dyke <neil@neilvandyke.org>
+;; Author: Neil Van Dyke <neil AT neilvandyke DOT org>
 ;; Web: http://www.neilvandyke.org/erin-twiki-emacs/
-;; CVS: $Id: erin.el,v 1.94 2007-02-28 08:01:46 neil Exp $
+;; CVS: $Id: erin.el,v 1.116 2009/08/19 08:27:28 neilpair Exp $
 ;; Keywords: html hypermedia hypertext text twiki wiki major-mode
 
 ;;; COMMENTARY:
@@ -22,9 +22,9 @@
 ;; current version of `erin.el' mostly just does semi-WYSIWYG fontifying
 ;; and heading renumbering.
 ;;
-;; To install, put file `erin.el' somewhere in your Emacs `load-path',
-;; optionally byte-compile it, and add the following expression to your
-;; `.emacs' file:
+;; To install, put file `erin.el' into one of the directories that's listed in
+;; your Emacs `load-path' variable, (optionally) byte-compile `erin.el', and
+;; add the following expression to your `.emacs' file:
 ;;
 ;;     (require 'erin)
 ;;
@@ -34,48 +34,49 @@
 ;;
 ;; Headings can be renumbered with the `erin-renumber-headings' command (key
 ;; sequence C-c C-r).  The number of pluses in the TWiki markup denotes the
-;; level of the heading, and headings with TWiki `!!' markup after the pluses
-;; are unnumbered.  For an example of numbered headings:
+;; level of the heading.  Headings with TWiki `!!' markup after the pluses are
+;; unnumbered.  For an example of unnumbered and numbered headings:
 ;;
-;;     ----+!! My Important Wiki Paper
-;;     ----+ 1 Introduction
-;;     ----+ 2 Theory
-;;     ----++ 2.1 Pretty Pictures View of Theory
-;;     ----++ 2.2 Cryptic Equations View of Theory
-;;     ----+++ 2.2.1 Integral Symbol
-;;     ----+ 3 Practice
+;;     ---+!! My Important Wiki Paper
+;;     ---+ 1 Introduction
+;;     ---+ 2 Theory
+;;     ---++ 2.1 Pretty Pictures View of Theory
+;;     ---++ 2.2 Cryptic Equations View of Theory
+;;     ---+++ 2.2.1 Integral Symbol
+;;     ---+ 3 Practice
 ;;
-;; Unless and until a future version of `erin.el' talks to a TWiki server
-;; directly, you need to manully select all the text in a TWiki page edit form,
-;; cut it, paste it into an Emacs buffer (in `erin-mode'), edit the text, cut
-;; it from Emacs, and paste it back into the TWiki form.  It's still a win for
-;; nontrivial pages.
-;;
-;; Just like TWiki is not named after Twiki, `erin.el' is not named after
-;; Twiki's arguably more attractive co-star, Erin Gray.
+;; Just as TWiki is not named after Twiki, `erin.el' is not named after Twiki's
+;; arguably more attractive co-star, Erin Gray.
 
 ;;; HISTORY:
 
-;; [Version 0.4, 2007-02-28, neil@neilvandyke.org] New command
-;; `erin-renumber-headings'.  List markup is now highlighted to arbitrary
-;; depths, rather than only 6 levels.  Fixed bug in lower-case ordered-lists,
-;; introduced in 0.3.
+;; [Version 0.6, 2009-08-19] Removed the erroneous setting of
+;; `fill-paragraph-function'.  Thanks to Michael Shields for reporting.
 ;;
-;; [Version 0.3, 2007-02-20, neil@neilvandyke.org] Default face colors are now
-;; reasonable on dark-background (e.g., reverse-video) Emacs.  In a
-;; double-square-brackets link with no alternate text and a WikiWord qualified
-;; with a Wiki name, mark the Wiki name as part of the link text (underlined,
-;; by default).  In ordered lists, now only supports "a", "A", "i", and "I",
-;; rather than all letters.  Comment changes.
+;; [Version 0.5, 2009-08-13] Note that I am no longer working on this package,
+;; since I am no longer using Twiki.  Changed license to GPL3.  Made the
+;; variable reference regexp not search past newline.  Corrected docstring for
+;; `erin-mode'.  Comment changes.  Included some commented-out partial
+;; implementation of paragraph filling and infrastructure for paragraph info.
 ;;
-;; [Version 0.2, 2007-02-13, neil@neilvandyke.org] Fixed bug in trying to match
-;; newline before a huggable.  Made huggers more liberal about contents (e.g.,
-;; "*bold:*" now works).  Made huggers permit some punctuation characters
-;; immediately following.
+;; [Version 0.4, 2007-02-28] New command `erin-renumber-headings'.  List markup
+;; is now highlighted to arbitrary depths, rather than only 6 levels.  Fixed
+;; bug in lower-case ordered-lists, introduced in 0.3.
 ;;
-;; [Version 0.1, 2007-02-13, neil@neilvandyke.org] First release.  It's already
-;; very useful, even in its primitive state, and I have an immediate need for a
-;; released version.
+;; [Version 0.3, 2007-02-20] Default face colors are now reasonable on
+;; dark-background (e.g., reverse-video) Emacs.  In a double-square-brackets
+;; link with no alternate text and a WikiWord qualified with a Wiki name, mark
+;; the Wiki name as part of the link text (underlined, by default).  In ordered
+;; lists, now only supports "a", "A", "i", and "I", rather than all letters.
+;; Comment changes.
+;;
+;; [Version 0.2, 2007-02-13] Fixed bug in trying to match newline before a
+;; huggable.  Made huggers more liberal about contents (e.g., "*bold:*" now
+;; works).  Made huggers permit some punctuation characters immediately
+;; following.
+;;
+;; [Version 0.1, 2007-02-13] First release.  It's already very useful, even in
+;; its primitive state, and I have an immediate need for a released version.
 
 ;;; CODE:
 
@@ -249,12 +250,14 @@
 (defvar erin-mode-map
   (let ((x (make-sparse-keymap)))
     ;; Note: It's the year 2007, Buck Rogers has already left the planet, and
-    ;; we can bind the flow-control character to something.
+    ;; we can bind a flow-control character to something.
     (define-key x "\C-c\C-r" 'erin-renumber-headings)
     (define-key x "\C-c\C-s" 'erin-sampler)
     x))
 
 (defvar erin-font-lock-keywords
+  ;; Let's see how much we can do with font-lock regexps before we decide to
+  ;; rewrite the whole thing to do a proper parse.
   (let* ((wikiword "[A-Z][a-z]+[A-Z][A-Za-z0-9]+")
          (possibly-qualified-wikiword
           (concat "\\(\\(?:[A-Z][A-Za-z]*\\.\\)?\\)\\(" wikiword "\\)"))
@@ -282,7 +285,7 @@
 
       ;; Variable references. (TODO: We should properly parse the quoted
       ;; strings in the attributes.)
-      ("\\(%\\)\\([A-Za-z]+\\)\\(\\(?:{[^}]*}\\)?\\)\\(%\\)"
+      ("\\(%\\)\\([A-Za-z]+\\)\\(\\(?:{[^}\r\n]*}\\)?\\)\\(%\\)"
        (1 'erin-deemph-markup-face)
        (2 'erin-variable-face)
        (3 'erin-variable-parameters-face)
@@ -378,8 +381,7 @@
                 "\\|"                   ; |a
                 "\\["
                 "\\)"                   ; >a
-                ;"+"
-                ; hack around: http://www.nabble.com/performance-hang-bug-in-regex.c-td19264524.html
+                "+"
                 "\\)"                   ; >4
                 "\\(\\]\\]\\)"          ; =5
                 )
@@ -457,27 +459,26 @@
   ;; TODO:
   (apply 'indent-relative-maybe args))
 
+(defmacro erin-setq-local (sym val)
+  (or (symbolp sym) (signal 'wrong-type-argument `(symbolp ,sym)))
+  `(progn (make-local-variable (quote ,sym))
+          (setq ,sym ,val)))
+
 (defun erin-mode ()
   "Major mode for editing TWiki pages.
 
-\\{erin-mode}"
+\\{erin-mode-map}"
   (interactive)
   (kill-all-local-variables)
   (setq major-mode 'erin-mode)
   (setq mode-name "Erin-TWiki")
   (use-local-map erin-mode-map)
   (set-syntax-table erin-mode-syntax-table)
-
-  (make-local-variable 'font-lock-beginning-of-syntax-function)
-  (make-local-variable 'font-lock-defaults)
-  (make-local-variable 'indent-line-function)
-  (make-local-variable 'indent-tabs-mode)
-
-  (setq font-lock-beginning-of-syntax-function 'beginning-of-line)
-  (setq font-lock-defaults '(erin-font-lock-keywords t nil nil nil))
-  (setq indent-line-function 'erin-indent-line-function)
-  (setq indent-tabs-mode nil)
-
+  ;; (erin-setq-local fill-paragraph-function 'erin-fill-paragraph)
+  (erin-setq-local font-lock-beginning-of-syntax-function 'beginning-of-line)
+  (erin-setq-local font-lock-defaults '(erin-font-lock-keywords t nil nil nil))
+  (erin-setq-local indent-line-function 'erin-indent-line-function)
+  (erin-setq-local indent-tabs-mode nil)
   (run-hooks 'erin-mode-hook))
 
 (defun erin-sampler ()
@@ -632,6 +633,169 @@
           ;; Advance to next line.
           (forward-line))))))
 
+;; Filling:
+
+;; PARAINFO and PARATYPE
+;;
+;; PARAINFO Is a list of the format:
+;;
+;;     (PARATYPE START FIRSTLINEP { EXTRA }* )
+;;
+;; START is the point that is the start of the paragraph.
+;;
+;; FIRSTLINEP is a boolean value for whether or not PT is in the first line
+;; of the paragraph.
+;;
+;; PARATYPE is one of the symbols from the table below.  The contents of the
+;; EXTRA value depends on PARATYPE.
+;;
+;; PARATYPE               EXTRA elements
+;; ---------------------  ---------------------------------
+;; blank-line
+;; description-list-item  (<item-depth> <item-label-string>)
+;; heading                <heading-level>
+;; normal
+;; ordered-list-item      (<item-depth> <item-number-string>)
+;; separator
+;; table-row
+;; unordered-list-item    (<item-depth>)
+
+;; (defmacro erin-make-parainfo (paratype start firstlinep extra)
+;;   `(vector ,paratype ,start ,firstlinep ,extra))
+;; 
+;; (defmacro erin-get-parainfo-paratype   (parainfo) `(aref ,parainfo 0))
+;; (defmacro erin-get-parainfo-start      (parainfo) `(aref ,parainfo 1))
+;; (defmacro erin-get-parainfo-firstlinep (parainfo) `(aref ,parainfo 2))
+;; (defmacro erin-get-parainfo-extras     (parainfo) `(aref ,parainfo 3))
+;; 
+;; (defmacro erin-set-parainfo-paratype   (parainfo x) `(aset ,parainfo 0 ,x))
+;; (defmacro erin-set-parainfo-start      (parainfo x) `(aset ,parainfo 1 ,x))
+;; (defmacro erin-set-parainfo-firstlinep (parainfo x) `(aset ,parainfo 2 ,x))
+;; (defmacro erin-set-parainfo-extras     (parainfo x) `(aset ,parainfo 3 ,x))
+;; 
+;; ;; TODO: Change parainfo to an array.
+;; 
+;; ;; (defun erin-find-line-para-something-from-point (want-parainfo
+;; ;;                                                  default-paratype
+;; ;;                                                  previous-backslash-presence)
+;; ;;   "This does the bulk of the work for `erin-initial-parainfo' !!!"
+;; 
+;; ;;   '!!!)
+;; 
+;; ;; (defun erin-find-next-para (!!!)
+;; ;;   '!!!)
+;; 
+;; (defun erin-initial-parainfo (pt)
+;;   (save-excursion
+;;     (save-match-data
+;;       ;; Note: This is a helper function for erin-paragraph-start-info.  It
+;;       ;; works from point and changes point, as well as stomps on match data.
+;;       (let ((parainfo             nil)
+;;             (last-normal-parainfo nil)
+;;             (firstlinep           t))
+;;         ;; Loop until we've set `parainfo', which should be a list beginning
+;;         ;; with paragraph type symbol and followed by any type-specific
+;;         ;; elements.
+;;         (while (not parainfo)
+;;           ;; Make sure we're at the beginning of line.
+;;           (beginning-of-line)
+;;           ;; Does the previous line end in a backslash?
+;;           ;;
+;;           ;; TODO: In current versions of TWiki, does backslash really continue
+;;           ;; all paragraphs, only table rows, or some other subset?
+;;           (if (save-excursion
+;;                 (condition-case err
+;;                     ;; Note: This won't work with CR-LF newlines.
+;;                     (progn (backward-char 2)
+;;                            (looking-at "\\\\"))
+;;                   (beginning-of-buffer nil)
+;;                   (end-of-buffer       nil)))
+;;               ;; Preceding line ends in a backslash, so go to previous line for
+;;               ;; the next iteration.
+;;               (forward-line -1)
+;;             ;; Preceding line doesn't end in a backslash, determine the
+;;             ;; paragraph type from the current line, and leave point at first
+;;             ;; character of paragraph.
+;;             (cond
+;;              ;; Table row.
+;;              ((looking-at "|")
+;;               (setq parainfo
+;;                     (erin-make-parainfo 'table-row (point) firstlinep nil)))
+;;              ;; Blank line.
+;;              ((looking-at "[ \t]*$")
+;;               ;; TODO: Maybe we should find the first blank line.
+;;               (setq parainfo (or last-normal-parainfo
+;;                                  (erin-make-parainfo 'blank-line
+;;                                                      (point) 
+;;                                                      firstlinep
+;;                                                      nil))))
+;;              ;; Separator or heading.
+;;              ((looking-at "-\\{3,\\}\\(?:\\(\\++\\)\\|\\(?:[ \t\r]*$\\)\\)")
+;;               (setq parainfo
+;;                     (or last-normal-parainfo
+;;                         (if (match-beginning 1)
+;;                             (erin-make-parainfo 'heading
+;;                                   (point)
+;;                                   firstlinep
+;;                                   (- (match-end 1) (match-beginning 1)))
+;;                           (erin-make-parainfo 'separator
+;;                                               (point)
+;;                                               firstlinep
+;;                                               nil)))))
+;;              ;; List item?
+;;              ((looking-at "\\(   \\)+\\([0-9]+\\|[AaIi]\\)\\.")
+;;               ;; TODO: !!! Add unordered-list and description-item to this
+;;               ;; regexp. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;;               (let ((item-depth (/ (- (match-end 1) (point)) 3)))
+;;                 (setq parainfo
+;;                       (erin-make-parainfo 'ordered-list-item
+;;                                           (point)
+;;                                           firstlinep
+;;                                           (list
+;;                                            item-depth
+;;                                            (match-string-no-properties 2))))))
+;;              ;; Nothing else matched, so we might be in a `normal', so set
+;;              ;; `last-normal-parainfo' to normal and either use that as the
+;;              ;; parainfo (if we're at the start of buffer) or move point to
+;;              ;; previous line and iterate.
+;;              (t (setq last-normal-parainfo
+;;                       (erin-make-parainfo 'normal (point) firstlinep nil))
+;;                 (if (bobp)
+;;                     (setq parainfo last-normal-parainfo)
+;;                   (forward-line -1)))))
+;;           ;; Set `first-line-p' to nil, in case we're advancing a line and
+;;           ;; iterating.
+;;           (setq firstlinep nil))
+;;         ;; Done iterating, so return the parainfo.
+;;         parainfo))))
+;; 
+;; ;; TODO: !!!!!!!!!!! add END field to parainfo, and populate for the one-liner
+;; ;; partypes as we scan them.
+;; 
+;; (defun erin-parainfo (pt)
+;;   (let ((parainfo (erin-initial-parainfo pt)))
+;;     ;; TODO: !!! Also find the end of the paragraph, and set it in
+;;     ;; parainfo.
+;;     parainfo))
+;; 
+;; (defun erin-fill-paragraph (arg)
+;;   (interactive (list nil))
+;; 
+;;   (let* ((parainfo (erin-parainfo (point)))
+;;          (paratype (erin-get-parainfo-paratype parainfo)))
+;; 
+;;     ;; (cond
+;; ;;      ((eq paratype 'normal)
+;; ;; ;;!!!!!!!!!!!!!!!!
+;; ;;       )
+;;      
+;; ;;     ;; TODO: Implement other types.
+;;     '!!!
+;; 
+;;     (message "DEBUG: %S" parainfo)))
+
+;; Auto-Modes:
+
 (add-to-list 'auto-mode-alist (cons "\\.twiki\\'" 'erin-mode))
 
 ;; TODO: Make a mode menu.
@@ -655,6 +819,27 @@
 ;; TODO: Maybe permit "=" hugger to be bordered externally by parens.
 
 ;; TODO: Command to renumber headings.
+
+;; TODO: Requested by Zach Beane: "default to auto-fill mode"
+
+;; TODO: Requested by Zach Beane: "fill bulleted paragraphs correctly; right
+;; now it treats the " *" as a fill prefix and wraps all bullet text together;
+;; would be nice if bullets were individually filled."
+
+;; TODO: Requested by Zach Beane: "would be super extra nice if there was a
+;; function to extract the canonical TWiki page name under the point, allowing
+;; for all the syntactic variations"
+
+;; TODO: Add command to add "<!-- -*- Erin -*- -->" cookie at top of buffer.
+;; But maybe wait to see whether it can be TWiki instead of Erin.
+
+;; TODO: In renumbering, don't match headings like "1A" as numbers.
+
+;; TODO: Document that renumbering is for specs and the like, for which there's
+;; reason to make all one Wiki page.
+
+;; TODO: Change colors: code to black on lightgreen, variables to black on
+;; orange.
 
 (provide 'erin)
 

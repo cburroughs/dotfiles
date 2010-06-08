@@ -2,23 +2,19 @@
 
 ;; ------------------------------------------------------------------------
 ;; Copyright (C) 2006-2007 Jens Peter Secher
-;;
-;; This software is provided 'as-is', without any express or implied
-;; warranty.  In no event will the author be held liable for any
-;; damages arising from the use of this software.
-;;
-;; Permission is granted to anyone to use this software for any
-;; purpose, including commercial applications, and to alter it and
-;; redistribute it freely, subject to the following restrictions:
-;;
-;; 1. The origin of this software must not be misrepresented; you must
-;;    not claim that you wrote the original software.  If you use this
-;;    software in a product, an acknowledgment in the product
-;;    documentation would be appreciated but is not required.
-;; 2. Altered source versions must be plainly marked as such, and must
-;;    not be misrepresented as being the original software.
-;; 3. This notice may not be removed or altered from any source
-;;    distribution.
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;; ------------------------------------------------------------------------
 
 ;; This is haxe-mode, an Emacs major mode for the haXe programming
@@ -38,8 +34,10 @@
 ;;            Added compile-error parser for the haXe compiler output.
 ;;            Loads of improvements.
 ;;    0.2.1 - Fix buffer-local comment-start-skip problem.
+;;    0.2.2 - Recognise keyword override.
+;;    0.3.0 - Switched to GPLv3 license because that is what cc-mode is using.
+;;    0.3.1 - Fix compile problem with emacs23.
 ;;
-;; TODO: Figure out a way to fix indentations after: typedef Foo = Int
 
 ;;; Usage:
 ;;
@@ -48,6 +46,7 @@
 ;; (defconst my-haxe-style
 ;;   '("java" (c-offsets-alist . ((case-label . +)
 ;;                                (arglist-intro . +)
+;;                                (arglist-cont-nonempty . 0)
 ;;                                (arglist-close . 0)
 ;;                                (cpp-macro . 0))))
 ;;   "My haXe Programming Style")
@@ -182,8 +181,8 @@
 (c-lang-defconst c-brace-list-decl-kwds
   haxe '( "enum" ))
 
-;; Keywords introducing declarations where the (first) identifier (declarator)
-;; follows directly after the keyword, without any type.
+;; Keywords introducing declarations where the identifier follows directly
+;; after the keyword, without any type.
 (c-lang-defconst c-typeless-decl-kwds
   haxe (append '( "function" "var" )
                (c-lang-const c-class-decl-kwds)
@@ -191,7 +190,7 @@
   
 ;; Definition modifiers.
 (c-lang-defconst c-modifier-kwds
-  haxe '( "private" "public" "static" ))
+  haxe '( "private" "public" "static" "override"))
 (c-lang-defconst c-other-decl-kwds
   haxe nil)
 
@@ -238,18 +237,6 @@
 (c-lang-defconst c-inexpr-brace-list-kwds
   haxe nil)
 
-;; No ellipsis.
-;(c-lang-defconst c-opt-type-suffix-key
-;  haxe nil)
-
-;(c-lang-defconst c-recognize-colon-labels
-;  haxe nil)
-
-;; Allow '=' in typedefs so they are treated as classes.
-(c-lang-defconst c-block-prefix-disallowed-chars
-  haxe (set-difference (c-lang-const c-block-prefix-disallowed-chars java)
-                       '(?=)))
-
 ;; All identifiers starting with a capital letter are types.
 (c-lang-defconst c-cpp-matchers
   haxe (append
@@ -269,14 +256,6 @@
   "Accurate normal highlighting for haxe mode.")
 (defvar haxe-font-lock-keywords haxe-font-lock-keywords-3
   "Default expressions to highlight in haxe mode.")
-(defun haxe-font-lock-keywords-1 ()
-  (c-compose-keywords-list haxe-font-lock-keywords-1))
-(defun haxe-font-lock-keywords-2 ()
-  (c-compose-keywords-list haxe-font-lock-keywords-2))
-(defun haxe-font-lock-keywords-3 ()
-  (c-compose-keywords-list haxe-font-lock-keywords-3))
-(defun haxe-font-lock-keywords ()
-  (c-compose-keywords-list haxe-font-lock-keywords))
 
 (defvar haxe-mode-syntax-table nil
   "Syntax table used in HaXe mode buffers.")
@@ -341,12 +320,9 @@ Key bindings:
   ;; only makes the necessary initialization to get the syntactic
   ;; analysis and similar things working.
   (c-common-init 'haxe-mode)
-  ;; For some reason, comment-start-skip has to be set manually.
-  (setq comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
-  ;; TODO: (easy-menu-add haxe-menu)
   (run-hooks 'c-mode-common-hook 'haxe-mode-hook)
   (c-update-modeline))
 
 (provide 'haxe-mode)
 
-;;; haxe-modex.el ends here.
+;;; haxe-mode.el ends here.

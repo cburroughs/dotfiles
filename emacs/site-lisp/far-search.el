@@ -11,14 +11,14 @@
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3 of the License, or
 ;; (at your option) any later version.
-;; 
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;; GNU General Public License for more details.
-;; 
+;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 ;;; Commentary:
@@ -29,19 +29,19 @@
 
 ;;; Basic usage:
 
-;;  (add-to-list 'load-path "~/path/to/far-search/")
-;;  (require 'far-search)
-;;  M-x far-search
+;; (add-to-list 'load-path "~/path/to/far-search/")
+;; (require 'far-search)
+;; M-x far-search
 
 
 
 ;;; Keyboard shortcuts
 
-;; C-n      move down one result
-;; C-p      move up one result
-;; C-c 0-9  choose a result by number
-;; enter    choose selected result
-;; C-c C-q  quit
+;; C-n move down one result
+;; C-p move up one result
+;; C-c 0-9 choose a result by number
+;; enter choose selected result
+;; C-c C-q quit
 
 
 ;;; Code:
@@ -71,6 +71,9 @@
 (defvar far-search-window-config nil
   "Old window configuration.")
 
+(defvar far-search-point-position nil
+  "Old point position.")
+
 (defvar far-search-mode-string ""
   "String in mode line for additional info.")
 
@@ -94,35 +97,35 @@
   "Keymap used by far-search.")
 
 
-(defstruct far-search-result 
+(defstruct far-search-result
   "A far-search search result.
 
-  * summary
-     The full body of text presented in the results list, 
-     may contain leading and trailing text, in addition to the match.
+* summary
+The full body of text presented in the results list,
+may contain leading and trailing text, in addition to the match.
 
-  * match-file-name
-    The filename of the buffer containing the match
+* match-file-name
+The filename of the buffer containing the match
 
-  * match-start
-    The point in buffer at which the match started
+* match-start
+The point in buffer at which the match started
 
-  * match-end
-    The point in buffer at which the match ended
+* match-end
+The point in buffer at which the match ended
 
-  * match-line
-    The line number in buffer match started
+* match-line
+The line number in buffer match started
 
-  * match-summary-offset
-    Within summary, the offset at which the match begins
+* match-summary-offset
+Within summary, the offset at which the match begins
 
-  * match-length
-    The length of the match
+* match-length
+The length of the match
 
-  * summary-start
-    The offset at which summary begins in the results buffer.
-  "
-  (summary nil) 
+* summary-start
+The offset at which summary begins in the results buffer.
+"
+  (summary nil)
   (match-file-name nil)
   (match-start nil)
   (match-end nil)
@@ -158,12 +161,13 @@
 
 (defun far-search ()
   "The main entrypoint for far-search-mode.
-   Initiate an incremental search of all live buffers."
+Initiate an incremental search of all live buffers."
   (interactive)
   (if (and (string= (buffer-name) far-search-buffer-name)
 	   (memq major-mode '(far-search-mode)))
       (message "Already in far-search buffer")
 
+    (setq far-search-point-position (point))
     (setq far-search-target-buffer (switch-to-buffer (get-buffer-create far-search-target-buffer-name)))
     (setq far-search-target-window (selected-window))
     (setq far-search-window-config (current-window-configuration))
@@ -188,7 +192,8 @@
   "Quit the far-search mode."
   (interactive)
   (kill-buffer far-search-buffer-name)
-  (set-window-configuration far-search-window-config))
+  (set-window-configuration far-search-window-config)
+  (goto-char far-search-point-position))
 
 
 (defun far-search-choose-current-result ()
@@ -224,7 +229,7 @@
 	   far-search-current-selected-result)
       (let* ((i (position far-search-current-selected-result far-search-current-results))
 	     (len (length far-search-current-results))
-	     (next (if (< (+ i 1) len) 
+	     (next (if (< (+ i 1) len)
 		       (nth (+ i 1) far-search-current-results)
 		     (nth 0 far-search-current-results))))
 	(setq far-search-current-selected-result next)
@@ -254,10 +259,10 @@
 
 (defun far-search-mode-common ()
   "Setup functions common to function `far-search-mode'."
-  (setq	far-search-mode-string  ""
-	far-search-mode-valid-string ""
-	mode-line-buffer-identification
-	'(25 . ("%b" far-search-mode-string far-search-valid-string)))
+  (setq  far-search-mode-string ""
+	 far-search-mode-valid-string ""
+	 mode-line-buffer-identification
+	 '(25 . ("%b" far-search-mode-string far-search-valid-string)))
   (far-search-update-modestring)
   (make-local-variable 'after-change-functions)
   (add-hook 'after-change-functions
@@ -278,7 +283,7 @@
   "Move cursor to current result selection in target buffer."
   (if (far-search-result-p far-search-current-selected-result)
       (with-current-buffer far-search-target-buffer
-	(let ((target-point (far-search-result-summary-start 
+	(let ((target-point (far-search-result-summary-start
 			     far-search-current-selected-result)))
 	  (set-window-point far-search-target-window target-point)
 	  ))))
@@ -355,18 +360,18 @@ optional fourth argument FORCE is non-nil."
 
     (let ((buffers (far-search-buffers-to-search)))
 
-      (mapc 
+      (mapc
        (lambda (b)
 	 (with-current-buffer b
 	   (goto-char (point-min))
 	   (let ((search-result (re-search-forward far-search-regexp nil t)))
 	     (if search-result
-		 (let ((text (buffer-substring-no-properties 
+		 (let ((text (buffer-substring-no-properties
 			      (point-at-bol)
 			      (min (point-max)
 				   (+ (match-end 0) 20))
 			      )))
-		   (push (make-far-search-result 
+		   (push (make-far-search-result
 			  :summary text
 			  :match-file-name (buffer-file-name)
 			  :match-start (match-beginning 0)
@@ -377,7 +382,7 @@ optional fourth argument FORCE is non-nil."
 		   )))
 	   )) buffers)
 
-      (if far-search-current-results 
+      (if far-search-current-results
 	  (setq far-search-current-selected-result (first far-search-current-results)))
 
       (let ((counter 0))
@@ -394,20 +399,20 @@ optional fourth argument FORCE is non-nil."
 
 	   (let ((p (point)))
 	     ;; Insert the actual text, highlighting the matched substring
-	     (insert (format "%s....  \n" (far-search-result-summary r))) 
+	     (insert (format "%s.... \n" (far-search-result-summary r)))
 	     (add-text-properties (+ p (far-search-result-match-summary-offset r))
-				  (+ p (far-search-result-match-summary-offset r) (far-search-result-match-length r)) 
+				  (+ p (far-search-result-match-summary-offset r) (far-search-result-match-length r))
 				  '(comment nil face far-search-result-match-face)))
 
 	   ;; Insert metadata, filename, line number
 	   (let ((p (point)))
-	     (insert (format "[%s : %s]" 
-			     (far-search-result-match-file-name r) 
+	     (insert (format "[%s : %s]"
+			     (far-search-result-match-file-name r)
 			     (far-search-result-match-line r)))
 	     (add-text-properties p (point) '(comment nil face far-search-result-file-name-face)))
 
 	   ;; Insert a seperator line
-	   (let ((p (point)))	   
+	   (let ((p (point)))
 	     (insert (format "\n\n%s\n\n" (make-string (window-width) ?-)))
 	     (add-text-properties p (point) '(comment nil face far-search-result-seperator-lines-face)))
 
@@ -421,6 +426,3 @@ optional fourth argument FORCE is non-nil."
 
 
 (provide 'far-search)
-
-
-
