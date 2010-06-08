@@ -8,7 +8,7 @@
 
 ;; C-c i calls insert-date-string
 (global-set-key (kbd "C-c i") 'insert-date-string)
-; would like to be able to use shift- arrow to change date
+;; would like to be able to use shift- arrow to change date (like in org-mode)
 
 
 ;; steve yegge
@@ -27,6 +27,7 @@
           (rename-buffer new-name) 	 
           (set-visited-file-name new-name) 	 
           (set-buffer-modified-p nil))))))
+
 
 (defun move-buffer-file (dir)
   "Moves both current buffer and file it's visiting to DIR." 

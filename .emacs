@@ -1,28 +1,28 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
-;; TODO: why does color-theme not fully load? (appear to loose colors on xwindow resize)
-;; TODO: figure out java-annotation support
-;; TODO: A happy round of commenting.
-;; TODO: Reduce the use of require (effective dot.emacs)
-;; TODO: use Alt-n to switch 'tabs'
-;; TODO/GOAL: less than 1s load time
-;; TODO: Make jdee work
-;; TODO: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
-;; TODO: func to resize to max screen width (across monitors)
-;; TODO: Do I like vi dot mode?
-;; TODO: What does pc-select etc mode not work in ubuntu land?
-;; TODO: more insert date options
-;; TODO: investigate ropemacs
-;; TODO: look into running emacsclient for terminal stuff
-;; TODO: open in firefox (new tab?)
-;; TODO: color-theme for org mode when opened directly
-;; TODO: add pycomplete to hippie-expand as well
-;; TODO: better way to set PYTHONPATH so gui launcher figures it out
-;; TODO: what to do about env not being sourced by gui launcher
-;; TODO: can tabbars be made to horizontally scroll?
-;; TODO: spell check not comments (ie for svn commit messages)
-;; TODO: document things I expect the package manager to install (partially done)
+;; todo: why does color-theme not fully load? (appear to loose colors on xwindow resize)
+;; todo: figure out java-annotation support
+;; todo: A happy round of commenting.
+;; todo: Reduce the use of require (effective dot.emacs)
+;; todo: use Alt-n to switch 'tabs'
+;; todo/GOAL: less than 1s load time
+;; todo: Make jdee work
+;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
+;; todo: func to resize to max screen width (across monitors)
+;; todo: Do I like vi dot mode?
+;; todo: What does pc-select etc mode not work in ubuntu land?
+;; todo: more insert date options
+;; todo: investigate ropemacs
+;; todo: look into running emacsclient for terminal stuff
+;; todo: open in firefox (new tab?)
+;; todo: color-theme for org mode when opened directly
+;; todo: add pycomplete to hippie-expand as well
+;; todo: better way to set PYTHONPATH so gui launcher figures it out
+;; todo: what to do about env not being sourced by gui launcher
+;; todo: can tabbars be made to horizontally scroll?
+;; todo: spell check not comments (ie for svn commit messages)
+;; todo: document things I expect the package manager to install (partially done)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: turn off hl-p in vc annotate mode
@@ -52,7 +52,6 @@
 ; sure, check the notice in each file.
 
 ; Goal: Runs under emacs-23 on gentoo and ubuntu
-; TODO: There is no good reason for it not to work in emacs 22
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 

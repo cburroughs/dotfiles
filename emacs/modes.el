@@ -27,14 +27,6 @@
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
-;; looking into 
-;; (add-hook 'speedbar-load-hook
-;;    '(lambda ()
-;;    (setq speedbar-update-speed 5
-;;      speedbar-track-mouse-flag t
-;;      speedbar-activity-change-focus t)))
-
-
  
 (defun esk-pp-json ()
   "Pretty-print the json object following point."

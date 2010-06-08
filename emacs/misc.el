@@ -45,5 +45,3 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
-
-;; from esk
