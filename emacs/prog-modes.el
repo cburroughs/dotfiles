@@ -89,13 +89,6 @@
                             (local-set-key "\C-cl" 'js-load-file-and-go)))
 
 
-;;; Actionscript
-
-(autoload 'actionscript-mode "actionscript-mode")
-(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-(add-hook 'actionscript-mode-hook '(lambda () 
-                                     (setq c-basic-offset 4)))
-
 ;;; Haxe
 
 (require 'haxe-mode)
