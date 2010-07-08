@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : $splat(obj);
+# --
+$splat($0)

@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : addClass(...)
+# --
+addClass('$0')

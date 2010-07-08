@@ -1,5 +1,5 @@
-#name : if ... end
-#group : control structure
+# -*- mode: snippet -*-
+#name : if condition ... end
 # --
 if ${1:condition}
   $0

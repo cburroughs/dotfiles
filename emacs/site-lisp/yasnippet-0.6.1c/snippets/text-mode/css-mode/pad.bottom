@@ -1,4 +1,4 @@
-#contributor : rejeep <johan.rejeep@gmail.com>
-#name : padding-bottom: ...
+# -*- mode: snippet -*-
+#name : padding-bottom: ...px;
 # --
-padding-bottom: $1;
+padding-bottom: $1px;

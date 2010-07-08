@@ -1,4 +1,4 @@
-#contributor : rejeep <johan.rejeep@gmail.com>
-#name : margin-bottom: ...
+# -*- mode: snippet -*-
+#name : margin-bottom: ...px;
 # --
-margin-bottom: $1;
+margin-bottom: $1px;
