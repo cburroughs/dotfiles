@@ -76,6 +76,7 @@
 (add-path "~/emacs/")
 (add-path "~/emacs/site-lisp/")
 (add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
+(add-path "~/emacs/site-lisp/yasnippet-0.6.1c/")
 
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present

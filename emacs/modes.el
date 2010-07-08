@@ -229,3 +229,9 @@
 ;(command-frequency-table-load)
 ;(command-frequency-mode 1)
 ;(command-frequency-autosave-mode 1)
+
+
+;; yasnippet goodness!!
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/emacs/site-lisp/yasnippet-0.6.1c/snippets")
