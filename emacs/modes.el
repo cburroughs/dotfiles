@@ -238,6 +238,7 @@
 ;; change
 
 ;; http://github.com/rejeep/yasnippets
+;; http://github.com/madsdk/yasnippets-latex
 
 (require 'yasnippet)
 (yas/initialize)
