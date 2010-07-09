@@ -41,30 +41,6 @@
 ;;              (local-set-key [(return)] 'newline-and-indent))))
 
 
-;;; Java
-
-;; FIXME: have not actually gotten this to work
-;; annotations indent
-(require 'java-mode-indent-annotations)
-(defun my-java-mode-hook ()
-  (java-mode-indent-annotations-setup))
-(add-hook 'java-mode-hook 'my-java-mode-hook)
-
-;; strange {} indentation
-(defun mrallen-java-mode ()
-  (interactive)
-  (add-hook 'java-mode-hook 
-            '(lambda () (c-set-offset 'substatement-open 0))))
-
-
-;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
-(add-hook 
- 'java-mode-hook
- '(lambda () "Treat Java 1.5 @-style annotations as comments."
-    (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
-    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
-
-
 ;;; Python
 
 ;; Python mode for ubuntu.  (has working indentation)
@@ -161,3 +137,38 @@
   "Load nxhtml mode from it's latest directory of crazyness"
   (interactive)
   (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))
+
+
+
+
+;;; Java
+
+;; FIXME: have not actually gotten this to work
+;; annotations indent
+(require 'java-mode-indent-annotations)
+(defun my-java-mode-hook ()
+  (java-mode-indent-annotations-setup))
+(add-hook 'java-mode-hook 'my-java-mode-hook)
+
+;; strange {} indentation
+(defun mrallen-java-mode ()
+  (interactive)
+  (add-hook 'java-mode-hook 
+            '(lambda () (c-set-offset 'substatement-open 0))))
+
+
+;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
+(add-hook 
+ 'java-mode-hook
+ '(lambda () "Treat Java 1.5 @-style annotations as comments."
+    (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
+    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
+
+;; java mode+++
+(require 'cedet)
+(semantic-load-enable-minimum-features) ;; or enable more if you wish
+(require 'malabar-mode)
+(setq malabar-groovy-lib-dir 
+      "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+

@@ -78,6 +78,11 @@
 (add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
 (add-path "~/emacs/site-lisp/yasnippet-0.6.1c/")
 
+;; Manually managing cedet until 23.2
+(when (not (my-gentoo?))
+  (load-file "~/local_install/cedet/cedet-1.0pre7/common/cedet.el"))
+(add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")
+
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/emacs/" 0)
@@ -157,6 +162,8 @@
 ;; jde
 
 ;; I expect to be in in local_install
+
+;; cedet
 
 ;;app-emacs/slime ; slime does not
 ;; have real releases so every machine will use a different
