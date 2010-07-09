@@ -158,11 +158,11 @@
 
 
 ;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
-(add-hook 
- 'java-mode-hook
- '(lambda () "Treat Java 1.5 @-style annotations as comments."
-    (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
-    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
+;; (add-hook 
+;;  'java-mode-hook
+;;  '(lambda () "Treat Java 1.5 @-style annotations as comments."
+;;     (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
+;;     (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 ;; java mode+++
 (require 'cedet)
