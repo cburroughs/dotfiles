@@ -27,14 +27,6 @@
 ; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
-;; looking into 
-;; (add-hook 'speedbar-load-hook
-;;    '(lambda ()
-;;    (setq speedbar-update-speed 5
-;;      speedbar-track-mouse-flag t
-;;      speedbar-activity-change-focus t)))
-
-
  
 (defun esk-pp-json ()
   "Pretty-print the json object following point."
@@ -134,6 +126,8 @@
 
 ;; Better twiki editing
 (require 'erin)
+(add-to-list 'auto-mode-alist '(".*firefox.*twiki.*" . erin-mode))
+
 
 ;; sql indenting
 ;; http://www.emacswiki.org/cgi-bin/wiki/download/sql-indent.el
@@ -235,3 +229,21 @@
 ;(command-frequency-table-load)
 ;(command-frequency-mode 1)
 ;(command-frequency-autosave-mode 1)
+
+
+;; yasnippet goodness!!
+
+;; additional snippet packs, the least bad thing seems to be dump them
+;; into one giant install snippet folder incase format or things
+;; change
+
+;; http://github.com/rejeep/yasnippets
+;; http://github.com/madsdk/yasnippets-latex
+
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/emacs/site-lisp/yasnippet-0.6.1c/snippets")
+
+
+;; rainbow mode!
+(require 'rainbow-mode)

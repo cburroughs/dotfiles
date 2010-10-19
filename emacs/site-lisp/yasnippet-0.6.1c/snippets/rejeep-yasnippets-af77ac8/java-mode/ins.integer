@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : Integer instance variable
+# --
+/**
+ * 
+ */
+private int ${1:variable_value};

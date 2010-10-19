@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Ert test
+# --
+(ert-deftest ${1:test-name} ()
+  $0
+  )

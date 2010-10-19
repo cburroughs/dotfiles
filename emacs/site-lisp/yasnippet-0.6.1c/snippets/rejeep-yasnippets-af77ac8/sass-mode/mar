@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : margin: ...px
+# --
+margin: $1px

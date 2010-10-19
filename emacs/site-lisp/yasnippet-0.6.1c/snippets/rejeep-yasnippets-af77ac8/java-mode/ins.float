@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+#name : Float instance variable
+# --
+/**
+ * 
+ */
+private float ${1:variable_value};

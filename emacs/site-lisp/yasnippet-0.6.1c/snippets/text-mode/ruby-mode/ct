@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : context "..." do ... end
+# --
+context "$1" do
+  setup { $0 }
+  
+  
+end

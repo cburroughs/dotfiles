@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : :conditions => []
+# --
+:conditions => ["$1", $0]

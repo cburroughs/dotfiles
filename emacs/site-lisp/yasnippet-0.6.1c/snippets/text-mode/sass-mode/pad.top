@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : padding-top: ...px
+# --
+padding-top: $1px

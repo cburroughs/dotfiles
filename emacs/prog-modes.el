@@ -7,77 +7,6 @@
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-;; tweaks from http://github.com/technomancy/emacs-starter-kit/tree/master
-(eval-after-load 'js2-mode
-  '(progn
-     ;; my customization
-     (setq js2-mirror-mode nil)
-
-      ;; Cosmetics
-     ;; Why does this not work?
-     (font-lock-add-keywords
-      'js2-mode `(("\\(function *\\)("
-                   (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                             "ƒ")
-                             nil)))))
-     ;; same; why does this not work?
-     (font-lock-add-keywords
-      'js2-mode
-      '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
-         1 font-lock-warning-face t)))
- 
-     (defun js-lambda () (interactive) (insert "function () {\n}")
-       (backward-char 5))
-     (add-hook 'js2-mode-hook 'coding-hook) ;; FIXME: need from esk
-     (define-key js2-mode-map (kbd "C-c l") 'js-lambda)
- 
-     ;; Fix js2's crazy indentation
-     (define-key js2-mode-map (kbd "TAB") (lambda () (interactive)
-                                            (indent-for-tab-command)
-                                            (back-to-indentation)))
-     (setq js2-bounce-indent-flag nil
-           js2-indent-on-enter-key t)
-
-     (defun js-continued-var-decl-list-p ()
-       "Return non-nil if point is inside a continued variable declaration list."
-       (interactive)
-       (let ((start (save-excursion (js-re-search-backward "\\<var\\>" nil t))))
-         (and start
-              (save-excursion (re-search-backward "\n" start t))
-              (not (save-excursion
-                     (js-re-search-backward
-                      ";\\|[^, \t][ \t]*\\(/[/*]\\|$\\)" start t))))))
-     
-     (defun js-proper-indentation (parse-status)
-       "Return the proper indentation for the current line."
-       (save-excursion
-         (back-to-indentation)
-         (let ((ctrl-stmt-indent (js-ctrl-statement-indentation))
-               (same-indent-p (looking-at "[]})]\\|\\<case\\>\\|\\<default\\>"))
-               (continued-expr-p (js-continued-expression-p)))
-           (cond (ctrl-stmt-indent)
-                 ((js-continued-var-decl-list-p)
-                  (js-re-search-backward "\\<var\\>" nil t)
-                  (+ (current-indentation) js2-basic-offset))
-                 ((nth 1 parse-status)
-                  (goto-char (nth 1 parse-status))
-                  (if (looking-at "[({[][ \t]*\\(/[/*]\\|$\\)")
-                      (progn
-                        (skip-syntax-backward " ")
-                        (when (= (char-before) ?\)) (backward-list))
-                        (back-to-indentation)
-                        (cond (same-indent-p
-                               (current-column))
-                              (continued-expr-p
-                               (+ (current-column) (* 2 js2-basic-offset)))
-                              (t
-                               (+ (current-column) js2-basic-offset))))
-                    (unless same-indent-p
-                      (forward-char)
-                      (skip-chars-forward " \t"))
-                    (current-column)))
-                 (continued-expr-p js2-basic-offset)
-                 (t 0)))))))
 
 (require 'js-comint)
 (setq inferior-js-program-command "rhino")
@@ -88,13 +17,10 @@
                             (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
                             (local-set-key "\C-cl" 'js-load-file-and-go)))
 
+;; json
+(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
+(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
 
-;;; Actionscript
-
-(autoload 'actionscript-mode "actionscript-mode")
-(add-to-list 'auto-mode-alist '("\\.as$" . actionscript-mode))
-(add-hook 'actionscript-mode-hook '(lambda () 
-                                     (setq c-basic-offset 4)))
 
 ;;; Haxe
 
@@ -117,24 +43,6 @@
 ;;              (setq indent-tabs-mode t)
 ;;              (setq fill-column 80)
 ;;              (local-set-key [(return)] 'newline-and-indent))))
-
-
-;;; Java
-
-;; FIXME: have not actually gotten this to work
-;; annotations indent
-(require 'java-mode-indent-annotations)
-(defun my-java-mode-hook ()
-  (java-mode-indent-annotations-setup))
-(add-hook 'java-mode-hook 'my-java-mode-hook)
-
-
-;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
-(add-hook 
- 'java-mode-hook
- '(lambda () "Treat Java 1.5 @-style annotations as comments."
-    (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
-    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 
 ;;; Python
@@ -172,12 +80,27 @@
 (add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
 ; TODO: inferior arc
 
+;; slime
+(if (not (my-gentoo?))
+    (progn
+      (eval-after-load "slime"
+        '(progn (slime-setup '(slime-repl))))
+      (load-library "~/local_install/slime-2010-09-22/slime.el")
+      (require 'slime)
+      (slime-setup))
+  (progn
+    (eval-after-load "slime"
+      '(progn (slime-setup '(slime-repl))))
+    (add-to-list 'load-path "~/local_install/slime-2009-09-14/")
+    (require 'slime)
+    (slime-setup)))
+
 
 ;;; Clojure
 ;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
 ;; and some READMEs...
 (require 'clojure-mode)
-(add-to-list 'load-path "~/prog/github/swank-clojure/src/emacs")
+;(add-to-list 'load-path "~/prog/github/swank-clojure/src/emacs")
 (require 'swank-clojure)
 
 ;(require 'swank-clojure-autoload)
@@ -191,21 +114,6 @@
 ;                       "gen_classpath -r -L ~/local_install/clojure/lib"))))))
 
 
-;; slime
-(if (not (my-gentoo?))
-    (progn
-      (eval-after-load "slime"
-        '(progn (slime-setup '(slime-repl))))
-      (load-library "~/local_install/slime-2009-11-11/slime.el")
-      (require 'slime)
-      (slime-setup))
-  (progn
-    (eval-after-load "slime"
-      '(progn (slime-setup '(slime-repl))))
-    
-    (add-to-list 'load-path "~/local_install/slime-2009-09-14/")
-    (require 'slime)
-    (slime-setup)))
 
 
 
@@ -233,3 +141,42 @@
   "Load nxhtml mode from it's latest directory of crazyness"
   (interactive)
   (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))
+
+
+
+
+;;; Java
+
+;; FIXME: have not actually gotten this to work
+;; annotations indent
+(require 'java-mode-indent-annotations)
+(defun my-java-mode-hook ()
+  (java-mode-indent-annotations-setup))
+(add-hook 'java-mode-hook 'my-java-mode-hook)
+
+;; strange {} indentation
+(defun mrallen-java-mode ()
+  (interactive)
+  (add-hook 'java-mode-hook 
+            '(lambda () (c-set-offset 'substatement-open 0))))
+
+
+;; http://nlp.stanford.edu/javanlp/emacs-tips.shtml
+;; (add-hook 
+;;  'java-mode-hook
+;;  '(lambda () "Treat Java 1.5 @-style annotations as comments."
+;;     (setq c-comment-start-regexp "\\(@\\|/\\(/\\|[*][*]?\\)\\)")
+;;     (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
+
+;; java mode+++
+(require 'cedet)
+(semantic-load-enable-minimum-features) ;; or enable more if you wish
+(require 'malabar-mode)
+(setq malabar-groovy-lib-dir 
+      "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+
+
+;; I suppose string templates are closest to programming
+(require 'stringtemplate-mode)
+(add-to-list 'auto-mode-alist '("\\.st$" . stringtemplate-mode))
