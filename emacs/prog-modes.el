@@ -176,3 +176,7 @@
       "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
+
+;; I suppose string templates are closest to programming
+(require 'stringtemplate-mode)
+(add-to-list 'auto-mode-alist '("\\.st$" . stringtemplate-mode))
