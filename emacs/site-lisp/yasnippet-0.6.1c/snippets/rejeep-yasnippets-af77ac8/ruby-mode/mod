@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+#name : Module
+# --
+module ${1:module_name}
+  $0
+end

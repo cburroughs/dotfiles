@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : minimum(...)
+# --
+minimum(:${1:column})

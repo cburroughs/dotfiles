@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : nothing
+# --
+render :nothing => true

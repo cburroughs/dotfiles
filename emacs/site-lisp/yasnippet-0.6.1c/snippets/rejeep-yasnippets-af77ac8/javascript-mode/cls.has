@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+#name : hasClass(...)
+# --
+hasClass('$0')
