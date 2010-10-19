@@ -169,12 +169,14 @@
 ;;     (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 ;; java mode+++
-(require 'cedet)
-(semantic-load-enable-minimum-features) ;; or enable more if you wish
-(require 'malabar-mode)
-(setq malabar-groovy-lib-dir 
-      "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+(when (not (my-gentoo?))
+  (progn
+    (require 'cedet)
+    (semantic-load-enable-minimum-features) ;; or enable more if you wish
+    (require 'malabar-mode)
+    (setq malabar-groovy-lib-dir 
+          "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
+    (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))))
 
 
 ;; I suppose string templates are closest to programming

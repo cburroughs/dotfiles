@@ -46,6 +46,8 @@
 ;; todo: http://nflath.com/2009/08/cc-and-java-customizations/ for java
 ;; todo: look at this: http://taesoo.org/Opensource/Pylookup
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
+;; todo: visual C-x o
+;; todo: Textmate ExecuteExternalCommand bridge
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be

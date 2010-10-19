@@ -76,6 +76,13 @@
 
 (global-set-key [f11] 'fullscreen)
 
+(defun totally-fullscreen()
+  (interactive)
+  (tool-bar-mode)
+  (menu-bar-mode))
+
+(global-set-key [f12] 'totally-fullscreen)
+
 
 ; TODO: Investigate these
 ;http://dotfiles.org/~coder_/.emacs
