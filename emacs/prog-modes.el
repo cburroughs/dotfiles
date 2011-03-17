@@ -22,29 +22,6 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
 
 
-;;; Haxe
-
-(require 'haxe-mode)
-(defconst my-haxe-style
-  '("java" (c-offsets-alist . ((case-label . +)
-                               (arglist-intro . +)
-                               (arglist-close . 0)
-                               (cpp-macro . 0))))
-  "My haXe Programming Style")
-(add-hook 'haxe-mode-hook
-          (function (lambda () (c-add-style "haxe" my-haxe-style t))))
-(autoload 'haxe-mode "haxe-mode")
-(add-to-list 'auto-mode-alist '("\\.hx$" . haxe-mode))
-
-;; (add-hook 'haxe-mode-hook
-;;           (function
-;;            (lambda ()
-;;              (setq tab-width 4)
-;;              (setq indent-tabs-mode t)
-;;              (setq fill-column 80)
-;;              (local-set-key [(return)] 'newline-and-indent))))
-
-
 ;;; Python
 
 ;; Python mode for ubuntu.  (has working indentation)

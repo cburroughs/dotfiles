@@ -48,6 +48,7 @@
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
 ;; todo: visual C-x o
 ;; todo: Textmate ExecuteExternalCommand bridge
+;; todo: (c-set-offset 'substatement-open 0) <-- java mode
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
@@ -88,8 +89,6 @@
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/emacs/" 0)
-(shell-command "rm ~/emacs/site-lisp/haxe-mode.elc") ;; Still needed?
-
 
 ;; If I ever use customize crap I don't want it pooping on this file
 ;; I assume this is automatically loaded
