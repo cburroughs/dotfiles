@@ -149,6 +149,7 @@
 (setq auto-mode-alist
       (cons '("\\.mdown" . markdown-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 
 ;; Save a list of recent files visited.
