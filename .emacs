@@ -79,6 +79,7 @@
 (add-path "~/emacs/site-lisp/")
 (add-path "~/emacs/site-lisp/emacs-nav-20090824b/")
 (add-path "~/emacs/site-lisp/yasnippet-0.6.1c/")
+(add-path "~/emacs/site-lisp/scala-mode/")
 
 ;; Manually managing cedet until 23.2
 (when (not (my-gentoo?))

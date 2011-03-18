@@ -167,3 +167,7 @@
 ;; I suppose string templates are closest to programming
 (require 'stringtemplate-mode)
 (add-to-list 'auto-mode-alist '("\\.st$" . stringtemplate-mode))
+
+;;; scala
+
+(load "scala-mode-auto.el")
