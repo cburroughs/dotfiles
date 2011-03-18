@@ -248,3 +248,6 @@
 
 ;; rainbow mode!
 (require 'rainbow-mode)
+
+;; nice commit messages
+(require 'git-commit-mode)
