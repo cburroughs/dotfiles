@@ -43,12 +43,11 @@
 ;; todo: eldoc mode
 ;; todo: http://www.emacswiki.org/emacs/PrettyLambda
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
-;; todo: http://nflath.com/2009/08/cc-and-java-customizations/ for java
 ;; todo: look at this: http://taesoo.org/Opensource/Pylookup
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
 ;; todo: visual C-x o
 ;; todo: Textmate ExecuteExternalCommand bridge
-;; todo: (c-set-offset 'substatement-open 0) <-- java mode
+;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
