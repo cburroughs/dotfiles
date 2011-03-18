@@ -132,6 +132,18 @@
     '(lambda () (c-set-offset 'substatement-open 0))))
 
 
+;;; accept evil tabs
+(defun faust-make-deal ()
+  (interactive)
+  (setq-default indent-tabs-mode 1)
+  (require 'smarttabs))
+
+
+(defun faust-change-mind ()
+  (interactive)
+  (setq-default indent-tabs-mode nil))
+  
+
 ;; java mode+++
 (when (not (my-gentoo?))
   (progn
