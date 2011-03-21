@@ -125,8 +125,7 @@
 (require 'cc-mode)
 (add-hook 'c-mode-common-hook
           '(lambda ()
-			 (c-subword-mode 1)
-			 (c-toggle-hungry-state 1)))
+			 (c-subword-mode 1)))
 
 
 ;;; Java
@@ -167,6 +166,17 @@
 ;; I suppose string templates are closest to programming
 (require 'stringtemplate-mode)
 (add-to-list 'auto-mode-alist '("\\.st$" . stringtemplate-mode))
+
+
+(defun java-4-space ()
+  (interactive)
+  (setq c-basic-offset 4))
+
+;; who does this.
+(defun java-2-space ()
+  (interactive)
+  (setq c-basic-offset 4))
+
 
 ;;; scala
 

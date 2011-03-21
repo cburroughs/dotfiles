@@ -250,4 +250,4 @@
 (require 'rainbow-mode)
 
 ;; nice commit messages
-(require 'git-commit-mode)
+(require 'git-commit)
