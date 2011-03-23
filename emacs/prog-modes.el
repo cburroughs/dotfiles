@@ -175,7 +175,7 @@
 ;; who does this.
 (defun java-2-space ()
   (interactive)
-  (setq c-basic-offset 4))
+  (setq c-basic-offset 2))
 
 
 ;;; scala
