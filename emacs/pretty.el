@@ -19,8 +19,7 @@
 (if window-system
     (progn
       (require 'color-theme)
-      (when (my-gentoo?)
-        (color-theme-initialize)) ; gentoo wants, ubuntu hates
+      (color-theme-initialize)
       (color-theme-clarity)
       (global-hl-line-mode 1)
       (set-face-background 'hl-line "gray18")))
@@ -33,11 +32,11 @@
 
 ; awesome fonts only with emacs 23!
 ; TODO: What if the system does not have this font?  
+;; todo: may need to revisit font sizes with widescreen real estate
 (if (string-match "23\." (emacs-version))
     (if (my-gentoo?)
         (set-frame-font "DejaVu Sans Mono-10")
-      (set-frame-font "DejaVu Sans Mono-8")))
-;;      (set-frame-font "Bitstream Vera Sans Mono-10")))
+      (set-frame-font "DejaVu Sans Mono-10")))
 
 
 ;; Start nice and tall, but should still be 80 char wide
