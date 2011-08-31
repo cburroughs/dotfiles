@@ -49,6 +49,7 @@
 ;; todo: Textmate ExecuteExternalCommand bridge
 ;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
 ;; todo: more scala goodies: http://scala.sygneca.com/tools/emacs
+;; todo: look into more anything.el goodness
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be

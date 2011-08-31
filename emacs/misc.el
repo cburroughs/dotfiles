@@ -50,3 +50,8 @@
     (progn
       (require 'edit-server)
       (edit-server-start)))
+
+
+(require 'anything)
+(require 'anything-find-project-resources)
+(global-set-key (kbd "M-r") 'anything-find-resource)
