@@ -1,0 +1,47 @@
+#!/bin/bash -x
+# -*- mode: sh; -*-
+
+
+PROXY_USER=$1
+PROXY_HOST=$2
+JMX_PORT=$3
+JMX_HOST=$4
+
+# Based on:
+# http://www.palominodb.com/blog/2010/11/02/using-ssh-proxying-jconsole-remote-cassandra-instances
+
+# set this to the host you'll proxy through.
+#proxy_host="remoteuser@remotehost -p 22"    host=$1
+
+localhost=`hostname`
+localport=10102
+
+
+if [ "x$PROXY_HOST" = "x" ]; then
+    echo "Usage: jc-ssh proxy_user proxy_hos jmx_port [jmx_host]"
+    exit 1
+fi 
+
+if [ "x$JMX_HOST" = "x" ]; then
+    JMX_HOST=PROXY_HOST
+fi 
+
+# start up a background ssh tunnel on the desired port
+ssh -N -f -D$localport $PROXY_USER@$PROXY_HOST
+
+# if the tunnel failed to come up, fail gracefully.
+if [ $? -ne 0 ]; then
+    echo "ssh tunnel failed"
+    exit 1
+fi
+
+ssh_pid=`ps awwwx | grep "[s]sh -N -f -D$localport" \
+    | awk '{print $1}'`
+echo "ssh pid = $ssh_pid"
+
+# Fire up jconsole to your remote host
+jconsole -J-DsocksProxyHost=$localhost -J-DsocksProxyPort=$localport \
+    service:jmx:rmi:///jndi/rmi://${JMX_HOST}:${JMX_PORT}/jmxrmi
+
+    # tear down the tunnel
+kill $ssh_pid
