@@ -6,6 +6,7 @@ PROXY_USER=$1
 PROXY_HOST=$2
 JMX_PORT=$3
 JMX_HOST=$4
+LOCAL_PORT=$5
 
 # Based on:
 # http://www.palominodb.com/blog/2010/11/02/using-ssh-proxying-jconsole-remote-cassandra-instances
@@ -18,7 +19,7 @@ localport=10102
 
 
 if [ "x$PROXY_HOST" = "x" ]; then
-    echo "Usage: jc-ssh proxy_user proxy_hos jmx_port [jmx_host]"
+    echo "Usage: jc-ssh <proxy-user> <proxy-host> <jmx-port> [jmx-host] [local-port]"
     exit 1
 fi 
 
@@ -26,10 +27,16 @@ if [ "x$JMX_HOST" = "x" ]; then
     JMX_HOST=PROXY_HOST
 fi 
 
-# start up a background ssh tunnel on the desired port
+localport=$LOCAL_PORT
+if [ "x$LOCAL_PORT" = "x" ]; then
+    localport=10102
+fi
+
+
+    # start up a background ssh tunnel on the desired port
 ssh -N -f -D$localport $PROXY_USER@$PROXY_HOST
 
-# if the tunnel failed to come up, fail gracefully.
+    # if the tunnel failed to come up, fail gracefully.
 if [ $? -ne 0 ]; then
     echo "ssh tunnel failed"
     exit 1
@@ -39,7 +46,7 @@ ssh_pid=`ps awwwx | grep "[s]sh -N -f -D$localport" \
     | awk '{print $1}'`
 echo "ssh pid = $ssh_pid"
 
-# Fire up jconsole to your remote host
+    # Fire up jconsole to your remote host
 jconsole -J-DsocksProxyHost=$localhost -J-DsocksProxyPort=$localport \
     service:jmx:rmi:///jndi/rmi://${JMX_HOST}:${JMX_PORT}/jmxrmi
 
