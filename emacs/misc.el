@@ -55,3 +55,8 @@
 (require 'anything)
 (require 'anything-find-project-resources)
 (global-set-key (kbd "M-r") 'anything-find-resource)
+
+(autoload 'columnize-text "columnize"
+  "Formats a list of items into columns (pillars)" t)
+
+(autoload 'align-cols "align" "Align text in the region." t)
