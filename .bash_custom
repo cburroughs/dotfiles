@@ -182,3 +182,6 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 if  [ `which emacs-snapshot 2> /dev/null` ] ; then
     export JAVA_HOME=/usr/lib/jvm/java-6-sun/
 fi
+
+
+### http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
