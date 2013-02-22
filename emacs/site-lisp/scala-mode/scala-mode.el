@@ -139,7 +139,8 @@ through `mail-user-agent'."
   "Syntax table used in `scala-mode' buffers.")
 
 ;;;###autoload
-(define-derived-mode scala-mode  "Scala"
+(unless (fboundp 'prog-mode) (defalias 'prog-mode 'fundamental-mode))
+(define-derived-mode scala-mode prog-mode "Scala"
   "Major mode for editing Scala code.
 \\{scala-mode-map}"
   :group 'scala
