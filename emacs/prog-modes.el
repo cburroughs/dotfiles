@@ -181,3 +181,5 @@
 ;;; scala
 
 (load "scala-mode-auto.el")
+
+(require 'vcl-mode)
