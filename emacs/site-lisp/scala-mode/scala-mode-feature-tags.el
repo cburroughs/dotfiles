@@ -1,36 +1,35 @@
-;;; -*-Emacs-Lisp-*-
-;;; scala-mode-feature-tags.el - 
+;;; scala-mode-feature-tags.el --- TAGS management for Scala
 
-;; Copyright (C) 2009-2011 Scala Dev Team at EPFL
+;; Copyright (C) 2009 Scala Dev Team at EPFL
 ;; Authors: See AUTHORS file
 ;; Keywords: scala languages oop
 
 ;;; License
 
 ;; SCALA LICENSE
-;;  
-;; Copyright (c) 2002-2011 EPFL, Lausanne, unless otherwise specified.
+;;
+;; Copyright (c) 2002-2010 EPFL, Lausanne, unless otherwise specified.
 ;; All rights reserved.
-;;  
+;;
 ;; This software was developed by the Programming Methods Laboratory of the
 ;; Swiss Federal Institute of Technology (EPFL), Lausanne, Switzerland.
-;;  
+;;
 ;; Permission to use, copy, modify, and distribute this software in source
 ;; or binary form for any purpose with or without fee is hereby granted,
 ;; provided that the following conditions are met:
-;;  
+;;
 ;;    1. Redistributions of source code must retain the above copyright
 ;;       notice, this list of conditions and the following disclaimer.
-;;  
+;;
 ;;    2. Redistributions in binary form must reproduce the above copyright
 ;;       notice, this list of conditions and the following disclaimer in the
 ;;       documentation and/or other materials provided with the distribution.
-;;  
+;;
 ;;    3. Neither the name of the EPFL nor the names of its contributors
 ;;       may be used to endorse or promote products derived from this
 ;;       software without specific prior written permission.
-;;  
-;;  
+;;
+;;
 ;; THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
 ;; ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -43,10 +42,11 @@
 ;; OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 ;; SUCH DAMAGE.
 
-;;; Code
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(provide 'scala-mode-feature-tags)
+;;; Commentary:
+;;
+
+;;; Code:
 
 (require 'etags)
 
@@ -54,19 +54,16 @@
   "Creating and using TAGS file searches"
   :group 'scala)
 
-
 (defcustom scala-mode-feature:tags-command "ctags"
-  "Tags command for parsing scala code. 
+  "Tags command for parsing scala code.
 Please see the contrib directory for ctags options for parsing scala files."
   :type 'string
   :group 'scala-mode-feature:tags)
 
-
 (defcustom scala-mode-feature:tags-option "-e -o %s -R %s"
-  "Options for the ctags command"
+  "Options for the ctags command."
   :type 'string
   :group 'scala-mode-feature:tags)
-
 
 (defcustom scala-mode-feature:tags-ask-when-reload nil
   "Indicates whether the user should confirm reload a TAGS table or not."
@@ -80,10 +77,10 @@ Please see the contrib directory for ctags options for parsing scala files."
   "")
 
 (defun scala-mode-feature-tags-create (dir-name)
-  "Create TAGS file"
+  "Create TAGS file from the files in DIR-NAME."
   (interactive "DTAGS file directory: ")
   (message "Creating TAGS, please wait...")
-  (let* 
+  (let*
       ((tags-file-name (concat dir-name "/TAGS"))
        (args (format scala-mode-feature:tags-option tags-file-name dir-name)))
     (shell-command
@@ -94,16 +91,14 @@ Please see the contrib directory for ctags options for parsing scala files."
       (visit-tags-table tags-file-name))
     (setq scala-mode-feature-tags-tag-file tags-file-name)))
 
-
 (defun scala-mode-feature-tags-load (file-name)
-  "Load TAGS file"
+  "Load TAGS file from FILE-NAME."
   (interactive "fTAGS file: ")
   (if (and (file-exists-p file-name) (file-readable-p file-name))
-      (progn 
+      (progn
 	(visit-tags-table file-name)
 	(setq scala-mode-feature-tags-tag-file file-name))
     (message "The TAGS file does not exist!")))
-
 
 (defun scala-mode-feature-tags-complete ()
   "Perform completion on the text around point.
@@ -120,7 +115,7 @@ for \\[find-tag] (which see)."
         (setq beg (point))
         (forward-char (length pattern))
         (setq completion (try-completion pattern scala-comp nil))
-        (cond 
+        (cond
 	 ((eq completion t))
 	 ((null completion)
 	  (message "Can't find completion for \"%s\"" pattern)
@@ -135,7 +130,6 @@ for \\[find-tag] (which see)."
 	     (all-completions pattern scala-comp)))
 	  (message "Making completion list...%s" "done"))))))
 
-
 (defun scala-mode-feature-tags-completion-table ()
     (or (and scala-mode-feature-tags-tag-file
 	     scala-mode-feature-tags-completion-table)
@@ -148,7 +142,6 @@ for \\[find-tag] (which see)."
         (unless tags-table
           (error "No TAGS file active!"))
         (setq scala-mode-feature-tags-completion-table tags-table))))
-
 
 (defun scala-mode-feature-tags-get-pattern ()
   (save-excursion
@@ -169,6 +162,10 @@ for \\[find-tag] (which see)."
                        (point))))
       nil)))
 
-(defun scala-mode-feature-tags-install () 
-  
+(defun scala-mode-feature-tags-install ()
+
   t)
+
+(provide 'scala-mode-feature-tags)
+
+;;; scala-mode-feature-tags.el ends here
