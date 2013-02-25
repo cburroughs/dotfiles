@@ -55,6 +55,7 @@
 (require 'anything)
 (require 'anything-find-project-resources)
 (global-set-key (kbd "M-r") 'anything-find-resource)
+(add-to-list `anything-find-resource--project-root-files '"build.sbt")
 
 (autoload 'columnize-text "columnize"
   "Formats a list of items into columns (pillars)" t)
