@@ -181,6 +181,7 @@
 ;;; scala
 
 (require 'scala-mode-auto)
-(define-key scala-mode-map [(tab)] 'scala-indent-line)
+(eval-after-load "scala-mode"
+  '(lambda () (define-key scala-mode-map [(tab)] 'scala-indent-line)))
 
 (require 'vcl-mode)
