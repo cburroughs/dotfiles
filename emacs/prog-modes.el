@@ -185,3 +185,6 @@
   '(lambda () (define-key scala-mode-map [(tab)] 'scala-indent-line)))
 
 (require 'vcl-mode)
+
+
+(setq ruby-deep-indent-paren nil)
