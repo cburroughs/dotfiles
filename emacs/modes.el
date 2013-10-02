@@ -106,12 +106,6 @@
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
   '(progn
-     (when window-system ; would prefer to do based on if color loaded
-       (progn ; implicit?
-         ; For reasons I do not understand this does *not* work if you
-         ; open the org-file with emacs on the cmd line
-         (load "color-theme-colorful-obsolescence")
-         (color-theme-colorful-obsolescence)))
      ; These give errors and seem to be unnecessary
      ;(define-key org-agenda-mode-map "\C-n" 'next-line)
      ;(define-key org-agenda-keymap "\C-n" 'next-line)
