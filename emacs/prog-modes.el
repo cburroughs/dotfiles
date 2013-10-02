@@ -57,22 +57,6 @@
 (add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
 ; TODO: inferior arc
 
-;; slime
-(if (not (my-gentoo?))
-    (progn
-      (eval-after-load "slime"
-        '(progn (slime-setup '(slime-repl))))
-      (load-library "~/local_install/slime-2010-09-22/slime.el")
-      (require 'slime)
-      (slime-setup))
-  (progn
-    (eval-after-load "slime"
-      '(progn (slime-setup '(slime-repl))))
-    (add-to-list 'load-path "~/local_install/slime-2009-09-14/")
-    (require 'slime)
-    (slime-setup)))
-
-
 ;;; Clojure
 ;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
 ;; and some READMEs...
