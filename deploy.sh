@@ -10,8 +10,8 @@ cp .inputrc ~
 cp .bash_custom ~
 cp .git-completion.sh ~
 
-cp ipythonrc-csb ~/.ipython/
-cp ipy-virtualenv.py ~/.ipython/
+#cp ipythonrc-csb ~/.ipython/
+#cp ipy-virtualenv.py ~/.ipython/
 
 mkdir -p ~/bin
 cp bin/* ~/bin
