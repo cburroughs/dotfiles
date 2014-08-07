@@ -172,10 +172,5 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
-# don't recall why this is the best laptop check
-if  [ `which emacs-snapshot 2> /dev/null` ] ; then
-    export JAVA_HOME=/usr/lib/jvm/java-6-sun/
-fi
-
 
 ### http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
