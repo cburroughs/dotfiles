@@ -173,3 +173,6 @@
 
 
 (setq ruby-deep-indent-paren nil)
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
