@@ -176,3 +176,14 @@
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
+
+(defun phab-php-mode ()
+  (interactive)
+  (setq c-default-style "k&r"
+        c-basic-offset 2)
+  (c-set-offset 'arglist-intro '+)
+  (c-set-offset 'arglist-close 0)
+  (c-set-offset 'statement-cont '+)
+  (c-set-offset 'topmost-intro-cont '+)
+  (c-set-offset 'case-label '+)
+  (c-set-offset 'arglist-comt-nonempty '+))
