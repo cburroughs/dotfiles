@@ -186,4 +186,4 @@
   (c-set-offset 'statement-cont '+)
   (c-set-offset 'topmost-intro-cont '+)
   (c-set-offset 'case-label '+)
-  (c-set-offset 'arglist-comt-nonempty '+))
+  (c-set-offset 'arglist-cont-nonempty '+))
