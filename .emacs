@@ -154,7 +154,6 @@
 
 ;; I expect the os package manager to take care of
 
-;; app-emacs/cedet
 ;; app-emacs/color-theme
 ;; app-emacs/ecb +java
 ;; app-emacs/graphviz-dot-mode
