@@ -56,6 +56,10 @@
 (require 'anything-find-project-resources)
 (global-set-key (kbd "M-r") 'anything-find-resource)
 (add-to-list `anything-find-resource--project-root-files '"build.sbt")
+(add-to-list `anything-find-resource--project-root-files '"pants.ini")
+(add-to-list `anything-find-resource--ignore-dirs '"dist/")
+(add-to-list `anything-find-resource--ignore-dirs '"target/")
+(add-to-list `anything-find-resource--ignore-files '"*.pyc")
 
 (autoload 'columnize-text "columnize"
   "Formats a list of items into columns (pillars)" t)
