@@ -99,7 +99,7 @@
 
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
-(load-library "key-bindings")
+(load-library "keybindings")
 (load-library "efuncs")
 (load-library "misc")
 (load-library "pretty")
