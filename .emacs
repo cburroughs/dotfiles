@@ -59,11 +59,14 @@
 
 (require 'cl) ; TODO: Everyone says this is awesome, find out why
 
-;; See http://a-nickels-worth.blogspot.com/2007/11/effective-emacs.html
-(defvar *emacs-load-start* (current-time)) ; Find out how long this takes
-;; Progress:
-;; Originally: 3s
-;; Pre-compiled: 2s
+;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
+(defvar *emacs-load-start* (current-time))
+(defun anarcat/time-to-ms (time)
+  (+ (* (+ (* (car time) (expt 2 16)) (car (cdr time)))
+	1000000) (car (cdr (cdr time)))))
+(defun anarcat/display-timing ()
+  (message ".emacs loaded in %fms" (/ (- (anarcat/time-to-ms (current-time)) (anarcat/time-to-ms *emacs-load-start*)) 1000000.0)))
+(add-hook 'after-init-hook 'anarcat/display-timing t)
 
 ;; For now I want things to work
 (defun my-gentoo? ()
@@ -138,14 +141,6 @@
 (setq semanticdb-default-save-directory "/tmp/")
 
 (setq make-backup-files t)
-
-
-;; end -- so we measure the time here
-(message "My .emacs loaded in %ds" 
-         (destructuring-bind (hi lo ms) (current-time) 
-           (- (+ hi lo) (+ (first *emacs-load-start*) 
-                           (second *emacs-load-start*)))))
-
 
 ;;; Dependencies
 
