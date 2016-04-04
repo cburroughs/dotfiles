@@ -4,7 +4,7 @@
 
 # For now all we do is copy over.
 cp .emacs ~
-cp -r emacs ~/
+rsync -aCz --delete .emacs.d ~/.emacs.d
 
 cp .inputrc ~
 cp .bash_custom ~
