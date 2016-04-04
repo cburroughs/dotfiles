@@ -83,9 +83,6 @@
 (add-path "~/.emacs.d/site-lisp/yasnippet-0.6.1c/")
 (add-path "~/.emacs.d/site-lisp/scala-mode/")
 
-;; Manually managing cedet until 23.2
-(when (not (my-gentoo?))
-  (load-file "~/local_install/cedet/cedet-1.0pre7/common/cedet.el"))
 (add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")
 
 ;; It is easy enough to byte compile everything, so we might as well
