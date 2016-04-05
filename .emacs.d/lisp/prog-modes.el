@@ -108,11 +108,6 @@
 ;;     (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))))
 
 
-;; I suppose string templates are closest to programming
-(require 'stringtemplate-mode)
-(add-to-list 'auto-mode-alist '("\\.st$" . stringtemplate-mode))
-
-
 (defun java-4-space ()
   (interactive)
   (setq c-basic-offset 4))
