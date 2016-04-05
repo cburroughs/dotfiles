@@ -50,6 +50,7 @@
 ;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
 ;; todo: more scala goodies: http://scala.sygneca.com/tools/emacs
 ;; todo: look into more anything.el goodness
+;; TODO: revisit snippets
 
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
@@ -83,7 +84,6 @@
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
 (add-path "~/.emacs.d/site-lisp/emacs-nav-20090824b/")
-(add-path "~/.emacs.d/site-lisp/yasnippet-0.6.1c/")
 (add-path "~/.emacs.d/site-lisp/scala-mode/")
 
 (add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")

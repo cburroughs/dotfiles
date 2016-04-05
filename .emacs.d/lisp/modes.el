@@ -227,20 +227,6 @@
 ;(command-frequency-autosave-mode 1)
 
 
-;; yasnippet goodness!!
-
-;; additional snippet packs, the least bad thing seems to be dump them
-;; into one giant install snippet folder incase format or things
-;; change
-
-;; http://github.com/rejeep/yasnippets
-;; http://github.com/madsdk/yasnippets-latex
-
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/emacs/site-lisp/yasnippet-0.6.1c/snippets")
-
-
 ;; rainbow mode!
 (require 'rainbow-mode)
 
