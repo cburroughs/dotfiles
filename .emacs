@@ -3,15 +3,11 @@
 
 ;; todo: why does color-theme not fully load? (appear to loose colors on xwindow resize)
 ;; todo: figure out java-annotation support
-;; todo: A happy round of commenting.
 ;; todo: Reduce the use of require (effective dot.emacs)
 ;; todo: use Alt-n to switch 'tabs'
-;; todo/GOAL: less than 1s load time
 ;; todo: Make jdee work
 ;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
 ;; todo: func to resize to max screen width (across monitors)
-;; todo: Do I like vi dot mode?
-;; todo: What does pc-select etc mode not work in ubuntu land?
 ;; todo: more insert date options
 ;; todo: investigate ropemacs
 ;; todo: look into running emacsclient for terminal stuff
@@ -29,15 +25,12 @@
 ;; todo: get tags of some sort working, they seem awesome
 ;; todo: js-comint code review
 ;; todo: look into nXhtml
-;; todo: why does haxe mode have recursive load errors when compiled?
-;; todo: make it so color-theme and slime don't screw each other up
 ;; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
 ;; todo: http://emacs-fu.blogspot.com/2009/02/transparent-emacs.html , needs newer emacs snapshot?
 ;; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
 ;; todo: next time I am hacking lisp code I really should look at paredit
 ;; todo: integrate ecb with smart-split
 ;; todo: http://www.neilvandyke.org/quack/
-;; todo: a simple trac wiki highlighting mode
 ;; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
 ;; todo: eldoc mode
@@ -55,10 +48,10 @@
 ; My .emacs "file".  All this stuff that has been accumulated and
 ; borrowed is probably under the GPL or public domain.  But to be
 ; sure, check the notice in each file.
+; Goal: Runs under emacs24 on multiple platforms, and load in a "few"
+; seconds
 
-; Goal: Runs under emacs-23 on gentoo and ubuntu
-
-(require 'cl) ; TODO: Everyone says this is awesome, find out why
+(require 'cl)
 
 ;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
 (defvar *emacs-load-start* (current-time))
@@ -156,13 +149,6 @@
 ;; app-emacs/crontab-mode 
 
 ;; I expect to be in in local_install
-
-;; cedet
-
-;;app-emacs/slime ; slime does not
-;; have real releases so every machine will use a different
-;; version. It's a crazy world. Least bad solution is to dump their
-;; cvs tarball in a directory.
 
 ;; Other:
 ;; tidy
