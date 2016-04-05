@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cp .emacs ~
-rsync -aCz .emacs.d ~/.emacs.d
+cp -ra .emacs.d/* ~/.emacs.d/
 
 cp .inputrc ~
 cp .bash_custom ~
