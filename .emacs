@@ -89,11 +89,11 @@
 
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
-(byte-recompile-directory "~/emacs/" 0)
+(byte-recompile-directory "~/.emacs.d/" 0)
 
 ;; If I ever use customize crap I don't want it pooping on this file
 ;; I assume this is automatically loaded
-(setq custom-file "~/emacs/.emacs-custom.el")
+(setq custom-file "~/.emac.ds/.emacs-custom.el")
 (load custom-file 'noerror)
 
 ;; load the files with the rest of my info

@@ -35,8 +35,8 @@
 (if (getenv "PYTHONPATH") ; if nil
     (when (not (string-match "site-lisp" (getenv "PYTHONPATH")))
       (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH") ":" 
-                                   (expand-file-name "~/emacs/site-lisp"))))
-  (setenv "PYTHONPATH"  (expand-file-name "~/emacs/site-lisp")))
+                                   (expand-file-name "~/.emacs.d/site-lisp"))))
+  (setenv "PYTHONPATH"  (expand-file-name "~/.emacs.d/site-lisp")))
 
 (eval-after-load "python-mode"
   '(require 'pycomplete))
