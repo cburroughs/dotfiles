@@ -52,40 +52,6 @@
 
 ;;;; Lisps
 
-;;; Clojure
-;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
-;; and some READMEs...
-(require 'clojure-mode)
-;(add-to-list 'load-path "~/prog/github/swank-clojure/src/emacs")
-(require 'swank-clojure)
-
-;(require 'swank-clojure-autoload)
-;(swank-clojure-config
-; (setq swank-clojure-jar-path "~/local_install/clojure/clojure.jar")
-; (setq swank-clojure-extra-classpaths
-;       (mapcar 'trim-string
-;               (cons "~/local_install/clojure/clojure-contrib.jar"
-;                     (split-string
-;                      (shell-command-to-string
-;                       "gen_classpath -r -L ~/local_install/clojure/lib"))))))
-
-
-
-
-
-;;; Common Lisp
-
-;; slime
-;(require 'slime)
-;(add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
-;(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-;; todo: how to do this for multiple slime lisps?
-;;(setq inferior-lisp-program "sbcl")
-
-;;; Scheme
-;; see external.el for scheme program name 
-
-
 ;; C#, YA RLY
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist
