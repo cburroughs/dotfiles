@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-#name : File
-# --
-File ${1:variable_name} = new File("${2:path}");

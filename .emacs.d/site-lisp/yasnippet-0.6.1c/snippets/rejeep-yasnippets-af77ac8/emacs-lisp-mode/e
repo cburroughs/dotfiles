@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-#name : should ...
-# --
-(equal ${1:o1} ${o2})

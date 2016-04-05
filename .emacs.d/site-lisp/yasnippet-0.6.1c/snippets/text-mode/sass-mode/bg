@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-#name : background: ...
-# --
-background: url(/images/$1)$2

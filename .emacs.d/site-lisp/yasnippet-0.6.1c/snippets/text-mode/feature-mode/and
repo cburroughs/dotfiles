@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-#name: And something else
-# --
-And ${1:something else}
-$0

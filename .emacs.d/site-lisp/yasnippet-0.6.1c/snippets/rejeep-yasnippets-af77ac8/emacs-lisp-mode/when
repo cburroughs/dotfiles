@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-#name : when condition ...
-# --
-(when ${1:condition}
-  $0
-)
