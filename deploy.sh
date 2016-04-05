@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cp .emacs ~
+mkdir -p ~/.emacs.d/
 cp -ra .emacs.d/* ~/.emacs.d/
 
 cp .inputrc ~
