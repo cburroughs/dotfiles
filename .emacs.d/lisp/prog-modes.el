@@ -18,8 +18,8 @@
                             (local-set-key "\C-cl" 'js-load-file-and-go)))
 
 ;; json
-(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+
 
 
 ;;; Python
