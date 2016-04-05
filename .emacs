@@ -83,7 +83,6 @@
 			
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
-(add-path "~/.emacs.d/site-lisp/emacs-nav-20090824b/")
 (add-path "~/.emacs.d/site-lisp/scala-mode/")
 
 (add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")

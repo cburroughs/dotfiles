@@ -205,8 +205,6 @@
 ;; http://github.com/aemoncannon/far-search-mode/tree/master
 (require 'far-search)
 
-(require 'nav)
-
 
 ;; whitespace
 (require 'show-wspace)
