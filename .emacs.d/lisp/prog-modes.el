@@ -52,12 +52,6 @@
 
 ;;;; Lisps
 
-;;; Arc
-;; arc stuff from http://github.com/nex3/dotfiles/
-(autoload 'arc-mode "arc" nil t)
-(add-to-list 'auto-mode-alist '("\\.arc$" . arc-mode))
-; TODO: inferior arc
-
 ;;; Clojure
 ;; ref: http://riddell.us/tutorial/slime_swank/slime_swank.html
 ;; and some READMEs...
