@@ -1,3 +1,5 @@
+# NOTE: Need to disale Gnome's Super+s "display some menu" shotcut
+
 # To specify a key, you can use 'xbindkeys --key' or
 # 'xbindkeys --multikey' and put one of the two lines in this file.
 #
