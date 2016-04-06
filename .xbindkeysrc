@@ -1,4 +1,7 @@
-# NOTE: Need to disale Gnome's Super+s "display some menu" shotcut
+# NOTE: Additional gnome changes
+# * disable Gnome's Super+s "display some menu" shotcut
+# * logout back to C-M-l
+# * gnome terminal: enable numonics
 
 # To specify a key, you can use 'xbindkeys --key' or
 # 'xbindkeys --multikey' and put one of the two lines in this file.
