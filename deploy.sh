@@ -4,9 +4,10 @@ cp .emacs ~
 mkdir -p ~/.emacs.d/
 cp -ra .emacs.d/* ~/.emacs.d/
 
-cp .inputrc ~
-cp .bash_custom ~
-cp .git-completion.sh ~
+cp -a .inputrc ~
+cp -a .bash_custom ~
+cp -a .git-completion.sh ~
+cp -a .xbindkeysrc ~
 
 #cp ipythonrc-csb ~/.ipython/
 #cp ipy-virtualenv.py ~/.ipython/
