@@ -87,9 +87,6 @@ if [[ -f /etc/gentoo-release ]] ; then
     }
 fi
 
-svndiff () { svn diff "${@}" | colordiff | less -R; }
-
-
 # http://www.shell-fu.org/lister.php?id=375
 function extract() {
     ee() { # echo and execute
