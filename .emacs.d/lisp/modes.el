@@ -119,11 +119,6 @@
      (define-key global-map [(control tab)]       'tabbar-forward)))
 
 
-;; Better twiki editing
-(require 'erin)
-(add-to-list 'auto-mode-alist '(".*firefox.*twiki.*" . erin-mode))
-
-
 ;; sql indenting
 ;; http://www.emacswiki.org/cgi-bin/wiki/download/sql-indent.el
 (eval-after-load "sql"
