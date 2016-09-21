@@ -1,0 +1,40 @@
+ * setup wifi and any other multi-day driver/kernel adventures (latest needed jessie-backports kernel + firmware + xorg drivers, and extra firmware from intel's website) 
+ * install gnome-flashback
+ * swap capslock and control. /etc/default/keyboard seems best to handle virtual terminals
+ * generate ssh key
+ * checkout and setup dotfiles
+ * test emacs, likely need to install some packages
+ * run gnome keybinding program
+ * run gnome-tweak-tool and allow X to be killed
+ * fix window buttons: gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+ * install/use clearlooks-phenix-theme
+ * install/use tango icon theme
+ * adjust dejavu fonts and be less huge
+ * adjust workspaces to 20(?) in 2 rows
+ * set: Tweak tool --> Typing --> Hyper mapped to Win Keys
+ * gnome panels: top only.  sm menu, terminal, [[window list added last]], worksapces, system monitor battery, notifications, clock, app icon
+ * Revert logout to C-M-l to avoid wm conflict (from keyboard shortcuts)
+
+ * blue window bar? (working now?, sometimes?
+ * brightness controls, fn keys? (xbacklight -set workaround)
+
+
+## Firefox
+
+Extensions:
+ * Cache Viewwer
+ * filter?
+ * JsonView
+ * Open in Browser
+ * copy as plaoin text
+ * Classic Theme Restorer
+ * google-plus-hide
+ * http/2 indicator
+ * httpseverywhere
+ 
+about:config
+ * browser.backspace_action = 0
+ * browser.link.open_external = 2
+ * browser.link.open_newwindow = 2
+ * browser.newtabpage.enabled
+ * browser.startup.page;0
