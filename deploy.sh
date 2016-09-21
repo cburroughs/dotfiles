@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rsync -a --delete .emacs.d/ ~/.emacs.d/
+rsync -a --exclude=elpa --delete .emacs.d/ ~/.emacs.d/
 
 cp -a .inputrc ~
 cp -a .bash_custom ~

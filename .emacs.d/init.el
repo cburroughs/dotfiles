@@ -79,12 +79,38 @@
 
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
-(byte-recompile-directory "~/.emacs.d/" 0)
+(byte-recompile-directory "~/.emacs.d/site-lisp" 0)
+(byte-recompile-directory "~/.emacs.d/lisp" 0)
 
 ;; If I ever use customize crap I don't want it pooping on this file
 ;; I assume this is automatically loaded
 (setq custom-file "~/.emac.ds/.emacs-custom.el")
 (load custom-file 'noerror)
+
+
+;; Bootstrap pkgs http://cachestocaches.com/2015/8/getting-started-use-package/
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+             '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/"))
+
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
 
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
