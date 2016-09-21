@@ -141,7 +141,6 @@
 ;; app-emacs/graphviz-dot-mode
 ;; app-emacs/jde
 ;; app-emacs/matlab
-;; app-emacs/pymacs
 ;; app-emacs/ruby-mode
 ;; jde
 ;; app-emacs/crontab-mode 

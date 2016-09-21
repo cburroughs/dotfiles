@@ -32,23 +32,6 @@
            (add-to-list 'auto-mode-alist '("\\BUILD\\'" . python-mode))
            (add-to-list 'interpreter-mode-alist '("python" . python-mode)))
 
-(if (getenv "PYTHONPATH") ; if nil
-    (when (not (string-match "site-lisp" (getenv "PYTHONPATH")))
-      (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH") ":" 
-                                   (expand-file-name "~/.emacs.d/site-lisp"))))
-  (setenv "PYTHONPATH"  (expand-file-name "~/.emacs.d/site-lisp")))
-
-(eval-after-load "python-mode"
-  '(require 'pycomplete))
-;(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(autoload 'python-mode "python-mode" "Python editing mode." t)
-(autoload 'pymacs-load "pymacs" nil t)
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-;(setq interpreter-mode-alist(cons '("python" . python-mode)
-;                             interpreter-mode-alist))
-
 
 ;;;; Lisps
 
