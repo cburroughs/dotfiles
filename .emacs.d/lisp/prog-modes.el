@@ -118,12 +118,6 @@
   (setq c-basic-offset 2))
 
 
-;;; scala
-
-(require 'scala-mode-auto)
-(eval-after-load "scala-mode"
-  '(lambda () (define-key scala-mode-map [(tab)] 'scala-indent-line)))
-
 (require 'vcl-mode)
 (setq vcl-indent-level 4)
 

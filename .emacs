@@ -41,7 +41,6 @@
 ;; todo: visual C-x o
 ;; todo: Textmate ExecuteExternalCommand bridge
 ;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
-;; todo: more scala goodies: http://scala.sygneca.com/tools/emacs
 ;; todo: look into more anything.el goodness
 ;; TODO: revisit snippets
 
@@ -76,7 +75,6 @@
 			
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
-(add-path "~/.emacs.d/site-lisp/scala-mode/")
 
 (add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")
 
