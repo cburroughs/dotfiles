@@ -2,7 +2,6 @@
 ;; My dot emacs
 ;; Minimum tested version: 24.4.1
 
-;; todo: why does color-theme not fully load? (appear to loose colors on xwindow resize)
 ;; todo: figure out java-annotation support
 ;; todo: Reduce the use of require (effective dot.emacs)
 ;; todo: use Alt-n to switch 'tabs'
@@ -13,7 +12,6 @@
 ;; todo: investigate ropemacs
 ;; todo: look into running emacsclient for terminal stuff
 ;; todo: open in firefox (new tab?)
-;; todo: color-theme for org mode when opened directly
 ;; todo: add pycomplete to hippie-expand as well
 ;; todo: better way to set PYTHONPATH so gui launcher figures it out
 ;; todo: what to do about env not being sourced by gui launcher
@@ -137,7 +135,6 @@
 
 ;; I expect the os package manager to take care of
 
-;; app-emacs/color-theme
 ;; app-emacs/ecb +java
 ;; app-emacs/graphviz-dot-mode
 ;; app-emacs/jde

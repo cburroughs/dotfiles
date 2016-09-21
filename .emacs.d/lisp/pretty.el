@@ -14,21 +14,26 @@
 ; try to have a decent name
 (setq frame-title-format '(buffer-file-name "%b -- %f" ( "%b" ) ) )
 
-;app-emacs/color-theme
-;; select a color theme and highlight current line if in not in term
+
+;; themes
+(add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
+
+(defun dark-theme ()
+  (interactive)
+  (load-theme 'clarity t)
+  (global-hl-line-mode 1)
+  (set-face-background 'hl-line "gray18"))
+
+
+(defun light-theme ()
+  (interactive)
+  (load-theme 'leuven t)
+  (global-hl-line-mode 1)
+  (set-face-background 'hl-line "snow"))
+
 (if window-system
     (progn
-      (require 'color-theme)
-      (color-theme-initialize)
-      (color-theme-clarity)
-      (global-hl-line-mode 1)
-      (set-face-background 'hl-line "gray18")))
-
-; todo: I could make this prettier
-(defun sun-theme ()
-  (interactive)
-  (color-theme-aalto-light)
-  (global-hl-line-mode 0))
+      (dark-theme)))
 
 ; awesome fonts only with emacs 23!
 ; TODO: What if the system does not have this font?  
