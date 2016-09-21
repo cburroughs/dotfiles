@@ -1,8 +1,6 @@
 #!/bin/sh
 
-cp .emacs ~
-mkdir -p ~/.emacs.d/
-cp -ra .emacs.d/* ~/.emacs.d/
+rsync -a --delete .emacs.d/ ~/.emacs.d/
 
 cp -a .inputrc ~
 cp -a .bash_custom ~
