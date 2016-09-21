@@ -1,5 +1,6 @@
 ;; Chris Burroughs
 ;; My dot emacs
+;; Minimum tested version: 24.4.1
 
 ;; todo: why does color-theme not fully load? (appear to loose colors on xwindow resize)
 ;; todo: figure out java-annotation support
