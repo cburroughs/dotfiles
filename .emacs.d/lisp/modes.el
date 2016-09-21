@@ -231,8 +231,3 @@
 
 ;; nice commit messages
 (require 'git-commit)
-
-(require 'nagios-mode)
-(setq nagios-indent-level 4)
-(add-to-list 'auto-mode-alist
-             '("\\.cfg$" . nagios-mode))
