@@ -80,7 +80,7 @@
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/.emacs.d/site-lisp" 0)
-(byte-recompile-directory "~/.emacs.d/lisp" 0)
+(byte-recompile-directory "~/.emacs.d/lisp")
 
 ;; If I ever use customize crap I don't want it pooping on this file
 ;; I assume this is automatically loaded

@@ -220,9 +220,10 @@
 ;(command-frequency-mode 1)
 ;(command-frequency-autosave-mode 1)
 
+(use-package rainbow-mode
+             :ensure t
+             :pin gnu)
 
-;; rainbow mode!
-(require 'rainbow-mode)
 
 ;; nice commit messages
 (require 'git-commit)
