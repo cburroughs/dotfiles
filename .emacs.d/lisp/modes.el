@@ -5,11 +5,14 @@
 (delete-selection-mode t) ; delete selected text
 
 ;; more paren highlighting goodness
-;; todo: add more colors
-(require 'highlight-parentheses)
-(highlight-parentheses-mode)
-(add-hook 'after-change-major-mode-hook
-          (lambda () (highlight-parentheses-mode 1)))
+(use-package highlight-parentheses
+             :ensure t
+             :pin melpa-stable
+             :config
+             (highlight-parentheses-mode)
+             (add-hook 'after-change-major-mode-hook
+                       (lambda () (highlight-parentheses-mode 1))))
+
 
 
 ;; from esk : display column number in modeline
