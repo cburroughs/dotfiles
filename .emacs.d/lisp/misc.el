@@ -45,13 +45,6 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
-;; Super Daemon Power
-(if (and (daemonp) (locate-library "edit-server"))
-    (progn
-      (require 'edit-server)
-      (edit-server-start)))
-
-
 (require 'anything)
 (require 'anything-find-project-resources)
 (global-set-key (kbd "M-r") 'anything-find-resource)
