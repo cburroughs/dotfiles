@@ -210,7 +210,8 @@
 
 (use-package rainbow-mode
              :ensure t
-             :pin gnu)
+             :pin gnu
+             :defer t)
 
 
 ;; nice commit messages
