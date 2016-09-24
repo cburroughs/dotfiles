@@ -1,4 +1,4 @@
-; Functions and such
+;; Functions and such
 
 ;; Insertion of Dates.
 (defun insert-date-string ()
@@ -14,7 +14,7 @@
 ;; steve yegge
 ;; Never understood why Emacs doesn't have this function.
 (defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME." 
+  "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
         (filename (buffer-file-name)))
@@ -22,15 +22,15 @@
         (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
           (message "A buffer named '%s' already exists!" new-name)
-        (progn 	 
-          (rename-file name new-name 1) 	 
-          (rename-buffer new-name) 	 
-          (set-visited-file-name new-name) 	 
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
 
 (defun move-buffer-file (dir)
-  "Moves both current buffer and file it's visiting to DIR." 
+  "Moves both current buffer and file it's visiting to DIR."
   (interactive "DNew directory: ")
   (let* ((name (buffer-name))
          (filename (buffer-file-name))
@@ -38,13 +38,13 @@
           (if (string-match dir "\\(?:/\\|\\\\)$")
               (substring dir 0 -1) dir))
          (newname (concat dir "/" name)))
-    
+
     (if (not filename)
         (message "Buffer '%s' is not visiting a file!" name)
-      (progn 	(copy-file filename newname 1) 	
-                (delete-file filename) 	
-                (set-visited-file-name newname) 	
-                (set-buffer-modified-p nil) 	t)))) 
+      (progn 	(copy-file filename newname 1)
+                (delete-file filename)
+                (set-visited-file-name newname)
+                (set-buffer-modified-p nil) 	t))))
 
 
 (defun wc-w ()
@@ -60,7 +60,7 @@
       (message "%d chars, %d words" char-count (/ char-count 5)))))
 
 
-;convert a buffer from dos ^M end of lines to unix end of lines
+;; convert a buffer from dos ^M end of lines to unix end of lines
 (defun dos2unix ()
   (interactive)
     (goto-char (point-min))
@@ -68,7 +68,7 @@
 
 
 ;; from emacs wiki
-;; obviously this would not work without X 
+;; obviously this would not work without X
 (defun fullscreen ()
   (interactive)
   (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -84,8 +84,8 @@
 (global-set-key [f12] 'totally-fullscreen)
 
 
-; TODO: Investigate these
-;http://dotfiles.org/~coder_/.emacs
+;; TODO: Investigate these
+;; http://dotfiles.org/~coder_/.emacs
 ;; {{{ Custom Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; An interactive version of the query-replace-regexp function  that lets you
 ;; see your regexp search before executing it (Safety first!)
@@ -134,13 +134,13 @@
   (interactive "P")
   (condition-case nil
       (fix-window-horizontal-size width)
-    (error 
+    (error
      (condition-case nil
 	 (fix-frame-horizontal-size width)
        (error
 	(error "Cannot resize window or frame horizontally"))))))
 
-; thanks #eamcs!
+;; thanks #eamcs!
 (defun apply-function-to-region (beg end fn)
   "Replace the given region with the result of applying the function to it."
     (save-excursion
@@ -168,7 +168,7 @@
     (goto-char (+ end 2 (length tag-name)))
     (insert "</" tag-name ">")))
 
-; http://bc.tech.coop/blog/docs/clojure-emacs.el
+;; http://bc.tech.coop/blog/docs/clojure-emacs.el
 (defun check-region-parens ()
   "Check if parentheses in the region are balanced. Signals a
 scan-error if not."
@@ -183,7 +183,7 @@ scan-error if not."
               (while (/= 0 (- (point)
                               (forward-list))))
               t)
-          (scan-error (signal 'scan-error 
+          (scan-error (signal 'scan-error
                               '("Region parentheses not balanced"))))))))
 
 
@@ -213,7 +213,7 @@ scan-error if not."
   (interactive)
   (insert (format-time-string "%c" (current-time))))
 
-;;http://blog.tuxicity.se/?p=32
+;; http://blog.tuxicity.se/?p=32
 (defun google-region (beg end)
   "Google the selected region."
   (interactive "r")

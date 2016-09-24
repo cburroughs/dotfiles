@@ -44,11 +44,11 @@
 ;; TODO: revisit snippets
 ;; TODO: Untangle  https://www.emacswiki.org/emacs/GitCommitMode
 
-; My .emacs "file".  All this stuff that has been accumulated and
-; borrowed is probably under the GPL or public domain.  But to be
-; sure, check the notice in each file.
-; Goal: Runs under emacs24 on multiple platforms, and load in a "few"
-; seconds
+;; My .emacs "file".  All this stuff that has been accumulated and
+;; borrowed is probably under the GPL or public domain.  But to be
+;; sure, check the notice in each file.
+;; Goal: Runs under emacs24 on multiple platforms, and load in a "few"
+;; seconds
 
 (require 'cl)
 
@@ -72,7 +72,7 @@
 ;; Need to set up path for elisp files
 (defun add-path (p)
   (add-to-list 'load-path p))
-			
+
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
 
@@ -98,7 +98,6 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
-
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (package-initialize)
@@ -168,7 +167,7 @@
 ;; app-emacs/matlab
 ;; app-emacs/ruby-mode
 ;; jde
-;; app-emacs/crontab-mode 
+;; app-emacs/crontab-mode
 
 ;; I expect to be in in local_install
 

@@ -1,6 +1,6 @@
-; misc changes and variable settings
+;; misc changes and variable settings
 
-;make the y or n suffice for a yes or no question
+;; make the y or n suffice for a yes or no question
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; copy-paste should work with other X clients

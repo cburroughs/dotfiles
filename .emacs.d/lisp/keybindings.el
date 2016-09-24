@@ -1,4 +1,3 @@
-;; Chris Burroughs
 ;; General Custom keybindings
 
 ;; in case of old emacs versions
@@ -61,4 +60,3 @@
 (global-set-key (kbd "C-x r C-w")   'rm-kill-region)
 (global-set-key (kbd "C-x r M-w")   'rm-kill-ring-save)
 (global-set-key (kbd "C-x r <down-mouse-1>") 'rm-mouse-drag-region)
-

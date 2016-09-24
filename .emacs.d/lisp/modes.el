@@ -1,4 +1,3 @@
-;; Chris Burroughs
 ;; emacs modes I use, their customization, and setup.
 
 (transient-mark-mode t) ; redundant, still does not work in ubuntu
@@ -25,7 +24,7 @@
 (setq diff-switches "-u")
 (add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode))
 
-; Finally found this.  page/updown can be undone
+;; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
  
@@ -72,7 +71,7 @@
  'tabbar-separator-face nil
  :height 0.7)
 
-; Don't cycle *scratch* and friends
+;; Don't cycle *scratch* and friends
 (setq tabbar-buffer-list-function
       (lambda ()
         (remove-if
@@ -80,9 +79,9 @@
            (find (aref (buffer-name buffer) 0) " *"))
     	   (buffer-list))))
 
-; remember
+;; remember
 (require 'remember)
-;(require 'remember-autoloads)
+;;(require 'remember-autoloads)
 (setq remember-data-file "~/Documents/org/notes.txt") ;; will change
 (global-set-key (kbd "C-c r") 'remember)
 (defun wicked/remember-review-file ()
