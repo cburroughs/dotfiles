@@ -123,12 +123,14 @@
 
 
 ;; sql indenting
-;; http://www.emacswiki.org/cgi-bin/wiki/download/sql-indent.el
-(eval-after-load "sql"
-  '(load-library "sql-indent"))
-(eval-after-load "sql-indent"
-  '(progn
-     (setq sql-indent-offset 4)))
+(use-package sql-indent
+             :ensure t
+             :pin melpa
+             :init
+             (eval-after-load "sql"
+               '(load-library "sql-indent"))
+             :config
+             (setq sql-indent-offset 4))
 
 
 
