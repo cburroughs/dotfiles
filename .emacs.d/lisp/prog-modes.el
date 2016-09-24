@@ -7,7 +7,6 @@
              :pin gnu)
 
 
-(require 'js-comint)
 (setq inferior-js-program-command "rhino")
 (add-hook 'js2-mode-hook '(lambda () 
                             (local-set-key "\C-x\C-e" 'js-send-last-sexp)
