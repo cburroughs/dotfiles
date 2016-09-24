@@ -76,8 +76,6 @@
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
 
-(add-path "~/local_install/malabar/malabar-1.4-SNAPSHOT/lisp/")
-
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/.emacs.d/site-lisp" 0)

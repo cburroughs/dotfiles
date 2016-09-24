@@ -48,13 +48,7 @@
 (defun mrallen-java-mode ()
   (interactive)
   (add-hook 'java-mode-hook
-            '(lambda () (c-set-offset 'substatement-open 0)))
-  ;; one of these does the trick
-  (add-hook 'malabar-mode-hook 
-            '(lambda () (c-set-offset 'substatement-open 0)))
-  (eval-after-load "malabar-mode"
-    '(lambda () (c-set-offset 'substatement-open 0))))
-
+            '(lambda () (c-set-offset 'substatement-open 0))))
 
 ;;; accept evil tabs
 (defun faust-make-deal ()
@@ -67,17 +61,6 @@
   (interactive)
   (setq-default indent-tabs-mode nil))
   
-
-;; java mode+++
-;; (when (not (my-gentoo?))
-;;   (progn
-;;     (require 'cedet)
-;;     (semantic-load-enable-minimum-features) ;; or enable more if you wish
-;;     (require 'malabar-mode)
-;;     (setq malabar-groovy-lib-dir 
-;;           "~/local_install/malabar/malabar-1.4-SNAPSHOT/lib/")
-;;     (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))))
-
 
 (defun java-4-space ()
   (interactive)
