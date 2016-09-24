@@ -191,7 +191,7 @@
 
 ;; whitespace
 (require 'show-wspace)
-(defun show-white-spacee ()
+(defun show-white-space ()
     (iteractive)
     (show-ws-toggle-show-hard-spaces)
     (show-ws-toggle-show-tabs)
