@@ -61,6 +61,12 @@
   (message ".emacs loaded in %fms" (/ (- (anarcat/time-to-ms (current-time)) (anarcat/time-to-ms *emacs-load-start*)) 1000000.0)))
 (add-hook 'after-init-hook 'anarcat/display-timing t)
 
+
+(setq gc-cons-threshold (* 24 1024 1024))
+(add-hook 'after-init-hook
+          (lambda () (setq gc-cons-threshold
+                           (* 8 1024))))
+
 ;; For now I want things to work
 (defun my-gentoo? ()
    (string-match "gentoo" (shell-command-to-string "uname -a")))
@@ -154,6 +160,8 @@
 (setq semanticdb-default-save-directory "/tmp/")
 
 (setq make-backup-files t)
+
+(garbage-collect)
 
 ;;; Dependencies
 
