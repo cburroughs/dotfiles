@@ -88,10 +88,10 @@
   (interactive)
   (setq c-basic-offset 2))
 
-
-(require 'vcl-mode)
-(setq vcl-indent-level 4)
-
+(use-package vcl-mode
+             :ensure t
+             :pin melpa
+             :mode "\\.vcl$")
 
 (setq ruby-deep-indent-paren nil)
 
