@@ -137,14 +137,13 @@
 (add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
 
 ;; markdown-mode
-(autoload 'markdown-mode "markdown-mode.el"
-  "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-      (cons '("\\.mdown" . markdown-mode) auto-mode-alist))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.page$" . markdown-mode))
-
+(use-package markdown-mode
+             :ensure t
+             :pin melpa-stable
+             :mode (("\\.mdown" . markdown-mode)
+                    ("\\.markdown" . markdown-mode)
+                    ("\\.md" . markdown-mode)
+                    ("\\.page" . markdown-mode)))
 
 ;; Save a list of recent files visited.
 (recentf-mode 1)
