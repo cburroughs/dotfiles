@@ -4,7 +4,8 @@
 ;;; Javascript
 (use-package js2-mode
              :ensure t
-             :pin gnu)
+             :pin gnu
+             :defer t)
 
 
 (setq inferior-js-program-command "rhino")
