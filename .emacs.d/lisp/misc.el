@@ -1,5 +1,10 @@
 ;; misc changes and variable settings
 
+(use-package esup
+  :ensure t
+  :defer 1)
+
+
 ;; make the y or n suffice for a yes or no question
 (fset 'yes-or-no-p 'y-or-n-p)
 
