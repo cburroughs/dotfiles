@@ -95,8 +95,10 @@
 
 (setq ruby-deep-indent-paren nil)
 
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.jinja\\'" . web-mode))
+(use-package web-mode
+             :ensure t
+             :pin melpa-stable
+             :mode "\\.jinja$")
 
 (defun phab-php-mode ()
   (interactive)
