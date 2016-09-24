@@ -186,12 +186,10 @@
 
 
 ;; might as well use emacs crazy powerful kill-ring
-(autoload 'kill-ring-search "kill-ring-search"
-  "Search the kill ring in the minibuffer."
-  (interactive))
-
-(global-set-key "\M-\C-y" 'kill-ring-search)
-
+(use-package kill-ring-search
+             :ensure t
+             :pin melpa-stable
+             :bind ("M-C-y" . kill-ring-search))
 
 ;; not sure what I want to do with this yet.
 ;; Sometimes it is nice to move about by visible/screen lines.
