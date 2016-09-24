@@ -30,19 +30,12 @@
 ;;;; Lisps
 
 
-;; The crazy wrod of nxhtml mode
-(defun load-nxhtml-mode ()
-  "Load nxhtml mode from it's latest directory of crazyness"
-  (interactive)
-  (load "~/local_install/nxhtml/nxhtml-1.9.32-090804/autostart.el"))
-
-
 ;; Useful stuff for almost all c modes
 ;; http://nflath.com/2009/08/cc-and-java-customizations/
 (require 'cc-mode)
 (add-hook 'c-mode-common-hook
           '(lambda ()
-			 (c-subword-mode 1)))
+             (c-subword-mode 1)))
 
 
 ;;; Java
