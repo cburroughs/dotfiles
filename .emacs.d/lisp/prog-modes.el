@@ -16,9 +16,10 @@
                             (local-set-key "\C-cl" 'js-load-file-and-go)))
 
 ;; json
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-
-
+(use-package json-mode
+             :ensure t
+             :pin melpa-stable
+             :mode "\\.json$")
 
 ;;; Python
 
