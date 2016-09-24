@@ -190,11 +190,6 @@
              :pin melpa-stable
              :bind ("M-C-y" . kill-ring-search))
 
-;; not sure what I want to do with this yet.
-;; Sometimes it is nice to move about by visible/screen lines.
-;;(require 'visible-lines)
-
-
 
 ;; far-search, finally something that searches across buffers!
 ;; http://github.com/aemoncannon/far-search-mode/tree/master
