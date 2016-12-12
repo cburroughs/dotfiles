@@ -75,7 +75,7 @@
 (use-package web-mode
              :ensure t
              :pin melpa-stable
-             :mode "\\.jinja$")
+             :mode ("\\.jinja$" "\\.mustache$"))
 
 (defun phab-php-mode ()
   (interactive)
