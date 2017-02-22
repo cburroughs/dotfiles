@@ -74,3 +74,10 @@ fewer than 80 columns."
   '(progn
      (set-face-foreground 'diff-added "green4")
      (set-face-foreground 'diff-removed "red3")))
+
+;; http://emacshorrors.com/posts/longlines-mode.html
+(use-package visual-fill-column
+             :ensure t
+             :pin melpa-stable
+             :init
+             (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
