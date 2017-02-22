@@ -93,6 +93,7 @@
 ;; -------------
 ; org mode stuff
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setq org-hide-leading-stars t)
 ; Should this stuff all done only after loading org-mode
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
