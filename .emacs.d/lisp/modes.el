@@ -104,21 +104,6 @@
 (require 'find-lisp)
 (setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$"))
 
-;; Give agenda normal emacs keybindings
-(eval-after-load "org"
-  '(progn
-     ; These give errors and seem to be unnecessary
-     ;(define-key org-agenda-mode-map "\C-n" 'next-line)
-     ;(define-key org-agenda-keymap "\C-n" 'next-line)
-     ;(define-key org-agenda-mode-map "\C-p" 'previous-line)
-     ;(define-key org-agenda-keymap "\C-p" 'previous-line)
-     ; Arn't these redundant given I alreay set them?
-     (define-key global-map "\C-cl" 'org-store-link)
-     (define-key global-map "\C-ca" 'org-agenda)
-     (define-key global-map [(control shift tab)] 'tabbar-backward)
-     (define-key global-map [(control tab)]       'tabbar-forward)))
-
-
 ;; sql indenting
 (use-package sql-indent
              :ensure t
