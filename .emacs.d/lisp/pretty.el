@@ -35,14 +35,8 @@
     (progn
       (dark-theme)))
 
-; awesome fonts only with emacs 23!
 ; TODO: What if the system does not have this font?  
-;; todo: may need to revisit font sizes with widescreen real estate
-(if (string-match "23\." (emacs-version))
-    (if (my-gentoo?)
-        (set-frame-font "DejaVu Sans Mono-10")
-      (set-frame-font "DejaVu Sans Mono-10")))
-
+(set-frame-font "DejaVu Sans Mono-10")
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
