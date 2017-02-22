@@ -101,10 +101,8 @@
 (setq org-agenda-include-diary t)
 (setq org-agenda-include-all-todo t)
 (setq org-deadline-warning-days 14)
-;; TODO make this more general between computers
-(if (my-gentoo?)
-    (setq org-agenda-files (list "~/Documents/org/home.org"))
-  (setq org-agenda-files (list "~/Documents/org/cs.org")))
+(require 'find-lisp)
+(setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$"))
 
 ;; Give agenda normal emacs keybindings
 (eval-after-load "org"
