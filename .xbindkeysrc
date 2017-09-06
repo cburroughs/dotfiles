@@ -1,8 +1,3 @@
-# NOTE: Additional gnome changes
-# * disable Gnome's Super+s "display some menu" shotcut
-# * logout back to C-M-l
-# * gnome terminal: enable numonics
-
 # To specify a key, you can use 'xbindkeys --key' or
 # 'xbindkeys --multikey' and put one of the two lines in this file.
 #
@@ -23,16 +18,18 @@
 # Examples of commands:
 
 "xbindkeys_show" 
-  control+shift + q
+  Mod4 + Shift + q
 
-"gnome-terminal"
+"mate-terminal"
   Mod4 + s
 
 "emacs"
   Mod4 + e
 
-"iceweasel"
+"firefox"
   Mod4 + f
 
-"chromium"
+
+# avoid gnnome-keyring nonesense
+"chromium --password-store=basic"
   Mod4 + c
