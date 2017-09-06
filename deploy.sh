@@ -2,7 +2,6 @@
 
 rsync -a --exclude=elpa --delete .emacs.d/ ~/.emacs.d/
 
-cp -a .inputrc ~
 cp -a .bash_custom ~
 cp -a .git-completion.sh ~
 cp -a .xbindkeysrc ~
