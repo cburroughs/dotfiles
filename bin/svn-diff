@@ -1,5 +1,0 @@
-#!/bin/bash
-# -*- mode: sh; -*-
-# Make svn diff default to not sucking
-
-svn diff $@ | colordiff | less
