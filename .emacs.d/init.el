@@ -178,5 +178,4 @@
 ;; I expect to be in in local_install
 
 ;; Other:
-;; tidy
 ;; http://code.google.com/p/m2jdee/ <-- for maven/jde file generation
