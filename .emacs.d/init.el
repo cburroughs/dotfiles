@@ -12,8 +12,6 @@
 ;; todo: look into running emacsclient for terminal stuff
 ;; todo: open in firefox (new tab?)
 ;; todo: add pycomplete to hippie-expand as well
-;; todo: better way to set PYTHONPATH so gui launcher figures it out
-;; todo: what to do about env not being sourced by gui launcher
 ;; todo: can tabbars be made to horizontally scroll?
 ;; todo: spell check not comments (ie for svn commit messages)
 ;; todo: document things I expect the package manager to install (partially done)
@@ -21,13 +19,10 @@
 ;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: turn off hl-p in vc annotate mode
 ;; todo: get tags of some sort working, they seem awesome
-;; todo: js-comint code review
 ;; todo: look into nXhtml
 ;; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
-;; todo: http://emacs-fu.blogspot.com/2009/02/transparent-emacs.html , needs newer emacs snapshot?
 ;; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
 ;; todo: next time I am hacking lisp code I really should look at paredit
-;; todo: integrate ecb with smart-split
 ;; todo: http://www.neilvandyke.org/quack/
 ;; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
@@ -46,8 +41,6 @@
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be
 ;; sure, check the notice in each file.
-;; Goal: Runs under emacs24 on multiple platforms, and load in a "few"
-;; seconds
 
 (require 'cl)
 
