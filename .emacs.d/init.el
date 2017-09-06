@@ -1,6 +1,5 @@
 ;; Chris Burroughs
 ;; My dot emacs
-;; Minimum tested version: 24.4.1
 
 ;; todo: figure out java-annotation support
 ;; todo: Reduce the use of require (effective dot.emacs)
@@ -67,12 +66,8 @@
           (lambda () (setq gc-cons-threshold
                            (* 8 1024))))
 
-;; For now I want things to work
-(defun my-gentoo? ()
-   (string-match "gentoo" (shell-command-to-string "uname -a")))
 
 ;; load gentoo installed stuff
-;; assume if gentoo using gentoo kernel
 (require 'site-gentoo nil t)
 
 ;; Need to set up path for elisp files

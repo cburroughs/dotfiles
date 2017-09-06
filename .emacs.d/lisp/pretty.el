@@ -40,7 +40,7 @@
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
-(when (my-gentoo?)
+(if window-system
   (setq initial-frame-alist '((top . 1) (height . 63))))
 
 
