@@ -1,1 +1,3 @@
 xmodmap ~/.xmodmaprc
+xbindkeys
+

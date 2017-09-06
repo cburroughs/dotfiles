@@ -4,6 +4,7 @@ rsync -a --exclude=elpa --delete .emacs.d/ ~/.emacs.d/
 
 cp -a .bash_custom ~
 cp -a .git-completion.sh ~
+cp -a .xprofile ~
 cp -a .xbindkeysrc ~
 
 #cp ipythonrc-csb ~/.ipython/
