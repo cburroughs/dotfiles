@@ -54,10 +54,23 @@
 (add-hook 'after-init-hook 'anarcat/display-timing t)
 
 
-(setq gc-cons-threshold (* 24 1024 1024))
+;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+(setq csb/init/gc-cons-large-threshold (* 24 1024 1024))
+(setq csb/init/gc-cons-normal-threshold (* 1024 1024))
+(setq gc-cons-threshold csb/init/gc-cons-large-threshold)
 (add-hook 'after-init-hook
           (lambda () (setq gc-cons-threshold
-                           (* 8 1024))))
+                           csb/init/gc-cons-normal-threshold)))
+(add-hook 'after-init-hook
+          (lambda ()
+             (message "init gc num:%i time:%f" gcs-done gc-elapsed)))
+(add-hook 'minibuffer-setup-hook
+          (lambda ()
+            (setq gc-cons-threshold csb/init/gc-cons-large-threshold)))
+(add-hook 'minibuffer-exit-hook
+          (lambda ()
+            (setq gc-cons-threshold csb/init/gc-cons-normal-threshold)))
+(add-hook 'focus-out-hook 'garbage-collect)
 
 
 ;; load gentoo installed stuff
