@@ -69,10 +69,16 @@
 
 (global-set-key [f11] 'toggle-frame-fullscreen)
 
-(defun totally-fullscreen()
+(defun totally-fullscreen ()
   (interactive)
-  (tool-bar-mode)
-  (menu-bar-mode))
+  ;; unclear why this toggle is not working in commands
+  (if menu-bar-mode
+      (menu-bar-mode -1)
+    (menu-bar-mode 1))
+  (if tool-bar-mode
+      (tool-bar-mode -1)
+    (tool-bar-mode 1))
+  (toggle-frame-fullscreen))
 
 (global-set-key [f12] 'totally-fullscreen)
 
