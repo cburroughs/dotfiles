@@ -65,6 +65,14 @@
   (interactive)
   (setq c-basic-offset 2))
 
+(defun nxml-4-space ()
+  (interactive)
+  (setq nxml-child-indent 4 nxml-attribute-indent 4))
+
+(defun nxml-2-space ()
+  (interactive)
+  (setq nxml-child-indent 4 nxml-attribute-indent 2))
+
 (use-package vcl-mode
              :ensure t
              :pin melpa
