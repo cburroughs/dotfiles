@@ -1,6 +1,7 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
+;; todo: see if esup is working
 ;; todo: figure out java-annotation support
 ;; todo: Reduce the use of require (effective dot.emacs)
 ;; todo: use Alt-n to switch 'tabs'
@@ -45,13 +46,9 @@
 (require 'cl)
 
 ;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
-(defvar *emacs-load-start* (current-time))
-(defun anarcat/time-to-ms (time)
-  (+ (* (+ (* (car time) (expt 2 16)) (car (cdr time)))
-	1000000) (car (cdr (cdr time)))))
-(defun anarcat/display-timing ()
-  (message ".emacs loaded in %fms" (/ (- (anarcat/time-to-ms (current-time)) (anarcat/time-to-ms *emacs-load-start*)) 1000000.0)))
-(add-hook 'after-init-hook 'anarcat/display-timing t)
+(add-hook 'after-init-hook
+          (lambda () (message "emacs-init-time: %s" (emacs-init-time))))
+
 
 
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
