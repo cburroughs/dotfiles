@@ -67,14 +67,7 @@
       (while (search-forward "\r" nil t) (replace-match "")))
 
 
-;; from emacs wiki
-;; obviously this would not work without X
-(defun fullscreen ()
-  (interactive)
-  (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                         '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-
-(global-set-key [f11] 'fullscreen)
+(global-set-key [f11] 'toggle-frame-fullscreen)
 
 (defun totally-fullscreen()
   (interactive)
