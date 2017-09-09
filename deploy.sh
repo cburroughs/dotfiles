@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rsync -a --exclude=elpa --delete .emacs.d/ ~/.emacs.d/
 
