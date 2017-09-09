@@ -9,6 +9,8 @@
 # TODO: look into cool PS1 alternatives
 # TODO: eix colors https://projects.gentooexperimental.org/eix/wiki/FAQ
 
+# -rw-------
+umask 077
 
 # Include local ~/bin in PATH, and local python bin
 PATH=~/bin/:~/.local/bin:$PATH
