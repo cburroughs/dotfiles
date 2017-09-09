@@ -1,8 +1,4 @@
 # -*- mode: sh; -*-
-# I am going to experiment with doing this differently than most
-# people.  Instead of having my own .bashrc I will use the .bashrc
-# that the system provides and source this file.  This could cause
-# conflicts.
 
 # TODO: git custom
 # TODO: max promt size /home/foo/.../bar/bax
