@@ -25,17 +25,9 @@ export INPUTRC='~/.inputrc'
 bind '\C-w:backward-kill-word'
 bind 'Meta-Rubout: unix-word-rubout'
 
-# def variables
-if  [ `which emacs-snapshot 2> /dev/null` ]
-then
-    export SVN_EDITOR='emacs-snapshot -nw'
-    export GIT_EDITOR='emacs-snapshot -nw'
-    export EDITOR='emacs-snapshot -nw'
-else
-    export SVN_EDITOR='emacs -nw'
-    export GIT_EDITOR='emacs -nw'
-    export EDITOR='emacs -nw'
-fi
+export EDITOR='emacs -nw'
+export SVN_EDITOR=$EDITOR
+export GIT_EDITOR=$EDITOR
 
 export HISTCONTROL=ignoreboth
 export HISTSIZE=20000
@@ -54,7 +46,6 @@ alias du='du -h'
 alias py='python'
 alias ipy='ipython --profile csb'
 alias e='emacs'
-alias es='emacs-snapshot'
 alias ec='emacsclient -t --alternate-editor=""'
 alias nano='nano -w'
 # note that exclude-dir is only available in versions >= 2.5.3 
