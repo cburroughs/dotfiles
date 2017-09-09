@@ -18,6 +18,9 @@ shopt -s histappend
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# ** pattern
+shopt -s globstar
+
 # Make sure this is sourced
 export INPUTRC='~/.inputrc'
 
