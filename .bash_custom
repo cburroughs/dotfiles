@@ -118,7 +118,6 @@ function common { history | awk '{print $9}' | awk 'BEGIN {FS="|"}{print $1}' | 
 
 
 # git stuff
-export GIT_PS1_SHOWDIRTYSTATE=1
 source ~/.config/git-prompt.sh
 
 
