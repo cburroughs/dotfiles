@@ -35,9 +35,6 @@ export HISTFILESIZE=20000
 export HISTTIMEFORMAT='%Y-%m-%d_%H:%M:%S '
 export PAGER='less'
 export LESS="-R -M --shift 5"
-#do we really want these in site-lisp?
-export PYTHONPATH=$PYTHONPATH:~/emacs/site-lisp
-export PYTHONPATH_BACK=$PYTHONPATH
 
 # aliases
 alias ll='ls -lh'
@@ -110,17 +107,6 @@ function .. (){
         arg=$(($arg - 1));
     done
 }
-
-function pythonpath-add() {
-    export PYTHONPATH=$PYTHONPATH:`pwd`
-}
-
-
-# imperfect
-function pythonpath-reset() {
-    export PYTHONPATH=$PYTHONPATH_BACK
-}
-
 
 # other
 bind "set completion-ignore-case on" 
