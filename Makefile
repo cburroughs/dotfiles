@@ -1,6 +1,5 @@
 SHELL=/bin/bash
 
-
 most: emacs bash git bin-utils x11
 .PHONY: emacs bash git bin-utils x11 first-run-only
 
@@ -18,7 +17,8 @@ bash:
 
 git:
 	@echo $@
-	cp -a .git-completion.sh ~
+	mkdir -p ~/.config
+	cp -a git-prompt.sh ~/.config/git-prompt.sh
 
 bin-utils:
 	@echo $@
