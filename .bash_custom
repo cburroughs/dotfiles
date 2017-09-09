@@ -45,10 +45,9 @@ alias ipy='ipython --profile csb'
 alias e='emacs'
 alias ec='emacsclient -t --alternate-editor=""'
 alias nano='nano -w'
-# note that exclude-dir is only available in versions >= 2.5.3 
-alias grep='grep --color --exclude-dir=".svn"'
-alias fgrep='fgrep --color --exclude-dir=".svn"'
-alias egrep='egrep --color --exclude-dir=".svn"'
+alias grep='grep --color '
+alias fgrep='fgrep --color'
+alias egrep='egrep --color'
 alias epoch='date +%s'
 # from: http://www.shell-fu.org/lister.php?id=54
 alias webshare='python -m SimpleHTTPServer'
