@@ -453,7 +453,7 @@ __git_ps1 ()
 				esac 2>/dev/null)" ||
 
 				b="$short_sha..."
-				b="($b)"
+				b="$b" # was $(b) -- cburroughs
 			fi
 		fi
 	fi
