@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 most: emacs bash git bin-utils x11
-.PHONY: emacs bash git bin-utils x11 first-run-only
+.PHONY: emacs bash git bin-utils x11 first-run-only xfce4-keyboard-shortcuts
 
 emacs:
 	@echo $@
@@ -33,3 +33,7 @@ x11:
 # Pseudo tied to hardware or otherwise specific per workstation
 hw:
 	cp -a .xmodmaprc ~
+
+xfce4-keyboard-shortcuts:
+	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
+	cp -a xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
