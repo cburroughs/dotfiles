@@ -120,22 +120,41 @@ function common { history | awk '{print $9}' | awk 'BEGIN {FS="|"}{print $1}' | 
 # git stuff
 source ~/.config/git-prompt.sh
 
+export TWO_LINE_PROMT=0
+export PROMPT_COMMAND=__prompt_command
+function __prompt_command() {
+	local EXIT="$?"
+	PS1=""
+    # heuristics for switching to two line promt
+    MAX_PATH_LEN=$(($COLUMNS / 2))
+    if [[ $MAX_PATH_LEN -gt 120 ]]; then
+        MAX_PATH_LEN=120
+    fi
 
-# don't know if use_color is defined outside of gentoo land
-if ${use_color} ; then
-    if [[ ${EUID} == 0 ]] ; then
-        PS1='\[\033[01;31m\]\h\[\033[01;34m\] \W$(__git_ps1 " (%s)") \$\[\033[00m\] '
-    else
-        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w$(__git_ps1 " (%s)") \$\[\033[00m\] '
+    local NoColor='\[\e[0m\]'
+    local BlueBold='\[\e[1;34m\]';
+    local GreenBold='\[\e[1;32m\]';
+    local RedBold='\[\e[1;31m\]';
+    local YellowLight='\[\e[0;93m\]';
+
+    local USER_AT_DIR="${GreenBold}\u@\h ${BlueBold}\w${NoColor}"
+    local GIT_PROMT='$(__git_ps1 " (%s)")'
+    local SUFFIX="${BlueBold} $ ${NoColor}"
+
+    if [[ $EXIT -gt 0 ]]; then
+        # Explosion U+1F4A5
+        PS1+="${RedBold}💥${EXIT}${NoColor} "
     fi
-else
-    if [[ ${EUID} == 0 ]] ; then
-                # show root@ when we don't have colors
-        PS1='\u@\h \W \$ '
-    else
-        PS1='\u@\h \w \$ '
+    if [[ $(command jobs 2>/dev/null) ]]; then
+        PS1+="${YellowLight}[\j] "
     fi
-fi
+    PS1+=$USER_AT_DIR
+    PS1+="${BlueBold}$GIT_PROMT${NoColor}"
+    if [[ $TWO_LINE_PROMT -gt 0 ]] || [[ ${#PWD} -gt $MAX_PATH_LEN ]]; then
+        PS1+="\n"
+    fi
+    PS1+=$SUFFIX
+}
 
 # http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
 # Less Colors for Man Pages
