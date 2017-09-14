@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Example ssh forwarding: ssh -L 5900:localhost:5900 -N -l USER HOST
+
+x0vncserver -display :0 -passwordfile ~/.vnc/passwd -HostsFile ~/.vnc/localhost-only 
