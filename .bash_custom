@@ -139,11 +139,11 @@ function __prompt_command() {
 
     local USER_AT_DIR="${GreenBold}\u@\h ${BlueBold}\w${NoColor}"
     local GIT_PROMT='$(__git_ps1 " (%s)")'
-    local SUFFIX="${BlueBold} $ ${NoColor}"
+    local SUFFIX="${BlueBold} \$${NoColor} "
 
     if [[ $EXIT -gt 0 ]]; then
-        # Explosion U+1F4A5
-        PS1+="${RedBold}💥${EXIT}${NoColor} "
+        # Tried (Explosion U+1F4A5  💥) but it makes things wonky
+        PS1+="${RedBold}${EXIT}${NoColor} "
     fi
     if [[ $(command jobs 2>/dev/null) ]]; then
         PS1+="${YellowLight}[\j] "
