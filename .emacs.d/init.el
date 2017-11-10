@@ -38,6 +38,7 @@
 ;; todo: look into more anything.el goodness
 ;; TODO: revisit snippets
 ;; TODO: Untangle  https://www.emacswiki.org/emacs/GitCommitMode
+;; TODO: https://github.com/alpaker/Fill-Column-Indicator
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be
