@@ -29,6 +29,8 @@
 "firefox"
   Mod4 + f
 
+"xfce4-dict"
+  Mod4 + d
 
 # avoid gnnome-keyring nonesense
 "chromium --password-store=basic"
