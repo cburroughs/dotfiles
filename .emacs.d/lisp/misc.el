@@ -67,3 +67,7 @@
 ;; http://www.emacswiki.org/emacs/FillParagraph
 ;; http://jblevins.org/projects/markdown-mode/
 (setq paragraph-start "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\.\\|[ \t]*: ")
+
+
+(use-package lorem-ipsum
+             :ensure t)
