@@ -5,6 +5,7 @@
 ;; todo: figure out java-annotation support
 ;; todo: Reduce the use of require (effective dot.emacs)
 ;; todo: use Alt-n to switch 'tabs'
+;; todo: Switch tabbar switching behavior to not conflict with org-mode
 ;; todo: Make jdee work
 ;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
 ;; todo: func to resize to max screen width (across monitors)
@@ -39,6 +40,7 @@
 ;; TODO: revisit snippets
 ;; TODO: Untangle  https://www.emacswiki.org/emacs/GitCommitMode
 ;; TODO: https://github.com/alpaker/Fill-Column-Indicator
+;; TODO: Is there a unified "sidebar" that can do files, functions, org-outlines, etc?
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be

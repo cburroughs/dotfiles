@@ -113,6 +113,13 @@
              (org-defkey org-mode-map "\C-c]" 'undefined))
           'append)
 
+;; "sidebar" outline for org-mode and other outlines
+(use-package outline-toc
+  :ensure t
+  :pin melpa
+  :bind ([f9] . outline-toc-mode))
+
+
 ;; sql indenting
 (use-package sql-indent
              :ensure t
