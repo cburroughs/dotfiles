@@ -71,3 +71,8 @@
 
 (use-package lorem-ipsum
              :ensure t)
+
+(use-package neotree
+  :ensure t
+  :pin melpa-stable
+  :bind ([f8] . neotree-toggle))
