@@ -36,7 +36,7 @@
       (dark-theme)))
 
 ; TODO: What if the system does not have this font?  
-(set-frame-font "DejaVu Sans Mono-10")
+(set-frame-font "DejaVu Sans Mono-11")
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
