@@ -39,10 +39,8 @@
 (set-frame-font "DejaVu Sans Mono-11")
 
 ;; Start nice and tall, but should still be 80 char wide
-;; TODO: revert to 1 when I figure out why 100% was too tall, task bar?
 (if window-system
-  (setq initial-frame-alist '((top . 1) (height . 63))))
-
+  (setq initial-frame-alist '((top . 0) (width . 80) (height . 52))))
 
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html
 (defun djcb-zoom (n)
