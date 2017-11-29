@@ -85,3 +85,16 @@ fewer than 80 columns."
              :pin melpa-stable
              :init
              (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
+
+
+;; full screen margins: Olivetti is a simple Emacs minor mode for a nice writing
+;; environment.
+(use-package olivetti
+  :ensure t
+  :pin melpa-stable)
+
+(defun prose-time ()
+    "Full screen writing focus"
+  (interactive)
+  (global-hl-line-mode 0)
+  (olivetti-mode))
