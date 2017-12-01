@@ -75,4 +75,6 @@
 (use-package neotree
   :ensure t
   :pin melpa-stable
-  :bind ([f8] . neotree-toggle))
+  :bind ([f8] . neotree-toggle)
+  :config
+  (setq neo-autorefresh nil))
