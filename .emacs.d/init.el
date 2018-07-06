@@ -175,6 +175,7 @@
 ;; app-emacs/ruby-mode
 ;; jde
 ;; app-emacs/crontab-mode
+;; app-emacs/yaml-mode
 
 ;; I expect to be in in local_install
 

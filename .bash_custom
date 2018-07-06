@@ -4,12 +4,14 @@
 # TODO: max promt size /home/foo/.../bar/bax
 # TODO: look into cool PS1 alternatives
 # TODO: eix colors https://projects.gentooexperimental.org/eix/wiki/FAQ
+# TODO: http://www.jonno.org/drupal/node/4
 
 # -rw-------
 umask 077
 
 # Include local ~/bin in PATH, and local python bin
 PATH=~/bin/:~/.local/bin:$PATH
+PATH=~/.cargo/bin:$PATH
 
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
