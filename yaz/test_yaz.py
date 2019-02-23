@@ -51,6 +51,33 @@ class TestConfig(unittest.TestCase):
         self.assertEqual('well', cfg.destination.hostname)
 
 
+class TestRootYazSnapshot(unittest.TestCase):
+    now = 1550948411
+
+    def test_as_str(self):
+        s = RootYazSnapshot('ᚩ', 'daily', 15, self.now)
+        self.assertEqual('yaz-ᚩ-daily-f-5c71983b',
+                         s.as_str())
+
+    def test_decode(self):
+        s = RootYazSnapshot.decode_from_str('yaz-ᚩ-daily-f-5c71983b')
+        self.assertEqual('ᚩ', s.sigil)
+        self.assertEqual('daily', s.freq)
+        self.assertEqual(15, s.seq)
+        self.assertEqual(self.now, s.timestamp)
+
+
+    def test_next(self):
+        s = RootYazSnapshot('ᚩ', 'daily', 15, self.now)
+        self.assertEqual('yaz-ᚩ-daily-10-5c71983c',
+                         s.next_in_seq(now=self.now+1).as_str())
+
+    def test_time_for_next(self):
+        s = RootYazSnapshot('ᚩ', 'daily', 15, self.now)
+        self.assertFalse(s.is_time_for_next(now=self.now+10))
+        self.assertTrue(s.is_time_for_next(now=self.now+86400*2))
+
+
 class TestRemoteShellCmd(unittest.TestCase):
     def test_simple(self):
         class Whoami(ShellCmd):

@@ -6,6 +6,7 @@ import json
 import logging
 import subprocess
 import sys
+import time
 
 from typing import Dict, List
 
@@ -23,9 +24,7 @@ from typing import Dict, List
 # not a gigantic storage pool with thousands of containers.  Learn python 3
 #
 
-# cmds: check-features, just-snap, just-prune-local, just-prune-remote(fuzzy on how snapshots work? don't think this is needed), initial-seed-send
-
-# LEFT OFF: Need to create a bhyve VM (FreeBSDD?) for testing, how all of -I and other optiosn work is unclaer.  Also testing...
+# cmds: check-features, just-snap, just-prune-local(?), just-prune-remote(fuzzy on how snapshots work? don't think this is needed), initial-seed-send, backup(doitall)
 
 LOG = logging.getLogger(__name__)
 
@@ -82,6 +81,88 @@ def parse_features(lines: str) -> Dict[str, str]:
             features[columns[1]] = columns[2]
     return features
 
+
+class RootYazSnapshot():
+    # form yaz-${sigil}-${freq}-${hex_seq}-${hex_epoch_sec}
+
+    def __init__(self, sigil: str, freq: str, seq: int, timestamp: int):
+        assert freq == 'daily'
+        self.sigil = sigil
+        self.freq = freq
+        self.seq = seq
+        self.timestamp = timestamp
+
+    def as_str(self) -> str:
+        hex_seq = hex(self.seq)[2:]
+        hex_ts =  hex(self.timestamp)[2:]
+        return f'yaz-{self.sigil}-{self.freq}-{hex_seq}-{hex_ts}'
+
+    def next_in_seq(self, now=None) -> 'RootYazSnapshot':
+        if now is None:
+            now = int(time.time())
+        return RootYazSnapshot(self.sigil, self.freq, self.seq + 1, now)
+
+    def is_time_for_next(self, now=None) -> bool:
+        if now is None:
+            now = int(time.time())
+        #approx_sec_day = 86400
+        approx_sec_day = 10
+        return now > approx_sec_day + self.timestamp
+
+    @staticmethod
+    def decode_from_str(name: str) -> 'RootYazSnapshot':
+        tupe = name.split('-')
+        assert tupe[0] == 'yaz'
+        seq = int(tupe[3], 16)
+        ts = int(tupe[4], 16)
+        return RootYazSnapshot(tupe[1], tupe[2], seq, ts)
+
+
+class YazSnapshots():
+
+    def __init__(self, snapshots: List[RootYazSnapshot]):
+        self.snapshots = sorted(snapshots, key = lambda s: s.seq)
+        # TODO: assert monotonic increasing seq?
+
+    def is_empty(self) -> bool:
+        empty = len(self.snapshots) == 0
+        if empty:
+            LOG.warning('no existing yaz snapshots found')
+        return empty
+
+    def begin_sequence(self, cfg) -> RootYazSnapshot:
+        LOG.warning('beginning snapshot sequence')
+        snap = RootYazSnapshot(cfg.sigil, 'daily', 0, int(time.time()))
+        self.snapshots.append(snap)
+        return snap
+
+    def next_in_seq(self):
+        if self.snapshots[-1].is_time_for_next():
+            snap = self.snapshots[-1].next_in_seq()
+            self.snapshots.append(snap)
+            return snap
+        else:
+            return None
+
+    def should_prune_eldest(self, cfg):
+        return len(self.snapshots) > cfg.snapshots.daily
+
+    def pop_eldest(self):
+        return self.snapshots.pop(0)
+
+    @staticmethod
+    def from_cmd_output(output: str) -> 'YazSnapshots':
+        snapshots = []
+        for line in output.split('\n'):
+            if not line:
+                continue
+            if '/' in line:
+                continue
+            snap = line.split('@')[1]
+            if snap.startswith('yaz-'):
+                snapshots.append(RootYazSnapshot.decode_from_str(snap))
+        return YazSnapshots(snapshots)
+
 ##### shell command objects #####
 
 class ShellCmd(abc.ABC):
@@ -119,6 +200,36 @@ class AllPoolPropertiesCmd(ShellCmd):
         return f'zpool get -Hp all {self.pool}'
 
 
+class ListPoolSnapshotsCmd(ShellCmd):
+
+    def __init__(self, pool: str):
+        self.pool = pool
+
+    def cmd_line(self):
+        return f'zfs list -Hp -r -t snapshot -o name {self.pool}'
+
+
+class TakePoolSnapshotCmd(ShellCmd):
+
+    def __init__(self, pool: str, snap_name: str):
+        self.pool = pool
+        self.snap_name = snap_name
+
+    def cmd_line(self):
+        return f'zfs snapshot -r {self.pool}@{self.snap_name}'
+
+
+class DestroyPoolSnapshotCmd(ShellCmd):
+
+    def __init__(self, pool: str, snap_name: str):
+        assert len(pool) > 0
+        assert len(snap_name) > 0
+        self.pool = pool
+        self.snap_name = snap_name
+
+    def cmd_line(self):
+        return f'zfs destroy -r {self.pool}@{self.snap_name}'
+
 ##### cmds #####
 
 def cmd_foo(args):
@@ -128,7 +239,7 @@ def cmd_foo(args):
 
 # TODO: pull out into it's own function, many things will chec this first
 def cmd_check_features(args):
-    config = Config.load_config('example.json')
+    config = Config.load_config(args.config)
     local_props =  AllPoolPropertiesCmd(config.pool).check_output()
     local_features = parse_features(local_props.decode())
     remote_props = RemoteShellCmd(config.destination,
@@ -143,14 +254,32 @@ def cmd_check_features(args):
             elif key in remote_features and remote_features[key] != 'enabled':
                 LOG.error(f'!feature {key} disable remote_features')
                 ok = False
+    if ok:
+        print('ok: features match')
     return ok
 
+
 def cmd_just_snap(args):
-    config = load_config('example.json')
-    pass
+    config = Config.load_config(args.config)
+    raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+    if snapshots.is_empty():
+        snap = snapshots.begin_sequence(config)
+        TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
+    else:
+        snap = snapshots.next_in_seq()
+        if snap is None:
+            LOG.info('no snapshot action needed')
+        else:
+            TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
+    while snapshots.should_prune_eldest(config):
+        eldest = snapshots.pop_eldest()
+        remain = len(snapshots.snapshots)
+        LOG.info(f'removing eldest snapshot {eldest.as_str()}, {remain} left')
+        DestroyPoolSnapshotCmd(config.pool, eldest.as_str()).check_call()
+
 
 ##### mainline #####
-
 
 def make_parser():
     parser = argparse.ArgumentParser()
@@ -158,12 +287,16 @@ def make_parser():
 
     parser.add_argument('--log-level', dest='log_level', type=str, default='warning',
                         choices=['critical', 'error', 'warning', 'info', 'debug'])
+    parser.add_argument('--config', type=str, required=True,)
 
     foo_p = subparsers.add_parser('foo')
     foo_p.set_defaults(func=cmd_foo)
 
     cf_p = subparsers.add_parser('check-features')
     cf_p.set_defaults(func=cmd_check_features)
+
+    js_p = subparsers.add_parser('just-snap')
+    js_p.set_defaults(func=cmd_just_snap)
 
     return parser
 
