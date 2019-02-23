@@ -6,6 +6,11 @@ import json
 import sys
 import subprocess
 
+from typing import Dict, List
+
+# note about mypy, pycodestyle,  other venv tools?  coverage
+# note about how to do a pyton3 venv
+
 # form yaz-${sigil}-${freq}-${hex_inc}-${hex_epoch_sec}
 # sigil from config, something to make these unique'
 
@@ -21,13 +26,53 @@ import subprocess
 # LEFT OFF: Need to create a bhyve VM (FreeBSDD?) for testing, how all of -I and other optiosn work is unclaer.  Also testing...
 
 
-def load_config(fname):
-    with open(fname, 'r') as f:
-        return json.load(f)
+class Config():
+
+    class Snapshots():
+
+        def __init__(self, daily: int):
+            self.daily = daily
+
+        @staticmethod
+        def from_json(d: Dict):
+            # TODO: warn on other than daily
+            return Config.Snapshots(d['daily'])
+
+
+    class Destination():
+
+        def __init__(self, user: str, hostname: str, dataset: str):
+            self.user = user
+            self.hostname = hostname
+            self.dataset = dataset
+            self.pool = dataset.split('/')[0]
+        
+        @staticmethod
+        def from_json(d: Dict):
+            return Config.Destination(d['user'], d['hostname'], d['dataset'])
+
+    def __init__(self, sigil: str, pool: str,
+                 snapshots, destination):
+        self.sigil = sigil
+        self.pool = pool
+        self.snapshots = snapshots
+        self.destination = destination
+
+
+    @staticmethod
+    def from_json(d: Dict):
+        return Config(d['sigil'], d['pool'],
+                      Config.Snapshots.from_json(d['snapshots']),
+                      Config.Destination.from_json(d['destination']))
+
+    @staticmethod
+    def load_config(fname: str):
+        with open(fname, 'r') as f:
+            return Config.from_json(json.load(f))
 
 # TODO: Some light config validation, not full json schema
 
-def parse_features(lines):
+def parse_features(lines: str) -> Dict[str, str]:
     features = {}
     for line in lines.split('\n'):
         if 'feature@' in line:
@@ -40,7 +85,7 @@ def parse_features(lines):
 class ShellCmd(abc.ABC):
 
     @abc.abstractmethod
-    def cmd_line(self):
+    def cmd_line(self) -> str:
         pass
 
     def check_output(self):
@@ -52,18 +97,18 @@ class ShellCmd(abc.ABC):
 
 class RemoteShellCmd(ShellCmd):
 
-    def __init__(self, username, hostname, cmd):
-        self.username = username
-        self.hostname = hostname
+    def __init__(self, dest: Config.Destination, cmd: ShellCmd):
+        self.user = dest.user
+        self.hostname = dest.hostname
         self.cmd = cmd
 
-    def cmd_line(self):
-        return f"ssh {self.username}@{self.hostname} '{self.cmd.cmd_line()}'"
+    def cmd_line(self) -> str:
+        return f"ssh {self.user}@{self.hostname} '{self.cmd.cmd_line()}'"
 
 
 class AllPoolPropertiesCmd(ShellCmd):
 
-    def __init__(self, pool):
+    def __init__(self, pool: str):
         self.pool = pool
 
     def cmd_line(self):
@@ -77,13 +122,11 @@ def cmd_foo(args):
 
 
 def cmd_check_features(args):
-    config = load_config('example.json')
-    # ShellCmd object pattern, and remove cmd object.. ABC types?
-    local_props =  AllPoolPropertiesCmd(config['pool']).check_output()
+    config = Config.load_config('example.json')
+    local_props =  AllPoolPropertiesCmd(config.pool).check_output()
     local_features = parse_features(local_props.decode())
-    remote_props = RemoteShellCmd(config['destination']['user'],
-                                  config['destination']['hostname'],
-                                  AllPoolPropertiesCmd(config['destination']['dataset'].split('/')[0])).check_output()
+    remote_props = RemoteShellCmd(config.destination,
+                                  AllPoolPropertiesCmd(config.destination.pool)).check_output()
     remote_features = parse_features(remote_props.decode())
     ok = True
     print(local_features)
