@@ -51,6 +51,22 @@ class TestConfig(unittest.TestCase):
         self.assertEqual('well', cfg.destination.hostname)
 
 
+class TestRemoteShellCmd(unittest.TestCase):
+    def test_simple(self):
+        class Whoami(ShellCmd):
+            def cmd_line(self):
+                return 'whoami'
+        c = RemoteShellCmd(Config.Destination('mirmir', 'well', 'tank/eyes'), Whoami())
+        self.assertEqual("ssh mirmir@well 'whoami'", c.cmd_line())
+
+
+class TestAllPoolPropertiesCmd(unittest.TestCase):
+    def test_simple(self):
+        c = AllPoolPropertiesCmd('tank')
+        self.assertEqual('zpool get -Hp all tank', c.cmd_line())
+
+
+
 
 
 if __name__ == '__main__':

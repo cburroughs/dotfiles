@@ -3,10 +3,12 @@
 import abc
 import argparse
 import json
-import sys
+import logging
 import subprocess
+import sys
 
 from typing import Dict, List
+
 
 # note about mypy, pycodestyle,  other venv tools?  coverage
 # note about how to do a pyton3 venv
@@ -25,6 +27,7 @@ from typing import Dict, List
 
 # LEFT OFF: Need to create a bhyve VM (FreeBSDD?) for testing, how all of -I and other optiosn work is unclaer.  Also testing...
 
+LOG = logging.getLogger(__name__)
 
 class Config():
 
@@ -46,7 +49,7 @@ class Config():
             self.hostname = hostname
             self.dataset = dataset
             self.pool = dataset.split('/')[0]
-        
+
         @staticmethod
         def from_json(d: Dict):
             return Config.Destination(d['user'], d['hostname'], d['dataset'])
@@ -70,7 +73,6 @@ class Config():
         with open(fname, 'r') as f:
             return Config.from_json(json.load(f))
 
-# TODO: Some light config validation, not full json schema
 
 def parse_features(lines: str) -> Dict[str, str]:
     features = {}
@@ -89,9 +91,11 @@ class ShellCmd(abc.ABC):
         pass
 
     def check_output(self):
+        LOG.info(f'check_output cmd: {self.cmd_line()}')
         return subprocess.check_output(self.cmd_line(), shell=True)
 
     def check_call(self):
+        LOG.info(f'check_call cmd: {self.cmd_line()}')
         return subprocess.check_call(self.cmd_line(), shell=True)
 
 
@@ -118,9 +122,11 @@ class AllPoolPropertiesCmd(ShellCmd):
 ##### cmds #####
 
 def cmd_foo(args):
+    LOG.info('hi')
     print('hello foo')
 
 
+# TODO: pull out into it's own function, many things will chec this first
 def cmd_check_features(args):
     config = Config.load_config('example.json')
     local_props =  AllPoolPropertiesCmd(config.pool).check_output()
@@ -129,15 +135,13 @@ def cmd_check_features(args):
                                   AllPoolPropertiesCmd(config.destination.pool)).check_output()
     remote_features = parse_features(remote_props.decode())
     ok = True
-    print(local_features)
-    print(remote_features)
     for key,val in local_features.items():
         if val == 'enabled':
             if key not in remote_features:
-                print(f'!feature {key} not in remote_features')
+                LOG.error(f'!feature {key} not in remote_features')
                 ok = False
             elif key in remote_features and remote_features[key] != 'enabled':
-                print(f'!feature {key} disable remote_features')
+                LOG.error(f'!feature {key} disable remote_features')
                 ok = False
     return ok
 
@@ -152,6 +156,9 @@ def make_parser():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
+    parser.add_argument('--log-level', dest='log_level', type=str, default='warning',
+                        choices=['critical', 'error', 'warning', 'info', 'debug'])
+
     foo_p = subparsers.add_parser('foo')
     foo_p.set_defaults(func=cmd_foo)
 
@@ -164,6 +171,12 @@ def make_parser():
 def main(argv):
     parser = make_parser()
     args = parser.parse_args(argv)
+    numeric_level = getattr(logging, args.log_level.upper(), None)
+    if not isinstance(numeric_level, int):
+        raise ValueError('Invalid log level: %s' % loglevel)
+    fmt = '[%(asctime)s] - %(filename)s:%(lineno)d - %(levelname)s - %(message)s'
+    logging.basicConfig(format=fmt, level=numeric_level)
+
     if not hasattr(args, 'func'):
         print('ERROR: missing subcommand',  file=sys.stderr)
         parser.print_help()
