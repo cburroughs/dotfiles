@@ -24,7 +24,7 @@ from typing import Dict, List
 # not a gigantic storage pool with thousands of containers.  Learn python 3
 #
 
-# cmds: check-features, just-snap, just-prune-local(?), just-prune-remote(fuzzy on how snapshots work? don't think this is needed), initial-seed-send, backup(doitall)
+# cmds: check-features, just-snap, just-prune-local(?), just-prune-remote(fuzzy on how snapshots work? don't think this is needed), initial-seed, backup(doitall)
 
 LOG = logging.getLogger(__name__)
 
@@ -105,8 +105,7 @@ class RootYazSnapshot():
     def is_time_for_next(self, now=None) -> bool:
         if now is None:
             now = int(time.time())
-        #approx_sec_day = 86400
-        approx_sec_day = 10
+        approx_sec_day = 86400
         return now > approx_sec_day + self.timestamp
 
     @staticmethod
@@ -191,6 +190,21 @@ class RemoteShellCmd(ShellCmd):
         return f"ssh {self.user}@{self.hostname} '{self.cmd.cmd_line()}'"
 
 
+class RemotePipeShellCmd(ShellCmd):
+
+    def __init__(self, local_cmd: ShellCmd,
+                 dest:Config.Destination,
+                 remote_cmd: ShellCmd):
+        self.local_cmd = local_cmd
+        self.dest = dest
+        self.remote_cmd = remote_cmd
+
+    def cmd_line(self):
+        return (f'{self.local_cmd.cmd_line()} | ' +
+                f'ssh {self.dest.user}@{self.dest.hostname} ' +
+                f"'{self.remote_cmd.cmd_line()}'")
+
+
 class AllPoolPropertiesCmd(ShellCmd):
 
     def __init__(self, pool: str):
@@ -208,6 +222,14 @@ class ListPoolSnapshotsCmd(ShellCmd):
     def cmd_line(self):
         return f'zfs list -Hp -r -t snapshot -o name {self.pool}'
 
+
+class ListPoolDatasetsCmd(ShellCmd):
+
+    def __init__(self, pool: str):
+        self.pool = pool
+
+    def cmd_line(self):
+        return f'zfs list -Hp -r -o name {self.pool}'
 
 class TakePoolSnapshotCmd(ShellCmd):
 
@@ -230,16 +252,41 @@ class DestroyPoolSnapshotCmd(ShellCmd):
     def cmd_line(self):
         return f'zfs destroy -r {self.pool}@{self.snap_name}'
 
+
+class InitialSendCmd(ShellCmd):
+
+    def __init__(self, pool: str, snap_name: str):
+        self.pool = pool
+        self.snap_name = snap_name
+
+    def cmd_line(self):
+        return f"zfs send -cR {self.pool}@{self.snap_name}"
+
+
+class IncrementalSendCmd(ShellCmd):
+
+    def __init__(self, pool: str, from_snap: str, to_snap: str):
+        self.pool = pool
+        self.from_snap = from_snap
+        self.to_snap = to_snap
+
+    def cmd_line(self):
+        return f"zfs send -cR -I {self.from_snap} {self.pool}@{self.to_snap}"
+
+class RecvCmd(ShellCmd):
+
+    def __init__(self, dest:Config.Destination, force: bool = False):
+        self.dest = dest
+        self.force = force
+        self.force_flag = '-F ' if force else ''
+
+    def cmd_line(self):
+        return f'zfs recv {self.force_flag} -du {self.dest.dataset}'
+
 ##### cmds #####
 
-def cmd_foo(args):
-    LOG.info('hi')
-    print('hello foo')
 
-
-# TODO: pull out into it's own function, many things will chec this first
-def cmd_check_features(args):
-    config = Config.load_config(args.config)
+def check_feature_compatibility(config):
     local_props =  AllPoolPropertiesCmd(config.pool).check_output()
     local_features = parse_features(local_props.decode())
     remote_props = RemoteShellCmd(config.destination,
@@ -255,11 +302,42 @@ def cmd_check_features(args):
                 LOG.error(f'!feature {key} disable remote_features')
                 ok = False
     if ok:
-        print('ok: features match')
-    return ok
+        LOG.info('ok: features match')
+    else:
+        raise Exception('feature mismatch!')
+
+
+def verify_remote_dataset_exits_but_empty(config):
+    remote_datasets = RemoteShellCmd(
+        config.destination,
+        ListPoolDatasetsCmd(config.destination.dataset.split('/')[0])).check_output()
+    remote_datasets = remote_datasets.decode().split('\n')
+    if config.destination.dataset not in remote_datasets:
+        msg = f'target dataset does not exist on remote'
+        LOG.error(msg)
+        raise Exception(msg)
+    remote_snapshots = RemoteShellCmd(
+        config.destination,
+        ListPoolSnapshotsCmd(config.destination.dataset)).check_output()
+    remote_snapshots = list(filter(lambda s: '@' in s,
+                              remote_snapshots.decode().split('\n')))
+    if len(remote_snapshots) > 0:
+        msg = f'dataset {config.destination.dataset} has {len(remote_snapshots)} snapshot can not seed'
+        LOG.error(msg)
+        raise Exception(msg)
+
+def cmd_foo(args):
+    LOG.info('hi')
+    print('hello foo')
+
+
+def cmd_check_features(args):
+    config = Config.load_config(args.config)
+    check_feature_compatibility(config)
 
 
 def cmd_just_snap(args):
+    # for testing, behavior may differ slightly
     config = Config.load_config(args.config)
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
     snapshots = YazSnapshots.from_cmd_output(raw_snaps)
@@ -279,13 +357,39 @@ def cmd_just_snap(args):
         DestroyPoolSnapshotCmd(config.pool, eldest.as_str()).check_call()
 
 
+def cmd_initial_seed(args):
+    config = Config.load_config(args.config)
+    check_feature_compatibility(config)
+    raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+    if not snapshots.is_empty():
+        msg = 'snapshots present! can not take initial seed'
+        LOG.error(msg)
+        raise Exception(msg)
+    verify_remote_dataset_exits_but_empty(config)
+
+    snap = snapshots.begin_sequence(config)
+    TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
+    LOG.info('appears safe to start initial send')
+    RemotePipeShellCmd(InitialSendCmd(config.pool, snap.as_str()),
+                       config.destination,
+                       RecvCmd(config.destination, force=True)).check_call()
+
+
+def cmd_backup(args):
+    config = Config.load_config(args.config)
+    check_feature_compatibility(config)
+    # todo: going to need a veryify remote has expected snapshots command?
+    # and have a while loop to catch up or someting
+
+
 ##### mainline #####
 
 def make_parser():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
-    parser.add_argument('--log-level', dest='log_level', type=str, default='warning',
+    parser.add_argument('--log-level', dest='log_level', type=str, default='info',
                         choices=['critical', 'error', 'warning', 'info', 'debug'])
     parser.add_argument('--config', type=str, required=True,)
 
@@ -297,6 +401,17 @@ def make_parser():
 
     js_p = subparsers.add_parser('just-snap')
     js_p.set_defaults(func=cmd_just_snap)
+
+    is_p = subparsers.add_parser('initial-seed')
+    is_p.set_defaults(func=cmd_initial_seed)
+
+    b_p = subparsers.add_parser('backup')
+    b_p.add_argument('--force-recv', dest='force_recv', action='store_true')
+    b_p.add_argument('--no-force-recv', dest='force_recv', action='store_false')
+    b_p.set_defaults(force_recv=False)
+    b_p.set_defaults(func=cmd_backup)
+
+    # --force flag for backup, I want an option to play it afe
 
     return parser
 

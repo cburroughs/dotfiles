@@ -88,12 +88,57 @@ class TestRemoteShellCmd(unittest.TestCase):
 
 
 class TestAllPoolPropertiesCmd(unittest.TestCase):
-    def test_simple(self):
+    def test(self):
         c = AllPoolPropertiesCmd('tank')
         self.assertEqual('zpool get -Hp all tank', c.cmd_line())
 
 
+class TestRemotePipeShellCmd(unittest.TestCase):
+    def test(self):
+        class Mario(ShellCmd):
+            def cmd_line(self):
+                return 'mario'
+        class World4(ShellCmd):
+            def cmd_line(self):
+                return 'world -4'
+        c = RemotePipeShellCmd(Mario(),
+                               Config.Destination('mirmir', 'well', 'tank/eyes'),
+                               World4())
+        self.assertEqual("mario | ssh mirmir@well 'world -4'",
+                         c.cmd_line())
 
+class TestTakePoolSnapshotCmd(unittest.TestCase):
+    def test(self):
+        c = TakePoolSnapshotCmd('cauldron', 'frog')
+        self.assertEqual('zfs snapshot -r cauldron@frog',
+                         c.cmd_line())
+
+class TestDestroyPoolSnapshotCmd(unittest.TestCase):
+    def test(self):
+        c = DestroyPoolSnapshotCmd('cauldron', 'frog')
+        self.assertEqual('zfs destroy -r cauldron@frog',
+                         c.cmd_line())
+
+class TestInitialSendCmd(unittest.TestCase):
+    def test(self):
+        c = InitialSendCmd('cauldron', 'frog')
+        self.assertEqual('zfs send -cR cauldron@frog',
+                         c.cmd_line())
+
+class TestIncrementalSendCmd(unittest.TestCase):
+    def test(self):
+        c = IncrementalSendCmd('cauldron', 'gall-of-goat', 'slip-of-yew')
+        self.assertEqual('zfs send -cR -I gall-of-goat cauldron@slip-of-yew',
+                         c.cmd_line())
+
+class TestRecvCmd(ShellCmd):
+    def test_simple(self):
+        c = RecvCmd(Config.Destination('mirmir', 'well', 'tank/eyes'))
+        self.assertEqual('zfs recv -du tank/eyes', c.cmd_line())
+
+    def test_force(self):
+        c = RecvCmd(Config.Destination('mirmir', 'well', 'tank/eyes'), force=True)
+        self.assertEqual('zfs recv -F -du tank/eyes', c.cmd_line())
 
 
 if __name__ == '__main__':
