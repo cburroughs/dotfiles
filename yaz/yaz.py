@@ -535,4 +535,5 @@ if __name__ == '__main__':
 # * https://old.reddit.com/r/zfs/comments/7fqu1y/a_small_survey_of_zfs_remote_replication_tools
 
 
-# DEBUG:  mount -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
+# DEBUG:  mount -o ro -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
+# ^^ zfs magic (delete queue?) may result in modifications when mounted
