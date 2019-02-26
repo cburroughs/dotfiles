@@ -138,8 +138,8 @@ class YazSnapshots():
         self.snapshots.append(snap)
         return snap
 
-    def next_in_seq(self):
-        if self.snapshots[-1].is_time_for_next():
+    def next_in_seq(self, force:bool = True):
+        if force or self.snapshots[-1].is_time_for_next():
             snap = self.snapshots[-1].next_in_seq()
             self.snapshots.append(snap)
             return snap
@@ -164,6 +164,9 @@ class YazSnapshots():
             if snap.startswith('yaz-'):
                 snapshots.append(RootYazSnapshot.decode_from_str(snap))
         return YazSnapshots(snapshots)
+
+    def __repr__(self):
+        return f'YazSnapshots(snapshots={self.snapshots})'
 
 ##### shell command objects #####
 
@@ -219,20 +222,32 @@ class AllPoolPropertiesCmd(ShellCmd):
 
 class ListPoolSnapshotsCmd(ShellCmd):
 
-    def __init__(self, pool: str):
+    def __init__(self, pool: str, recursive=True):
         self.pool = pool
+        self.recursive_flag =  '-r' if recursive else ''
 
     def cmd_line(self):
-        return f'zfs list -Hp -r -t snapshot -o name {self.pool}'
+        return f'zfs list -Hp {self.recursive_flag} -t snapshot -o name {self.pool}'
+
+
+class ListDatasetSnapshotsCmd(ShellCmd):
+    # The snapshots on a single dataset
+
+    def __init__(self, dataset: str):
+        self.dataset = dataset
+
+    def cmd_line(self):
+        return f'zfs list -Hp -r -d 1 -t snapshot -o name {self.dataset}'
 
 
 class ListPoolDatasetsCmd(ShellCmd):
 
-    def __init__(self, pool: str):
+    def __init__(self, pool: str, recursive=True):
         self.pool = pool
+        self.recursive_flag =  '-r' if recursive else ''
 
     def cmd_line(self):
-        return f'zfs list -Hp -r -o name {self.pool}'
+        return f'zfs list -Hp {self.recursive_flag} -o name {self.pool}'
 
 class TakePoolSnapshotCmd(ShellCmd):
 
@@ -281,7 +296,13 @@ class IncrementalSendCmd(ShellCmd):
 
 
 class RecvCmd(ShellCmd):
-
+    # zfs recv -R with -F will destory snapshots and datasets and is thus no
+    # protection against accidentally destroying either.  Indeed it will
+    # replicate mistake to the backup!  By default this does not force the recv
+    # then, trading safety for (unbounded) storage growth on the backup.  Either
+    # a manual run with --recv-force, or a separate less frequent cron, is thus
+    # needed
+g    
     def __init__(self, dest:Config.Destination, force: bool = False, resume:bool = False):
         self.dest = dest
         self.force = force
@@ -304,10 +325,10 @@ def check_feature_compatibility(config):
     for key,val in local_features.items():
         if val == 'enabled':
             if key not in remote_features:
-                LOG.error(f'!feature {key} not in remote_features')
+                LOG.error(f'feature {key} not in remote_features')
                 ok = False
-            elif key in remote_features and remote_features[key] != 'enabled':
-                LOG.error(f'!feature {key} disable remote_features')
+            elif key in remote_features and remote_features[key] == 'disabled':
+                LOG.error(f'feature {key} disabled in remote_features')
                 ok = False
     if ok:
         LOG.info('ok: features match')
@@ -341,7 +362,7 @@ def cmd_check_features(args):
 
 
 def cmd_just_snap(args):
-    # for testing, behavior may differ slightly
+    # for testing, behavior may differ
     config = Config.load_config(args.config)
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
     snapshots = YazSnapshots.from_cmd_output(raw_snaps)
@@ -370,7 +391,6 @@ def cmd_initial_seed(args):
         msg = 'snapshots present! can not take initial seed'
         LOG.error(msg)
         raise Exception(msg)
-    # UGH NOT thE RIGHT CHECK AGAIN? # OR MAYBE IT IS
     verify_remote_dataset_exits_but_empty(config)
 
     snap = snapshots.begin_sequence(config)
@@ -407,9 +427,49 @@ def cmd_initial_seed(args):
 
 def cmd_backup(args):
     config = Config.load_config(args.config)
+
+    raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+
+    snap = snapshots.next_in_seq(args.force_snapshot)
+    if snap is None:
+        LOG.info('most recent snapshot is new enough, nothing to do')
+        return
     check_feature_compatibility(config)
-    # todo: going to need a veryify remote has expected snapshots command?
-    # and have a while loop to catch up or someting
+    TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
+
+    raw_remote_snaps = RemoteShellCmd(
+        config.destination,
+        ListDatasetSnapshotsCmd(config.destination.dataset)).check_output().decode()
+    remote_snapshots = list(map(lambda s: s.split('@')[1],
+                                filter(lambda s: s, raw_remote_snaps.split('\n'))))
+    LOG.debug(f'remote snapshots: {remote_snapshots}')
+    cmds = []
+    for idx, yaz_snap in enumerate(snapshots.snapshots):
+        if yaz_snap.as_str() in remote_snapshots:
+            continue
+        else:
+            prev = snapshots.snapshots[idx-1].as_str()
+            cmd = RemotePipeShellCmd(IncrementalSendCmd(config.pool,
+                                                        prev,
+                                                        yaz_snap.as_str()),
+                                     config.destination,
+                                     RecvCmd(config.destination, force=args.force_recv))
+            cmds.append(cmd)
+    if not cmds:
+        LOG.info('remote up to date, nothing to send')
+        return
+    LOG.info('upcoming commands...')
+    for cmd in cmds:
+        LOG.info(f'     {cmd.cmd_line()}')
+    for cmd in cmds:
+        cmd.check_call()
+    LOG.info('all incremental sends complete')
+    while args.prune and snapshots.should_prune_eldest(config):
+        eldest = snapshots.pop_eldest()
+        remain = len(snapshots.snapshots)
+        LOG.info(f'removing eldest snapshot {eldest.as_str()}, {remain} left')
+        DestroyPoolSnapshotCmd(config.pool, eldest.as_str()).check_call()
 
 
 ##### mainline #####
@@ -432,9 +492,15 @@ def make_parser():
     is_p.set_defaults(func=cmd_initial_seed)
 
     b_p = subparsers.add_parser('backup')
+    b_p.add_argument('--force-snapshot', dest='force_snapshot', action='store_true')
+    b_p.add_argument('--no-force-snapshot', dest='force_snapshot', action='store_false')
     b_p.add_argument('--force-recv', dest='force_recv', action='store_true')
     b_p.add_argument('--no-force-recv', dest='force_recv', action='store_false')
+    b_p.add_argument('--prune', dest='prune', action='store_true')
+    b_p.add_argument('--no-prune', dest='prune', action='store_false')
+    b_p.set_defaults(force_snapshot=False)
     b_p.set_defaults(force_recv=False)
+    b_p.set_defaults(prune=True)
     b_p.set_defaults(func=cmd_backup)
 
     return parser
