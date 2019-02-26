@@ -4,6 +4,7 @@ import abc
 import argparse
 import json
 import logging
+import os
 import subprocess
 import sys
 import time
@@ -11,20 +12,18 @@ import time
 from typing import Dict, List
 
 
-# note about mypy, pycodestyle,  other venv tools?  coverage
-# note about how to do a pyton3 venv
+# Yet Another ZFS replication script
 
-# form yaz-${sigil}-${freq}-${hex_inc}-${hex_epoch_sec}
-# sigil from config, something to make these unique'
+# Design space:
+# * Prefer config files to property magic
+# * "Extra" snapshots are okay, don't fight with zfs-auto-snapshot
+# * Replicate a workstation pool, not a NAS or container host
+# * Learning python 3 along the way.
 
-# Yet Another ZFS replication script design: use config files, not soo much
-# property magic.  Extra snapshots are okay, don't interfere with or compete
-# with existing time based snapshots.  Simple enough that I can understand what
-# is going on, focused on replciaitng an entire desktop pool of reasonable size,
-# not a gigantic storage pool with thousands of containers.  Learn python 3
-#
+# Helpful *development* tools
+## virtual environment: python3.6  -m venv env
+## mypy, pycodestyle, coverage
 
-# cmds: check-features, just-snap, just-prune-local(?), just-prune-remote(fuzzy on how snapshots work? don't think this is needed), initial-seed, backup(doitall)
 
 LOG = logging.getLogger(__name__)
 
@@ -37,7 +36,7 @@ class Config():
 
         @staticmethod
         def from_json(d: Dict):
-            # TODO: warn on other than daily
+            # TODO: error early on other than daily
             return Config.Snapshots(d['daily'])
 
 
@@ -85,6 +84,10 @@ def parse_features(lines: str) -> Dict[str, str]:
 class RootYazSnapshot():
     # form yaz-${sigil}-${freq}-${hex_seq}-${hex_epoch_sec}
 
+    # The use of multiple "sigils" is to help transition to new versions, and
+    # reserve the potential to allow multiple full backups to sit side by side
+    # "freq" is always daily, but leaves room for others in the future
+
     def __init__(self, sigil: str, freq: str, seq: int, timestamp: int):
         assert freq == 'daily'
         self.sigil = sigil
@@ -120,8 +123,8 @@ class RootYazSnapshot():
 class YazSnapshots():
 
     def __init__(self, snapshots: List[RootYazSnapshot]):
-        self.snapshots = sorted(snapshots, key = lambda s: s.seq)
         # TODO: assert monotonic increasing seq?
+        self.snapshots = sorted(snapshots, key = lambda s: s.seq)
 
     def is_empty(self) -> bool:
         empty = len(self.snapshots) == 0
@@ -254,13 +257,16 @@ class DestroyPoolSnapshotCmd(ShellCmd):
 
 
 class InitialSendCmd(ShellCmd):
+    # After much trial and error, it is best to avoid -R on the initial send and
+    # use each "fully qualified" snapshot name.  This is because resume is only
+    # per dataset, you can't resume the full -R recursion.  Thus we pass in each
+    # full "pool/dataset@snap" from `zfs list` instead of interpolating it.
 
-    def __init__(self, pool: str, snap_name: str):
-        self.pool = pool
+    def __init__(self, snap_name: str):
         self.snap_name = snap_name
 
     def cmd_line(self):
-        return f"zfs send -cR {self.pool}@{self.snap_name}"
+        return f"zfs send -c {self.snap_name}"
 
 
 class IncrementalSendCmd(ShellCmd):
@@ -273,15 +279,17 @@ class IncrementalSendCmd(ShellCmd):
     def cmd_line(self):
         return f"zfs send -cR -I {self.from_snap} {self.pool}@{self.to_snap}"
 
+
 class RecvCmd(ShellCmd):
 
-    def __init__(self, dest:Config.Destination, force: bool = False):
+    def __init__(self, dest:Config.Destination, force: bool = False, resume:bool = False):
         self.dest = dest
         self.force = force
         self.force_flag = '-F ' if force else ''
+        self.resume_flag = 's' if resume else ''
 
     def cmd_line(self):
-        return f'zfs recv {self.force_flag} -du {self.dest.dataset}'
+        return f'zfs recv {self.force_flag} -{self.resume_flag}du {self.dest.dataset}'
 
 ##### cmds #####
 
@@ -326,10 +334,6 @@ def verify_remote_dataset_exits_but_empty(config):
         LOG.error(msg)
         raise Exception(msg)
 
-def cmd_foo(args):
-    LOG.info('hi')
-    print('hello foo')
-
 
 def cmd_check_features(args):
     config = Config.load_config(args.config)
@@ -366,14 +370,39 @@ def cmd_initial_seed(args):
         msg = 'snapshots present! can not take initial seed'
         LOG.error(msg)
         raise Exception(msg)
+    # UGH NOT thE RIGHT CHECK AGAIN? # OR MAYBE IT IS
     verify_remote_dataset_exits_but_empty(config)
 
     snap = snapshots.begin_sequence(config)
     TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
     LOG.info('appears safe to start initial send')
-    RemotePipeShellCmd(InitialSendCmd(config.pool, snap.as_str()),
-                       config.destination,
-                       RecvCmd(config.destination, force=True)).check_call()
+
+    # avoiding -R on initial send because because it means we can't reusme the whole thing
+    seed_snaps = ListPoolSnapshotsCmd(config.pool).check_output()
+    seed_snaps = list(filter(lambda s: snap.as_str() in s,  seed_snaps.decode().split('\n')))
+    cmds = []
+
+    assert (config.pool + '@') in seed_snaps[0]
+    cmds.append(RemotePipeShellCmd(InitialSendCmd(seed_snaps[0]),
+                                   config.destination,
+                                   RecvCmd(config.destination, force=True, resume=True)))
+
+    for seed_snap in seed_snaps[1:]: # skip special first one that is just the pool name
+        if not seed_snap:
+            continue
+        # One of the seed snaps just created above
+        if snap.as_str() in seed_snap:
+            cmd = RemotePipeShellCmd(InitialSendCmd(seed_snap),
+                                     config.destination,
+                                     RecvCmd(config.destination, resume=True))
+            cmds.append(cmd)
+    LOG.info('upcoming commands...')
+    for cmd in cmds:
+        LOG.info(f'     {cmd.cmd_line()}')
+    # on failure, human will have to complete manualy with tokens and continue fromt he above list
+    LOG.info('starting initial send...')
+    for cmd in cmds:
+        cmd.check_call()
 
 
 def cmd_backup(args):
@@ -393,9 +422,6 @@ def make_parser():
                         choices=['critical', 'error', 'warning', 'info', 'debug'])
     parser.add_argument('--config', type=str, required=True,)
 
-    foo_p = subparsers.add_parser('foo')
-    foo_p.set_defaults(func=cmd_foo)
-
     cf_p = subparsers.add_parser('check-features')
     cf_p.set_defaults(func=cmd_check_features)
 
@@ -410,8 +436,6 @@ def make_parser():
     b_p.add_argument('--no-force-recv', dest='force_recv', action='store_false')
     b_p.set_defaults(force_recv=False)
     b_p.set_defaults(func=cmd_backup)
-
-    # --force flag for backup, I want an option to play it afe
 
     return parser
 
@@ -435,11 +459,11 @@ if __name__ == '__main__':
     main(sys.argv[1:])
 
 
-
-# https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b
-
-
-# https://serverfault.com/questions/137468/better-logging-for-cronjobs-send-cron-output-to-syslog
+# Some references
+# * https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b
+# * https://serverfault.com/questions/137468/better-logging-for-cronjobs-send-cron-output-to-syslog
+# * https://unix.stackexchange.com/questions/263677/how-to-one-way-mirror-an-entire-zfs-pool-to-another-zfs-pool
+# * https://old.reddit.com/r/zfs/comments/7fqu1y/a_small_survey_of_zfs_remote_replication_tools
 
 
 
