@@ -21,11 +21,12 @@ from typing import Dict, List
 # * Learning python 3 along the way.
 
 # Helpful *development* tools
-## virtual environment: python3.6  -m venv env
-## mypy, pycodestyle, coverage
+# virtual environment: python3.6  -m venv env
+# mypy, pycodestyle, coverage
 
 
 LOG = logging.getLogger(__name__)
+
 
 class Config():
 
@@ -38,7 +39,6 @@ class Config():
         def from_json(d: Dict):
             # TODO: error early on other than daily
             return Config.Snapshots(d['daily'])
-
 
     class Destination():
 
@@ -58,7 +58,6 @@ class Config():
         self.pool = pool
         self.snapshots = snapshots
         self.destination = destination
-
 
     @staticmethod
     def from_json(d: Dict):
@@ -97,7 +96,7 @@ class RootYazSnapshot():
 
     def as_str(self) -> str:
         hex_seq = hex(self.seq)[2:]
-        hex_ts =  hex(self.timestamp)[2:]
+        hex_ts = hex(self.timestamp)[2:]
         return f'yaz-{self.sigil}-{self.freq}-{hex_seq}-{hex_ts}'
 
     def next_in_seq(self, now=None) -> 'RootYazSnapshot':
@@ -124,7 +123,7 @@ class YazSnapshots():
 
     def __init__(self, snapshots: List[RootYazSnapshot]):
         # TODO: assert monotonic increasing seq?
-        self.snapshots = sorted(snapshots, key = lambda s: s.seq)
+        self.snapshots = sorted(snapshots, key=lambda s: s.seq)
 
     def is_empty(self) -> bool:
         empty = len(self.snapshots) == 0
@@ -138,7 +137,7 @@ class YazSnapshots():
         self.snapshots.append(snap)
         return snap
 
-    def next_in_seq(self, force:bool = True):
+    def next_in_seq(self, force: bool = True):
         if force or self.snapshots[-1].is_time_for_next():
             snap = self.snapshots[-1].next_in_seq()
             self.snapshots.append(snap)
@@ -168,7 +167,9 @@ class YazSnapshots():
     def __repr__(self):
         return f'YazSnapshots(snapshots={self.snapshots})'
 
+
 ##### shell command objects #####
+
 
 class ShellCmd(abc.ABC):
 
@@ -199,7 +200,7 @@ class RemoteShellCmd(ShellCmd):
 class RemotePipeShellCmd(ShellCmd):
 
     def __init__(self, local_cmd: ShellCmd,
-                 dest:Config.Destination,
+                 dest: Config.Destination,
                  remote_cmd: ShellCmd):
         self.local_cmd = local_cmd
         self.dest = dest
@@ -224,7 +225,7 @@ class ListPoolSnapshotsCmd(ShellCmd):
 
     def __init__(self, pool: str, recursive=True):
         self.pool = pool
-        self.recursive_flag =  '-r' if recursive else ''
+        self.recursive_flag = '-r' if recursive else ''
 
     def cmd_line(self):
         return f'zfs list -Hp {self.recursive_flag} -t snapshot -o name {self.pool}'
@@ -244,10 +245,11 @@ class ListPoolDatasetsCmd(ShellCmd):
 
     def __init__(self, pool: str, recursive=True):
         self.pool = pool
-        self.recursive_flag =  '-r' if recursive else ''
+        self.recursive_flag = '-r' if recursive else ''
 
     def cmd_line(self):
         return f'zfs list -Hp {self.recursive_flag} -o name {self.pool}'
+
 
 class TakePoolSnapshotCmd(ShellCmd):
 
@@ -302,8 +304,8 @@ class RecvCmd(ShellCmd):
     # then, trading safety for (unbounded) storage growth on the backup.  Either
     # a manual run with --recv-force, or a separate less frequent cron, is thus
     # needed
-g    
-    def __init__(self, dest:Config.Destination, force: bool = False, resume:bool = False):
+
+    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False):
         self.dest = dest
         self.force = force
         self.force_flag = '-F ' if force else ''
@@ -316,13 +318,13 @@ g
 
 
 def check_feature_compatibility(config):
-    local_props =  AllPoolPropertiesCmd(config.pool).check_output()
+    local_props = AllPoolPropertiesCmd(config.pool).check_output()
     local_features = parse_features(local_props.decode())
     remote_props = RemoteShellCmd(config.destination,
                                   AllPoolPropertiesCmd(config.destination.pool)).check_output()
     remote_features = parse_features(remote_props.decode())
     ok = True
-    for key,val in local_features.items():
+    for key, val in local_features.items():
         if val == 'enabled':
             if key not in remote_features:
                 LOG.error(f'feature {key} not in remote_features')
@@ -349,7 +351,7 @@ def verify_remote_dataset_exits_but_empty(config):
         config.destination,
         ListPoolSnapshotsCmd(config.destination.dataset)).check_output()
     remote_snapshots = list(filter(lambda s: '@' in s,
-                              remote_snapshots.decode().split('\n')))
+                                   remote_snapshots.decode().split('\n')))
     if len(remote_snapshots) > 0:
         msg = f'dataset {config.destination.dataset} has {len(remote_snapshots)} snapshot can not seed'
         LOG.error(msg)
@@ -407,7 +409,7 @@ def cmd_initial_seed(args):
                                    config.destination,
                                    RecvCmd(config.destination, force=True, resume=True)))
 
-    for seed_snap in seed_snaps[1:]: # skip special first one that is just the pool name
+    for seed_snap in seed_snaps[1:]:  # skip special first one that is just the pool name
         if not seed_snap:
             continue
         # One of the seed snaps just created above
@@ -474,6 +476,7 @@ def cmd_backup(args):
 
 ##### mainline #####
 
+
 def make_parser():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
@@ -532,5 +535,4 @@ if __name__ == '__main__':
 # * https://old.reddit.com/r/zfs/comments/7fqu1y/a_small_survey_of_zfs_remote_replication_tools
 
 
-
-# DEBUG:  mount -t zfs zroot/backup/ys76/GENTOO/build-dir /mnt/backup
+# DEBUG:  mount -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
