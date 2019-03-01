@@ -265,7 +265,7 @@ class DestroyPoolSnapshotCmd(ShellCmd):
 
     def __init__(self, pool: str, snap_name: str):
         assert len(pool) > 0
-        assert len(snap_name) > 0-
+        assert len(snap_name) > 0
         self.pool = pool
         self.snap_name = snap_name
 
