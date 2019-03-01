@@ -173,6 +173,7 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 
 # ~sigh~
+# better to add to /etc/profile.d/fix-scrollbars.sh
 export GTK_OVERLAY_SCROLLING=0
 
 # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=15154#11
