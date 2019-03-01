@@ -122,7 +122,7 @@ class TestDestroyPoolSnapshotCmd(unittest.TestCase):
 class TestInitialSendCmd(unittest.TestCase):
     def test(self):
         c = InitialSendCmd('cauldron@frog')
-        self.assertEqual('zfs send -c cauldron@frog',
+        self.assertEqual('zfs send -pc cauldron@frog',
                          c.cmd_line())
 
 class TestIncrementalSendCmd(unittest.TestCase):

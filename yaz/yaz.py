@@ -107,7 +107,7 @@ class RootYazSnapshot():
     def is_time_for_next(self, now=None) -> bool:
         if now is None:
             now = int(time.time())
-        approx_sec_day = 86400
+        approx_sec_day = 86400 * 0.98
         return now > approx_sec_day + self.timestamp
 
     @staticmethod
@@ -152,7 +152,7 @@ class YazSnapshots():
         return self.snapshots.pop(0)
 
     @staticmethod
-    def from_cmd_output(output: str) -> 'YazSnapshots':
+    def from_cmd_output(output: str, sigil: str) -> 'YazSnapshots':
         snapshots = []
         for line in output.split('\n'):
             if not line:
@@ -160,7 +160,7 @@ class YazSnapshots():
             if '/' in line:
                 continue
             snap = line.split('@')[1]
-            if snap.startswith('yaz-'):
+            if snap.startswith('yaz-' + sigil):
                 snapshots.append(RootYazSnapshot.decode_from_str(snap))
         return YazSnapshots(snapshots)
 
@@ -265,7 +265,7 @@ class DestroyPoolSnapshotCmd(ShellCmd):
 
     def __init__(self, pool: str, snap_name: str):
         assert len(pool) > 0
-        assert len(snap_name) > 0
+        assert len(snap_name) > 0-
         self.pool = pool
         self.snap_name = snap_name
 
@@ -283,7 +283,7 @@ class InitialSendCmd(ShellCmd):
         self.snap_name = snap_name
 
     def cmd_line(self):
-        return f"zfs send -c {self.snap_name}"
+        return f"zfs send -pc {self.snap_name}"
 
 
 class IncrementalSendCmd(ShellCmd):
@@ -367,7 +367,7 @@ def cmd_just_snap(args):
     # for testing, behavior may differ
     config = Config.load_config(args.config)
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
-    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps, config.sigil)
     if snapshots.is_empty():
         snap = snapshots.begin_sequence(config)
         TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
@@ -388,7 +388,7 @@ def cmd_initial_seed(args):
     config = Config.load_config(args.config)
     check_feature_compatibility(config)
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
-    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps, config.sigil)
     if not snapshots.is_empty():
         msg = 'snapshots present! can not take initial seed'
         LOG.error(msg)
@@ -431,7 +431,7 @@ def cmd_backup(args):
     config = Config.load_config(args.config)
 
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
-    snapshots = YazSnapshots.from_cmd_output(raw_snaps)
+    snapshots = YazSnapshots.from_cmd_output(raw_snaps, config.sigil)
 
     snap = snapshots.next_in_seq(args.force_snapshot)
     if snap is None:
@@ -533,6 +533,10 @@ if __name__ == '__main__':
 # * https://serverfault.com/questions/137468/better-logging-for-cronjobs-send-cron-output-to-syslog
 # * https://unix.stackexchange.com/questions/263677/how-to-one-way-mirror-an-entire-zfs-pool-to-another-zfs-pool
 # * https://old.reddit.com/r/zfs/comments/7fqu1y/a_small_survey_of_zfs_remote_replication_tools
+
+# Example permissions
+# root@yggdrasil[~]# zfs allow  backup_y54 create,mount tank/backups/chris/y54
+# root@yggdrasil[~]# zfs allow -c allow,atime,clone,compression,create,destroy,diff,hold,logbias,mount,mountpoint,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
 
 
 # DEBUG:  mount -o ro -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
