@@ -302,7 +302,7 @@ class RecvCmd(ShellCmd):
     # protection against accidentally destroying either.  Indeed it will
     # replicate mistake to the backup!  By default this does not force the recv
     # then, trading safety for (unbounded) storage growth on the backup.  Either
-    # a manual run with --recv-force, or a separate less frequent cron, is thus
+    # a manual run with --force-recv, or a separate less frequent cron, is thus
     # needed
 
     def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False):
@@ -538,6 +538,9 @@ if __name__ == '__main__':
 # root@yggdrasil[~]# zfs allow  backup_y54 create,mount tank/backups/chris/y54
 # root@yggdrasil[~]# zfs allow -c allow,atime,clone,compression,create,destroy,diff,hold,logbias,mount,mountpoint,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
 
+# NOTE: Because mountpoint is replicated (seemed good to avoid errors) then
+# canmount=noauto needs to be set ot multiple datasets try to mount in the same
+# place
 
 # DEBUG:  mount -o ro -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
 # ^^ zfs magic (delete queue?) may result in modifications when mounted
