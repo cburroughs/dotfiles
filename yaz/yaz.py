@@ -421,7 +421,7 @@ def cmd_initial_seed(args):
     LOG.info('upcoming commands...')
     for cmd in cmds:
         LOG.info(f'     {cmd.cmd_line()}')
-    # on failure, human will have to complete manualy with tokens and continue fromt he above list
+    # on failure, human will have to complete manualy with tokens and continue from the above list
     LOG.info('starting initial send...')
     for cmd in cmds:
         cmd.check_call()
@@ -433,6 +433,14 @@ def cmd_backup(args):
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
     snapshots = YazSnapshots.from_cmd_output(raw_snaps, config.sigil)
 
+    # TODO: Need to rejiger logic (maybe with a flag?) so that we can see if
+    # there is work to do and do that before taking another snapshot.  Otherwise
+    # if there has been an error with a child dataset, on the backup destination
+    # we will keep building up snapshots on the parent, but never make any
+    # progress.  As a possible alternative or compliment, adjust the
+    # remote_snapshots log below so that instead of just looking at the remote
+    # parent, we look at the snapshots of all child datasets, and use the one
+    # that is missing the most.  Unsure how this would interact with -F recv.
     snap = snapshots.next_in_seq(args.force_snapshot)
     if snap is None:
         LOG.info('most recent snapshot is new enough, nothing to do')
