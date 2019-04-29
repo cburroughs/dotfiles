@@ -1,0 +1,23 @@
+## General
+
+Using ISO 8601 date formatting (YYYY-MM-DD) alongside the rest of `en_US` is not part of any canned local.  For example, `en_DK` uses a 24 hour clock.  To that end `en_US@csb` is otherwise identical to `en_US` except for `d_fmt`.
+
+To use this:
+ * `cp en_US@csb /usr/share/i18n/locales/`
+ * add `en_US@csb UTF-8` to `/etc/locale.gen`
+ * edit `/etc/env.d/02locale` and follow  https://wiki.gentoo.org/wiki/Localization/Guide
+
+## Thunderbird/Firefox
+
+Starting with version 60 Thunderbird ignores local's from libc:
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1502659
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1426907
+ 
+Thunderbird will look at the "name" of the local, but not it's contents, and then go off and consult a different library.  However, said library is all sorts of different so cases like `en_DK` will produce totally different results.  This is all sorts of broken.  Customizing the date format with said library is described as "advanced" by a glibc developer, so that path does not sound promising.
+
+The crazy workaround hack is to add a local called "root" which triggers a fallback to ISO 8601.  This is nuts
+
+ * `ln -s /usr/share/i18n/locales/en_US@csb /usr/share/i18n/locales/root`
+ * Add `root.UTF-8 UTF-8` to /etc/locale.gen
+ * Generate!
+ * Customize the Thunderbird desktop launch file
