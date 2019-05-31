@@ -35,9 +35,11 @@ export SVN_EDITOR=$EDITOR
 export GIT_EDITOR=$EDITOR
 
 export HISTCONTROL=ignoreboth
-export HISTSIZE=20000
-export HISTFILESIZE=20000
+export HISTSIZE=32768
+export HISTFILESIZE=32768
 export HISTTIMEFORMAT='%Y-%m-%d_%H:%M:%S '
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
 export PAGER='less'
 export LESS="-R -M --shift 5"
 
