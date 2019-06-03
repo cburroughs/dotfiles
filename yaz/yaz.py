@@ -297,6 +297,7 @@ class IncrementalSendCmd(ShellCmd):
         return f"zfs send -cR -I {self.from_snap} {self.pool}@{self.to_snap}"
 
 
+## TODO: Why does -F seem to destory old snapshots from my laptop, but not desktop?
 class RecvCmd(ShellCmd):
     # zfs recv -R with -F will destory snapshots and datasets and is thus no
     # protection against accidentally destroying either.  Indeed it will
