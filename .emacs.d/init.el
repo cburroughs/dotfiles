@@ -130,37 +130,51 @@
 ;; Putting Files places
 
 ;; copied from the internet
-;; http://snarfed.org/space/gnu%20emacs%20backup%20files
+;; https://snarfed.org/gnu_emacs_backup_files
+;; http://pragmaticemacs.com/emacs/auto-save-and-backup-every-save/
 ;; don't splatter backup and autosave files everywhere
 
-;; Put autosave files (ie #foo#) in one place, *not*
-;; scattered all over the file system!
-;; but not in temp
-(defvar autosave-dir
- (concat "~/.config/emacs/autosaves/"))
+;; Put autosave files (ie #foo#) in one place, *not* scattered all over the file
+;; system, not in /tmp where they can be lost when most needed
 
-(make-directory autosave-dir t)
+(defvar csb-auto-save-dir "~/.config/emacs/autosaves/")
+
+(make-directory csb-auto-save-dir t)
 
 (defun auto-save-file-name-p (filename)
   (string-match "^#.*#$" (file-name-nondirectory filename)))
 
 (defun make-auto-save-file-name ()
-  (concat autosave-dir
+  (concat csb-auto-save-dir
    (if buffer-file-name
       (concat "#" (file-name-nondirectory buffer-file-name) "#")
     (expand-file-name
      (concat "#%" (buffer-name) "#")))))
 
+
 ;; Put backup files (ie foo~) in one place too. (The backup-directory-alist
 ;; list contains regexp=>directory mappings; filenames matching a regexp are
 ;; backed up in the corresponding directory. Emacs will mkdir it if necessary.)
-(defvar backup-dir (concat "~/.config/emacs/backups/"))
-(setq backup-directory-alist (list (cons "." backup-dir)))
+(defvar csb-backup-dir (concat "~/.config/emacs/backups/"))
+(setq backup-directory-alist (list (cons "." csb-backup-dir)))
+(setq
+ backup-by-copying t     ; don't clobber symlinks
+ kept-new-versions 10    ; keep 10 latest versions
+ kept-old-versions 0     ; don't bother with old versions
+ delete-old-versions t   ; don't ask about deleting old versions
+ version-control t       ; number backups
+ vc-make-backup-files t) ; backup version controlled files
 
-(setq semanticdb-default-save-directory "/tmp/")
+
+
 
 (setq make-backup-files t)
 
+
+;; Is this still relevant?
+(setq semanticdb-default-save-directory "/tmp/")
+
+;; fin
 (garbage-collect)
 
 ;;; Dependencies
