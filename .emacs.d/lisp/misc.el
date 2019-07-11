@@ -64,8 +64,6 @@
 (autoload 'columnize-text "columnize"
   "Formats a list of items into columns (pillars)" t)
 
-(autoload 'align-cols "align" "Align text in the region." t)
-
 ;; http://www.emacswiki.org/emacs/FillParagraph
 ;; http://jblevins.org/projects/markdown-mode/
 (setq paragraph-start "\f\\|[ \t]*$\\|[ \t]*[*+-] \\|[ \t]*[0-9]+\\.\\|[ \t]*: ")
