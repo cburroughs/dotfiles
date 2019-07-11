@@ -131,10 +131,11 @@
              (setq sql-indent-offset 4))
 
 
-
-; dot files
-(autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
+;; dot files
+(use-package graphviz-dot-mode
+  :ensure t
+  :pin melpa-stable
+  :mode ("\\.dot$" . graphviz-dot-mode))
 
 ;; markdown-mode
 (use-package markdown-mode

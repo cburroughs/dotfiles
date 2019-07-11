@@ -20,6 +20,8 @@
 ;; use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+;; graphviz dot mode requires this to be set, unclear how it is different from the above
+(setq-default default-tab-width 4)
 
 ;; prefer hippie-expand over deavrez
 (global-set-key (kbd "M-/") 'hippie-expand)
