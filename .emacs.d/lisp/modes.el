@@ -123,7 +123,7 @@
 ;; sql indenting
 (use-package sql-indent
              :ensure t
-             :pin melpa
+             :pin gnu
              :init
              (eval-after-load "sql"
                '(load-library "sql-indent"))

@@ -75,7 +75,7 @@
 
 (use-package vcl-mode
              :ensure t
-             :pin melpa
+             :pin gnu
              :mode "\\.vcl$")
 
 (setq ruby-deep-indent-paren nil)
