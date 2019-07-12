@@ -78,3 +78,18 @@
   :bind ([f8] . neotree-toggle)
   :config
   (setq neo-autorefresh nil))
+
+
+;; http://pragmaticemacs.com/emacs/world-clock-in-emacs/
+;; for display-time-world
+(setq display-time-world-list
+      '(("Etc/UTC" "UTC")
+        ("America/Los_Angeles" "Los_Angeles")
+        ("America/New_York" "New York")
+        ("America/Vancouver" "Vancouver")
+        ("Europe/Berlin" "Berlin")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")
+        ("Asia/Seoul" "Seoul")
+        ("Asia/Shanghai" "Bejing/Shanghai")
+        ("Asia/Tokyo" "Tokyo")))
