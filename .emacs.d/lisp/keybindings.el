@@ -15,7 +15,7 @@
 (defalias 'qrr 'query-replace-regexp)
 
 ;; Need to force this some times?
-(global-set-key "\C-c\C-c" 'comment-region) 
+(global-set-key "\C-c\C-c" 'comment-region)
 
 ;; cua-like
 (global-set-key [home] 'beginning-of-buffer)
@@ -60,3 +60,9 @@
 (global-set-key (kbd "C-x r C-w")   'rm-kill-region)
 (global-set-key (kbd "C-x r M-w")   'rm-kill-ring-save)
 (global-set-key (kbd "C-x r <down-mouse-1>") 'rm-mouse-drag-region)
+
+;; slightly better buffer listing ("Better Defaults")
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; Delete upt to the occurance of a character
+(global-set-key (kbd "M-z") 'zap-up-to-char)

@@ -83,6 +83,12 @@
 (add-path "~/.emacs.d/lisp/")
 (add-path "~/.emacs.d/site-lisp/")
 
+
+;; "Setting load-prefer-newer prevents stale elisp bytecode from shadowing more
+;; up-to-date source files." (Better Defaults)
+(setq load-prefer-newer t)
+
+
 ;; It is easy enough to byte compile everything, so we might as well
 ;; The 0 option makes an .elc file even if one is not yet present
 (byte-recompile-directory "~/.emacs.d/site-lisp" 0)
