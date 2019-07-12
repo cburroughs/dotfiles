@@ -216,3 +216,18 @@
 
 ;; nice commit messages
 (require 'git-commit)
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-enable-undo-in-region nil)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)))
+
+;; see https://github.com/syl20bnr/spacemacs/issues/12110
+;; Setting to about 10x the default
+(setq undo-limit (* 1024 80 10))
+(setq undo-strong-limit (* 2 undo-limit))
+(setq undo-outer-limit 24000000)

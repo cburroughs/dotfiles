@@ -121,6 +121,9 @@
   (require 'use-package))
 (require 'bind-key)
 
+(use-package dash :ensure t)
+(use-package diminish :ensure t)
+
 
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
