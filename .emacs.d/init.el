@@ -120,7 +120,7 @@
 ;; try to put in order of least likely to break
 (load-library "keybindings")
 (load-library "efuncs")
-(load-library "misc")
+(load-library "sundry")
 (load-library "pretty")
 (load-library "modes")
 (load-library "prog-modes")
@@ -165,14 +165,17 @@
  version-control t       ; number backups
  vc-make-backup-files t) ; backup version controlled files
 
-
-
-
 (setq make-backup-files t)
 
 
 ;; Is this still relevant?
 (setq semanticdb-default-save-directory "/tmp/")
+
+;; https://www.emacswiki.org/emacs/SavePlace
+(save-place-mode 1) 
+(setq save-place-file "~/.config/emacs/places/emacs-places")
+(setq save-place-forget-unreadable-files nil)
+
 
 ;; fin
 (garbage-collect)
