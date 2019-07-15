@@ -98,3 +98,31 @@ fewer than 80 columns."
   (interactive)
   (global-hl-line-mode 0)
   (olivetti-mode))
+
+
+;; Dependency of doom-modeline
+(use-package all-the-icons
+  :pin melpa-stable)
+
+;; Fancy modelines
+(use-package doom-modeline
+  :ensure t
+  :pin melpa-stable
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-height 22)
+  (setq doom-modeline-buffer-file-name-style 'buffer-name)
+  (setq doom-modeline-minor-modes t)
+  (set-face-attribute 'mode-line nil :height 105)
+  (set-face-attribute 'mode-line-inactive nil :height 105))
+
+
+;; Creates a "draw" of sorts for minor modes
+;; https://manuel-uberti.github.io/emacs/2018/03/10/moody-and-minions/
+(use-package minions
+  :pin melpa-stable
+  :config
+  (setq  minions-mode-line-lighter
+         (all-the-icons-octicon  "tools"
+                                 :height 1.0 :v-adjust .05))
+  (minions-mode 1))

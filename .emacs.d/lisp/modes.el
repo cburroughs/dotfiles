@@ -218,7 +218,6 @@
 (require 'git-commit)
 
 (use-package undo-tree
-  :diminish undo-tree-mode
   :config
   (progn
     (global-undo-tree-mode)
