@@ -177,6 +177,13 @@
 (setq make-backup-files t)
 
 
+;; Save a list of recent files visited.
+(setq recentf-max-saved-items 128
+      recentf-max-menu-items 24)
+(setq recentf-save-file (expand-file-name "~/.config/emacs/recentf"))
+(recentf-mode 1)
+
+
 ;; Is this still relevant?
 (setq semanticdb-default-save-directory "/tmp/")
 

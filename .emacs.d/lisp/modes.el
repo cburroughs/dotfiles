@@ -146,9 +146,6 @@
                     ("\\.md" . markdown-mode)
                     ("\\.page" . markdown-mode)))
 
-;; Save a list of recent files visited.
-(recentf-mode 1)
-
 ;; colorize diffs.
 (eval-after-load 'diff-mode
   '(progn
