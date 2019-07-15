@@ -35,7 +35,7 @@
     (progn
       (dark-theme)))
 
-; TODO: What if the system does not have this font?  
+; TODO: What if the system does not have this font?
 (set-frame-font "DejaVu Sans Mono-11")
 
 ;; Start nice and tall, but should still be 80 char wide
@@ -45,8 +45,8 @@
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html
 (defun djcb-zoom (n)
   "with positive N, increase the font size, otherwise decrease it"
-  (set-face-attribute 'default (selected-frame) :height 
-    (+ (face-attribute 'default :height) (* (if (> n 0) 1 -1) 10)))) 
+  (set-face-attribute 'default (selected-frame) :height
+    (+ (face-attribute 'default :height) (* (if (> n 0) 1 -1) 10))))
 
 (global-set-key (kbd "C-+")      '(lambda nil (interactive) (djcb-zoom 1)))
 (global-set-key (kbd "C--")      '(lambda nil (interactive) (djcb-zoom -1)))
@@ -94,7 +94,7 @@ fewer than 80 columns."
   :pin melpa-stable)
 
 (defun prose-time ()
-    "Full screen writing focus"
+  "Full screen writing focus"
   (interactive)
   (global-hl-line-mode 0)
   (olivetti-mode))
@@ -126,3 +126,73 @@ fewer than 80 columns."
          (all-the-icons-octicon  "tools"
                                  :height 1.0 :v-adjust .05))
   (minions-mode 1))
+
+
+
+;; Alternative tabs
+(use-package centaur-tabs
+  :demand
+  :bind
+  ;; TODO: Switch to only using terminal style PageUp/Down for fewer conflicts?
+  ([(C-S-iso-lefttab)] . centaur-tabs-backward)
+  ([(control tab)] . centaur-tabs-forward)
+  ("C-<prior>" . centaur-tabs-backward)
+  ("C-<next>" . centaur-tabs-forward)
+  :hook
+  (dired-mode . centaur-tabs-local-mode)
+  (term-mode . centaur-tabs-local-mode)
+  (calendar-mode . centaur-tabs-local-mode)
+  (org-agenda-mode . centaur-tabs-local-mode)
+  :config
+;;  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-set-close-button nil)
+  (setq centaur-tabs-set-modified-marker t)
+  (setq centaur-tabs-modified-marker "*")
+  (setq centaur-tabs-set-bar 'over) ;; Theme dependent?
+  (setq centaur-tabs-style "box")  ;; Theme dependent?
+  (defun centaur-tabs-hide-tab (x)
+     (let ((name (format "%s" x)))
+       (or
+        (string-prefix-p "*" name)
+        (string-prefix-p "COMMIT_EDITMSG" name)
+        (and (string-prefix-p "magit" name)
+             (not (file-name-extension name)))
+	  )))
+  ;;  (centaur-tabs-inherit-tabbar-faces)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-mode t))
+
+
+;; TODO: Choose
+;; tabbar is pretty awesome
+(require 'tabbar)
+;; (tabbar-mode t)
+;; (global-set-key [(C-S-iso-lefttab)] 'tabbar-backward) ; why funy binding?
+;; (global-set-key [(control tab)]       'tabbar-forward)
+(set-face-attribute
+ 'tabbar-default-face nil
+ :background "gray60")
+(set-face-attribute
+ 'tabbar-unselected-face nil
+ :background "gray85"
+ :foreground "gray30"
+ :box nil)
+(set-face-attribute
+ 'tabbar-selected-face nil
+ :background "#f2f2f6"
+ :foreground "black"
+ :box nil)
+(set-face-attribute
+ 'tabbar-button-face nil
+ :box '(:line-width 1 :color "gray72" :style released-button))
+(set-face-attribute
+ 'tabbar-separator-face nil
+ :height 0.7)
+
+;; Don't cycle *scratch* and friends
+(setq tabbar-buffer-list-function
+      (lambda ()
+        (remove-if
+         (lambda(buffer)
+           (find (aref (buffer-name buffer) 0) " *"))
+         (buffer-list))))
