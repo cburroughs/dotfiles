@@ -110,6 +110,7 @@ fewer than 80 columns."
 
 ;; Dependency of doom-modeline
 (use-package all-the-icons
+  :ensure t
   :pin melpa-stable)
 
 ;; Fancy modelines
@@ -128,6 +129,7 @@ fewer than 80 columns."
 ;; Creates a "draw" of sorts for minor modes
 ;; https://manuel-uberti.github.io/emacs/2018/03/10/moody-and-minions/
 (use-package minions
+  :ensure t
   :pin melpa-stable
   :config
   (setq  minions-mode-line-lighter
@@ -139,6 +141,7 @@ fewer than 80 columns."
 
 ;; Alternative tabs
 (use-package centaur-tabs
+  :ensure t
   :demand
   :bind
   ;; TODO: Switch to only using terminal style PageUp/Down for fewer conflicts?
