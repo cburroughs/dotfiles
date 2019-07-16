@@ -1,5 +1,12 @@
 ;; Cosmetic changes
 
+;; Disable the tool bar; finally a cool kid?
+(tool-bar-mode -1)
+
+(if (not window-system)
+    (menu-bar-mode -1))
+
+
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t) ;; not sure of effect
 
@@ -39,8 +46,9 @@
 (set-frame-font "DejaVu Sans Mono-11")
 
 ;; Start nice and tall, but should still be 80 char wide
+;; Note that the height is hard coded and depends on the resolution
 (if window-system
-  (setq initial-frame-alist '((width . 80) (height . 52))))
+  (setq initial-frame-alist '((width . 80) (height . 55))))
 
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html
 (defun djcb-zoom (n)
