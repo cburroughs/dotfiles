@@ -103,13 +103,10 @@
 ;; Bootstrap pkgs http://cachestocaches.com/2015/8/getting-started-use-package/
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 
