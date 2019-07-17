@@ -1,6 +1,38 @@
 ;; Programming modes in a separate file
 
 
+;; Completion
+
+
+;; https://www.emacswiki.org/emacs/CompanyMode
+(defun company-except-in-minibuffer ()
+  (interactive)
+  (if (minibufferp)
+      (minibuffer-complete)
+    (company-indent-or-complete-common)))
+
+;; https://emacsredux.com/blog/2016/01/31/use-tab-to-indent-or-complete/
+(setq tab-always-indent 'complete)
+
+;; The above together are needed to make company mode not go totally crazy
+;; fighting with existing auto-compete or indentation.  Python indentation is
+;; still a little different, but hitting S-TAB works about as well as repeated
+;; TAB to cycle
+(use-package company
+  :ensure t
+  :defer t
+  :hook (after-init . global-company-mode)
+  :bind (("<tab>" . company-except-in-minibuffer))
+  :config
+  (setq company-tooltip-limit 16)
+  (setq company-tooltip-align-annotations t)
+  (setq company-idle-delay nil)
+  (setq company-selection-wrap-around t)
+  ;; leave it to hippie
+  (setq company-backends (delete 'company-dabbrev company-backends))
+  (company-tng-configure-default))
+
+
 ;;; Javascript
 (use-package js2-mode
              :ensure t
