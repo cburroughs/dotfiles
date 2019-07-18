@@ -22,25 +22,41 @@
 (setq frame-title-format '(buffer-file-name "%b -- %f" ( "%b" ) ) )
 
 
+;; Default to highlighting
+(global-hl-line-mode 1)
+
 ;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
 
+;; NOTE That while it *almost* works, custom themes can not reliably be reset, or
+;; switched between
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=15687
+;; https://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme
+;; https://stackoverflow.com/questions/9900232/changing-color-themes-emacs-24-order-matters
+
 (defun dark-theme ()
   (interactive)
+  (mapcar #'disable-theme custom-enabled-themes)
   (load-theme 'clarity t)
-  (global-hl-line-mode 1)
-  (set-face-background 'hl-line "gray18"))
+  (custom-theme-set-faces
+   'clarity
+   '(hl-line ((t (:background "gray18"))))))
 
 
 (defun light-theme ()
   (interactive)
-  (load-theme 'leuven t)
-  (global-hl-line-mode 1)
-  (set-face-background 'hl-line "snow"))
+  (mapcar #'disable-theme custom-enabled-themes)
+  (setq leuven-scale-outline-headlines nil)
+  (setq leuven-scale-org-agenda-structure nil)
+  (load-theme 'leuven t))
 
-(if window-system
-    (progn
-      (dark-theme)))
+;; https://emacs.stackexchange.com/questions/7151/is-there-a-way-to-detect-that-emacs-is-running-in-a-terminal
+(if (display-graphic-p)
+    (dark-theme)
+  (progn
+    (global-hl-line-mode 0)
+    (load-theme 'wheatgrass t)))
+
 
 ; TODO: What if the system does not have this font?
 (set-frame-font "DejaVu Sans Mono-11")
