@@ -27,7 +27,7 @@
 ;; Finally found this.  page/updown can be undone
 (setq scroll-preserve-screen-position t)
 
- 
+
 (defun esk-pp-json ()
   "Pretty-print the json object following point."
   (interactive)
@@ -107,12 +107,17 @@
 
 ;; markdown-mode
 (use-package markdown-mode
-             :ensure t
-             :pin melpa-stable
-             :mode (("\\.mdown" . markdown-mode)
-                    ("\\.markdown" . markdown-mode)
-                    ("\\.md" . markdown-mode)
-                    ("\\.page" . markdown-mode)))
+  :ensure t
+  :pin melpa-stable
+  :config
+  ;; Remove once this is in a newer markdown-mode release
+  ;; https://github.com/jrblevin/markdown-mode/pull/252/files
+  (set-face-attribute 'markdown-inline-code-face nil
+                      :inherit '(markdown-code-face font-lock-constant-face))
+  :mode (("\\.mdown" . markdown-mode)
+         ("\\.markdown" . markdown-mode)
+         ("\\.md" . markdown-mode)
+         ("\\.page" . markdown-mode)))
 
 ;; colorize diffs.
 (eval-after-load 'diff-mode

@@ -50,7 +50,9 @@
  '(clearcase-dired-checkedout-face ((t (:foreground "red"))))
  '(comint-highlight-input ((t (:bold t :weight bold))))
  '(comint-highlight-prompt ((t (:foreground "cyan"))))
- '(fixed-pitch ((t (:family "courier"))))
+ ;; csb: Hacky work around to avoid this ending up as some jarrying
+ ;; courier-esque thing when everything is already monospaced
+ '(fixed-pitch ((t (:family "DejaVu Sans Mono"))))
  '(flash-paren-face-off ((t (nil))))
  '(flash-paren-face-on ((t (nil))))
  '(flash-paren-face-region ((t (nil))))
