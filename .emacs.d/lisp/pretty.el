@@ -227,3 +227,19 @@ fewer than 80 columns."
          (lambda(buffer)
            (find (aref (buffer-name buffer) 0) " *"))
          (buffer-list))))
+
+
+(use-package dashboard
+  :ensure t
+  :pin melpa-stable
+  :config
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-items '((recents  . 10)
+                          (bookmarks . 5)
+                          (projects . 5)))
+  (dashboard-setup-startup-hook))
