@@ -189,6 +189,10 @@ fewer than 80 columns."
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t))
 
+;; https://github.com/ema2159/centaur-tabs/issues/34
+(eval-after-load 'centaur-tabs-mode
+  (setq uniquify-buffer-name-style 'forward))
+
 
 ;; TODO: Choose
 ;; tabbar is pretty awesome
