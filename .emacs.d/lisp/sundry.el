@@ -52,6 +52,21 @@
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
+
+(use-package projectile
+  :ensure t
+  :pin melpa-stable
+  :config
+  (setq projectile-known-projects-file "~/.config/emacs/projectile-bookmarks.el")
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (add-to-list 'projectile-globally-ignored-directories "build/")
+  (add-to-list 'projectile-globally-ignored-directories "dist/")
+  (add-to-list 'projectile-globally-ignored-directories "target/")
+  (projectile-register-project-type 'pants '("pants.ini"))
+  (projectile-mode +1))
+
+
+;; TODO: Can projectile fully replace this old vender fork?
 (require 'anything)
 (require 'anything-find-project-resources)
 (global-set-key (kbd "M-r") 'anything-find-resource)
