@@ -154,3 +154,10 @@
          ("<f1> u" . counsel-unicode-char)
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)))
+
+
+(use-package ace-window
+  :ensure t
+  ;; ran into a bug with the stable one?
+  :pin melpa
+  :bind (("M-o" . ace-window)))
