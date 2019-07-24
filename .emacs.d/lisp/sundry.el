@@ -66,6 +66,7 @@
   :pin melpa-stable
   :config
   (setq projectile-known-projects-file "~/.config/emacs/projectile-bookmarks.el")
+  (setq projectile-completion-system 'ivy)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (add-to-list 'projectile-globally-ignored-directories "build/")
   (add-to-list 'projectile-globally-ignored-directories "dist/")
