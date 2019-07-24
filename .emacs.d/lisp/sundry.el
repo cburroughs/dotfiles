@@ -119,13 +119,18 @@
         ("Asia/Tokyo" "Tokyo")))
 
 
+;; NOTE: Neither ivy nor counsel are "enabled" to take over standard buffer or
+;; file operations.  But a number of other handy functions are enabled.
 (use-package ivy
   :ensure t
   :pin melpa-stable
+  :demand t
+  :bind ("C-c C-r" . ivy-resume)
   :config
   (setq ivy-use-virtual-buffers nil)
   (setq ivy-count-format "(%d/%d) ")
   (ivy-mode 0))
+
 
 (use-package swiper
   :ensure t
@@ -137,3 +142,15 @@
          ("M-r" . isearch-backward))
   :config
   (setq swiper-stay-on-quit nil))
+
+
+(use-package counsel
+  :ensure t
+  :after ivy
+  :pin melpa-stable
+  :bind (("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
+         ("<f1> l" . counsel-find-library)
+         ("<f1> u" . counsel-unicode-char)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)))
