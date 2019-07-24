@@ -39,14 +39,6 @@
     (goto-char (point-min))))
 
 
-;; Better buffer switching
-;; TODO: deprecated in 24,
-;; https://www.emacswiki.org/emacs/IcompleteMode
-;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
-(require 'iswitchb)
-(iswitchb-mode 1)
-
-
 ;; remember
 (require 'remember)
 ;;(require 'remember-autoloads)

@@ -27,12 +27,12 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; http://trey-jackson.blogspot.com/2007/12/emacs-tip-5-hippie-expand.html
-(setq hippie-expand-try-functions-list 
-      '(try-expand-dabbrev try-expand-dabbrev-all-buffers 
+(setq hippie-expand-try-functions-list
+      '(try-expand-dabbrev try-expand-dabbrev-all-buffers
                            try-expand-dabbrev-from-kill
-                           try-complete-file-name-partially 
+                           try-complete-file-name-partially
                            try-complete-file-name
-                           try-expand-all-abbrevs try-expand-list 
+                           try-expand-all-abbrevs try-expand-list
                            try-expand-line
                            try-complete-lisp-symbol-partially
                            try-complete-lisp-symbol))
@@ -53,6 +53,14 @@
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
 
+;; Better buffer switching
+;; TODO: deprecated in 24,
+;; https://www.emacswiki.org/emacs/IcompleteMode
+;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
+(require 'iswitchb)
+(iswitchb-mode 1)
+
+
 (use-package projectile
   :ensure t
   :pin melpa-stable
@@ -69,7 +77,7 @@
 ;; TODO: Can projectile fully replace this old vender fork?
 (require 'anything)
 (require 'anything-find-project-resources)
-(global-set-key (kbd "M-r") 'anything-find-resource)
+;;(global-set-key (kbd "M-r") 'anything-find-resource)
 (add-to-list `anything-find-resource--project-root-files '"build.sbt")
 (add-to-list `anything-find-resource--project-root-files '"pants.ini")
 (add-to-list `anything-find-resource--ignore-dirs '"dist/")
@@ -108,3 +116,23 @@
         ("Asia/Seoul" "Seoul")
         ("Asia/Shanghai" "Bejing/Shanghai")
         ("Asia/Tokyo" "Tokyo")))
+
+
+(use-package ivy
+  :ensure t
+  :pin melpa-stable
+  :config
+  (setq ivy-use-virtual-buffers nil)
+  (setq ivy-count-format "(%d/%d) ")
+  (ivy-mode 0))
+
+(use-package swiper
+  :ensure t
+  :after ivy
+  :pin melpa-stable
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper-backward)
+         ("M-s" . isearch-forward)
+         ("M-r" . isearch-backward))
+  :config
+  (setq swiper-stay-on-quit nil))
