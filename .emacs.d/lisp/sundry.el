@@ -161,3 +161,11 @@
   ;; ran into a bug with the stable one?
   :pin melpa
   :bind (("M-o" . ace-window)))
+
+
+;; Do I actually end up using this?
+(use-package avy
+  :ensure t
+  :bind (("C-;" . avy-goto-char-2)
+         ("C-'" . avy-goto-line))
+  :config (setq avy-all-windows 't))
