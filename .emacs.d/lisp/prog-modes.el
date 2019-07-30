@@ -1,6 +1,16 @@
 ;; Programming modes in a separate file
 
 
+;; imenu
+(setq imenu-auto-rescan 't)
+(setq imenu-auto-rescan-maxout (* 1024 1024))
+
+;; https://www.emacswiki.org/emacs/ImenuMode
+(defun try-to-add-imenu ()
+  (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
+(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+
+
 ;; Completion
 
 
@@ -127,3 +137,11 @@
   (c-set-offset 'topmost-intro-cont '+)
   (c-set-offset 'case-label '+)
   (c-set-offset 'arglist-cont-nonempty '+))
+
+
+;; (use-package lsp-mode
+;;   :pin melpa-stable
+;;   :hook (rust-mode . lsp-deferred)
+;;   :commands (lsp lsp-deferred))
+  
+  
