@@ -73,11 +73,11 @@
              (org-defkey org-mode-map "\C-c]" 'undefined))
           'append)
 
-;; "sidebar" outline for org-mode and other outlines
-(use-package outline-toc
+;; "sidebar" outline for org-mode and anything that supports imenu
+(use-package imenu-list
   :ensure t
-  :pin melpa
-  :bind ([f9] . outline-toc-mode))
+  :pin melpa-stable
+  :bind ([f9] . imenu-list-smart-toggle))
 
 
 ;; sql indenting
