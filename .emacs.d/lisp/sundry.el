@@ -148,12 +148,20 @@
   :ensure t
   :after ivy
   :pin melpa-stable
+  :demand t
+  ;; remap only some standard keybindings; add new ones
   :bind (("<f1> f" . counsel-describe-function)
          ("<f1> v" . counsel-describe-variable)
          ("<f1> l" . counsel-find-library)
          ("<f1> u" . counsel-unicode-char)
          ("C-c g" . counsel-git)
-         ("C-c j" . counsel-git-grep)))
+         ("C-c j" . counsel-git-grep))
+  :config
+  ;; Why does this have to be defined here and not above?
+  (global-set-key (kbd "C-c C-j") 'counsel-imenu)
+  ;; Provisional, unclear on side effects
+  (setq enable-recursive-minibuffers t)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 
 (use-package ace-window
