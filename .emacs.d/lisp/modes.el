@@ -146,11 +146,6 @@
              :bind ("M-C-y" . kill-ring-search))
 
 
-;; far-search, finally something that searches across buffers!
-;; http://github.com/aemoncannon/far-search-mode/tree/master
-(require 'far-search)
-
-
 ;; whitespace
 (require 'show-wspace)
 (defun show-white-space ()
