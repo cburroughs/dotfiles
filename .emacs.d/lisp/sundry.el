@@ -136,8 +136,8 @@
   :ensure t
   :after ivy
   :pin melpa-stable
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper-backward)
+  :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch-backward)
          ("M-s" . isearch-forward)
          ("M-r" . isearch-backward))
   :config
