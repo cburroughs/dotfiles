@@ -2,47 +2,30 @@
 ;; My dot emacs
 
 ;; todo: see if esup is working
-;; todo: figure out java-annotation support
-;; todo: Reduce the use of require (effective dot.emacs)
-;; todo: use Alt-n to switch 'tabs'
-;; todo: Switch tabbar switching behavior to not conflict with org-mode
-;; todo: Make jdee work
 ;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
-;; todo: func to resize to max screen width (across monitors)
 ;; todo: more insert date options
-;; todo: investigate ropemacs
 ;; todo: look into running emacsclient for terminal stuff
 ;; todo: open in firefox (new tab?)
-;; todo: add pycomplete to hippie-expand as well
-;; todo: can tabbars be made to horizontally scroll?
 ;; todo: spell check not comments (ie for svn commit messages)
-;; todo: document things I expect the package manager to install (partially done)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: turn off hl-p in vc annotate mode
-;; todo: get tags of some sort working, they seem awesome
-;; todo: look into nXhtml
 ;; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
 ;; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
 ;; todo: next time I am hacking lisp code I really should look at paredit
 ;; todo: http://www.neilvandyke.org/quack/
 ;; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
-;; todo: eldoc mode
-;; todo: http://www.emacswiki.org/emacs/PrettyLambda
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
-;; todo: look at this: http://taesoo.org/Opensource/Pylookup
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
-;; todo: visual C-x o
 ;; todo: Textmate ExecuteExternalCommand bridge
 ;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
-;; todo: look into more anything.el goodness
 ;; TODO: revisit snippets
 ;; TODO: Untangle  https://www.emacswiki.org/emacs/GitCommitMode
 ;; TODO: https://github.com/alpaker/Fill-Column-Indicator
-;; TODO: Is there a unified "sidebar" that can do files, functions, org-outlines, etc?
 ;; TODO revisit shell usage https://manuel-uberti.github.io/emacs/2017/10/07/m-x-shell/
 ;; TODO: Look into defining some abbreviations http://ergoemacs.org/emacs/emacs_abbrev_mode.html
+;; TODO: Look into hydra again
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be
@@ -199,16 +182,14 @@
 
 ;; I expect the os package manager to take care of
 
+;; app-emacs/crontab-mode
 ;; app-emacs/ecb +java
 ;; app-emacs/graphviz-dot-mode
 ;; app-emacs/jde
 ;; app-emacs/matlab
 ;; app-emacs/ruby-mode
-;; jde
-;; app-emacs/crontab-mode
 ;; app-emacs/yaml-mode
 
-;; I expect to be in in local_install
-
-;; Other:
-;; http://code.google.com/p/m2jdee/ <-- for maven/jde file generation
+;; External:
+;; dev-vcs/git
+;; sys-apps/ripgrep
