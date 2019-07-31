@@ -136,10 +136,13 @@
   :ensure t
   :after ivy
   :pin melpa-stable
+  ;; https://oremacs.com/2019/04/07/swiper-isearch/
   :bind (("C-s" . swiper-isearch)
          ("C-r" . swiper-isearch-backward)
          ("M-s" . isearch-forward)
-         ("M-r" . isearch-backward))
+         ("M-r" . isearch-backward)
+         ;; https://oremacs.com/2016/07/29/brand-new-swiper-all/
+         ("C-c s" . swiper-all))
   :config
   (setq swiper-stay-on-quit nil))
 
