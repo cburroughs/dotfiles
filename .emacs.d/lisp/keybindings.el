@@ -66,3 +66,13 @@
 
 ;; Delete upt to the occurance of a character
 (global-set-key (kbd "M-z") 'zap-up-to-char)
+
+;; meta
+
+(use-package which-key
+  :defer 1
+  :ensure t
+  :pin melpa-stable
+  :config
+  (setq which-key-compute-remaps t)
+  (which-key-mode 1))
