@@ -11,6 +11,16 @@
 (add-hook 'font-lock-mode-hook 'try-to-add-imenu)
 
 
+;; "dumb" jump to definition
+
+(use-package dumb-jump
+  :ensure t
+  :pin melpa-stable
+  :config
+  (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-aggressive nil)
+  (dumb-jump-mode))
+
 ;; Completion
 
 
