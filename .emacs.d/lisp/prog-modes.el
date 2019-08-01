@@ -29,7 +29,9 @@
   (interactive)
   (if (minibufferp)
       (minibuffer-complete)
-    (company-indent-or-complete-common)))
+    (if (derived-mode-p 'prog-mode)
+        (company-indent-or-complete-common)
+      (indent-for-tab-command))))
 
 ;; https://emacsredux.com/blog/2016/01/31/use-tab-to-indent-or-complete/
 (setq tab-always-indent 'complete)
@@ -41,7 +43,7 @@
 (use-package company
   :ensure t
   :defer t
-  :hook (after-init . global-company-mode)
+  :hook (prog-mode . company-mode)
   :bind (("<tab>" . company-except-in-minibuffer))
   :config
   (setq company-tooltip-limit 16)
