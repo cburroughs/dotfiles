@@ -26,6 +26,8 @@
 ;; TODO revisit shell usage https://manuel-uberti.github.io/emacs/2017/10/07/m-x-shell/
 ;; TODO: Look into defining some abbreviations http://ergoemacs.org/emacs/emacs_abbrev_mode.html
 ;; TODO: Look into hydra again
+;; TODO: revisit lsp-java
+;; TODO: Consider elgot vs lsp-mode again
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be

@@ -152,11 +152,13 @@
 ;; Language Server Time
 
 
+;; TODO: I would like to be able to stick with melpa-stable
 ;; TODO: in future versions, check out lsp-deferred
 (use-package lsp-mode
   :ensure t
-  :pin melpa-stable
-  :hook ((python-mode . lsp)
+  :pin melpa
+  :hook ((rust-mode . lsp)
+         (python-mode . lsp)
          (python-mode . (lambda () (flymake-mode 0))))
   :commands lsp
   :config
@@ -165,7 +167,9 @@
   (with-eval-after-load 'lsp
     (run-at-time "1 sec" 4 'flymake-mode 0))
   (setq lsp-auto-guess-root 't)
-
+  (setq lsp-enable-snippet nil)
+  (setq lsp-highlight-sumbol-at-point nil)
+  (setq lsp-enable-symbol-highlighting nil)
 
   (defun csb/lsp-ui-doc-toggle ()
     (interactive)
@@ -179,7 +183,7 @@
 
   (use-package lsp-ui
     :ensure t
-    :pin melpa-stable
+    :pin melpa
     :commands lsp-ui-mode
     :bind (("C-c q" . csb/lsp-ui-doc-toggle))
     :config
@@ -206,7 +210,7 @@
 
   (use-package company-lsp
     :ensure t
-    :pin melpa-stable
+    :pin melpa
     :commands company-lsp)
     :config
     (push 'company-lsp company-backends))
