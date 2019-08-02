@@ -170,6 +170,13 @@
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 
+
+;;; Windows and jumping around
+
+;; "undo" for window changes
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
+
 (use-package ace-window
   :ensure t
   ;; ran into a bug with the stable one?
