@@ -24,6 +24,13 @@
 
 ;; Default to highlighting
 (global-hl-line-mode 1)
+;; https://lists.gnu.org/archive/html/help-gnu-emacs/2011-12/msg00135.html
+(defun visual-line-line-range ()
+  (save-excursion
+    (cons (progn (vertical-motion 0) (point))
+         (progn (vertical-motion 1) (+ (point) 0)))))
+
+(setq hl-line-range-function 'visual-line-line-range)
 
 ;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")

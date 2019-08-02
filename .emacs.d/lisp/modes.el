@@ -51,7 +51,9 @@
 (global-set-key (kbd "C-c R") 'wicked/remember-review-file)
 
 ;; -------------
-; org mode stuff
+;; org mode stuff
+;; TODO: https://emacs.stackexchange.com/questions/7432/make-visual-line-mode-more-compatible-with-org-mode/12437
+;; ^^ How can I get visual-line-mode/visual-fill-column mode to play nice with org-mode. By not wrapping headings?
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setq org-hide-leading-stars t)
 ; Should this stuff all done only after loading org-mode
