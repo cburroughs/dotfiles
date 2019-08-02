@@ -183,3 +183,11 @@
   :bind (("C-;" . avy-goto-char-2)
          ("C-'" . avy-goto-line))
   :config (setq avy-all-windows 't))
+
+
+;; Do I actually end up using this?
+(use-package eyebrowse
+  :ensure t
+  :pin melpa-stable
+  :config
+  (eyebrowse-mode t))
