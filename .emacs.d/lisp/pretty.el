@@ -130,7 +130,6 @@ fewer than 80 columns."
 (defun prose-time ()
   "Full screen writing focus"
   (interactive)
-  (global-hl-line-mode 0)
   (olivetti-mode))
 
 
