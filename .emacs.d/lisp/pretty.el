@@ -44,11 +44,16 @@
 (defun dark-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
+  (setq org-todo-keyword-faces
+        '(("TODO" . "#C16069")
+          ("WAITING" . "#dc752f")
+          ("DONE" . "#98be65")))
   (load-theme 'claritas t))
 
 (defun light-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
+  (seq org-todo-keyword-faces nil)
   (setq leuven-scale-outline-headlines nil)
   (setq leuven-scale-org-agenda-structure nil)
   (load-theme 'leuven t))
