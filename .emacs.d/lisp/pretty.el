@@ -44,14 +44,7 @@
 (defun dark-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
-  (load-theme 'clarity t)
-  (custom-theme-set-faces
-   'clarity
-   '(swiper-line-face ((t (:background "gray28")))))
-  (custom-theme-set-faces
-   'clarity
-   '(hl-line ((t (:background "gray18"))))))
-
+  (load-theme 'claritas t))
 
 (defun light-theme ()
   (interactive)

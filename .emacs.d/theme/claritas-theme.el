@@ -1,4 +1,4 @@
-;;; clarity-theme.el --- clarity theme
+;;; claritas-theme.el --- claritas theme
 
 ;; Copyright (C) 2003 by Richard Wellum
 ;; Copyright (C) 2013 by Syohei YOSHIDA
@@ -22,15 +22,16 @@
 
 ;;; Commentary:
 ;;
-;; Port of clarity theme from `color-themes'
+;; A personal custimzation of the clarity theme.  (Built on the prot fo clarity
+;; from from `color-themes')
 
 ;;; Code:
 
-(deftheme clarity
-  "clarity theme")
+(deftheme claritas
+  "claritas theme")
 
 (custom-theme-set-faces
- 'clarity
+ 'claritas
 
  '(default ((t (:background "black" :foreground "white"))))
  '(mouse ((t (:foregound "white"))))
@@ -52,7 +53,9 @@
  '(comint-highlight-input ((t (:bold t :weight bold))))
  '(comint-highlight-prompt ((t (:foreground "cyan"))))
  '(cursor ((t (:background "yellow"))))
- '(fixed-pitch ((t (:family "courier"))))
+ ;; csb: Hacky work around to avoid this ending up as some jarrying
+ ;; courier-esque thing when everything is already monospaced
+ '(fixed-pitch ((t (:family "DejaVu Sans Mono"))))
  '(flash-paren-face-off ((t (nil))))
  '(flash-paren-face-on ((t (nil))))
  '(flash-paren-face-region ((t (nil))))
@@ -110,13 +113,22 @@
  '(widget-documentation-face ((t (:foreground "lime green"))))
  '(widget-field-face ((t (:background "dim gray"))))
  '(widget-inactive-face ((t (:foreground "light gray"))))
- '(widget-single-line-field-face ((t (:background "dim gray")))))
+ '(widget-single-line-field-face ((t (:background "dim gray"))))
+
+;; hightlighting lines
+ '(hl-line ((t (:background "gray18"))))
+ '(swiper-line-face ((t (:background "gray28"))))
+
+)
+
+
+
 
 ;;;###autoload
 (when load-file-name
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'clarity)
+(provide-theme 'claritas)
 
-;;; clarity-theme.el ends here
+;;; claritas-theme.el ends here
