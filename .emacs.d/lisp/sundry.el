@@ -139,11 +139,14 @@
   :ensure t
   :after ivy
   :pin melpa-stable
-  ;; https://oremacs.com/2019/04/07/swiper-isearch/
-  :bind (("C-s" . swiper-isearch)
-         ("C-r" . swiper-isearch-backward)
-         ("M-s" . isearch-forward)
-         ("M-r" . isearch-backward)
+  ;; https://oremacs.com/2019/04/07/swiper-isearch/ Maybe revsit fully switching
+  ;; to swiper instead of isearch in the future?  Sadly seems prone to 100% cpu
+  ;; hangs.  https://github.com/abo-abo/swiper/issues/925 is perhaps a relevant
+  ;; issue
+  :bind (("M-s" . swiper)
+         ("M-r" . swiper-backward)
+         ;;("M-s" . isearch-forward)
+         ;;("M-r" . isearch-backward)
          ;; https://oremacs.com/2016/07/29/brand-new-swiper-all/
          ("C-c s" . swiper-all))
   :config
