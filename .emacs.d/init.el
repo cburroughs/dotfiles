@@ -25,7 +25,7 @@
 ;; TODO: https://github.com/alpaker/Fill-Column-Indicator
 ;; TODO revisit shell usage https://manuel-uberti.github.io/emacs/2017/10/07/m-x-shell/
 ;; TODO: Look into defining some abbreviations http://ergoemacs.org/emacs/emacs_abbrev_mode.html
-;; TODO: Look into hydra again
+;; TODO: Look into hydra again & https://gitlab.com/jjzmajic/hercules.el
 ;; TODO: revisit lsp-java
 ;; TODO: Consider elgot vs lsp-mode again
 ;; TODO: Still not happy with company being bound to TAB, too much funkyness
@@ -92,7 +92,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
+      '(("gnu" . "http://elpa.gnu.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("melpa" . "https://melpa.org/packages/")))
 

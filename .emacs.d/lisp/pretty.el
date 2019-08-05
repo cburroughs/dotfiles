@@ -58,6 +58,29 @@
   (setq leuven-scale-org-agenda-structure nil)
   (load-theme 'leuven t))
 
+
+(use-package spacemacs-theme
+  :pin melpa
+  :defer t
+  :ensure t)
+
+(use-package doom-themes
+  :pin melpa
+  :defer t
+  :ensure t)
+
+
+(defun space-theme ()
+  (interactive)
+  (mapcar #'disable-theme custom-enabled-themes)
+  (load-theme 'spacemacs-dark t))
+
+(defun my-doom-theme ()
+  (interactive)
+  (mapcar #'disable-theme custom-enabled-themes)
+  (load-theme 'doom-one t))
+
+
 ;; https://emacs.stackexchange.com/questions/7151/is-there-a-way-to-detect-that-emacs-is-running-in-a-terminal
 (if (display-graphic-p)
     (dark-theme)

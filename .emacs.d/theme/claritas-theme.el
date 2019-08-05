@@ -119,6 +119,9 @@
  '(hl-line ((t (:background "gray18"))))
  '(swiper-line-face ((t (:background "gray28"))))
 
+ ;; tabs
+ 
+ 
 )
 
 
