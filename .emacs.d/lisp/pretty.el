@@ -195,6 +195,7 @@ fewer than 80 columns."
   ([(control tab)] . centaur-tabs-forward)
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)
+  ("C-c t" . centaur-tabs-counsel-switch-group)
   :hook
   (dired-mode . centaur-tabs-local-mode)
   (term-mode . centaur-tabs-local-mode)
