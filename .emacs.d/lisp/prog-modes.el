@@ -151,6 +151,13 @@
   (c-set-offset 'arglist-cont-nonempty '+))
 
 
+;; grooy
+(use-package groovy-mode
+  :ensure t
+  :pin melpa-stable
+  :mode "\\.groovy$")
+
+
 ;; Language Server Time
 
 
