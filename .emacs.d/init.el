@@ -34,9 +34,16 @@
 ;; borrowed is probably under the GPL or public domain.  But to be
 ;; sure, check the notice in each file.
 
+
+;; More timing details adapted from doom
+(defvar csb/init/init-time nil)
+
+
 ;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
-(add-hook 'after-init-hook
-          (lambda () (message "emacs-init-time: %s" (emacs-init-time))))
+(add-hook 'window-setup-hook
+          (lambda () (progn
+                       (setq csb/init/init-time (float-time (time-subtract (current-time) before-init-time)))
+                      (message "emacs-init-time: %.3f seconds" csb/init/init-time))))
 
 
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
