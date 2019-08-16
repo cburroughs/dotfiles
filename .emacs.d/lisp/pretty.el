@@ -1,5 +1,8 @@
 ;; Cosmetic changes
 
+;; I don't blink on the terminal, let's try being consistent
+(blink-cursor-mode -1)
+
 ;; Disable the tool bar; finally a cool kid?
 (tool-bar-mode -1)
 
