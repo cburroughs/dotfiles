@@ -34,21 +34,22 @@
 ;; borrowed is probably under the GPL or public domain.  But to be
 ;; sure, check the notice in each file.
 
-(require 'cl)
-
 ;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
 (add-hook 'after-init-hook
           (lambda () (message "emacs-init-time: %s" (emacs-init-time))))
 
 
-
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-(setq csb/init/gc-cons-large-threshold (* 24 1024 1024))
+;; https://github.com/hlissner/doom-emacs/wiki/FAQ#how-is-dooms-startup-so-fast
 (setq csb/init/gc-cons-normal-threshold (* 1024 1024))
+(setq csb/init/gc-cons-large-threshold (* 48 1024 1024))
+(setq csb/init/gc-cons-percentage gc-cons-percentage)
+
 (setq gc-cons-threshold csb/init/gc-cons-large-threshold)
+(setq gc-cons-percentage 0.9)
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold
-                           csb/init/gc-cons-normal-threshold)))
+          (lambda () (setq gc-cons-threshold csb/init/gc-cons-normal-threshold
+                           gc-cons-percentage csb/init/gc-cons-percentage)))
 (add-hook 'after-init-hook
           (lambda ()
              (message "init gc num:%i time:%f" gcs-done gc-elapsed)))
@@ -60,6 +61,15 @@
             (setq gc-cons-threshold csb/init/gc-cons-normal-threshold)))
 (add-hook 'focus-out-hook 'garbage-collect)
 
+(defvar csb/init/file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+(add-hook 'emacs-startup-hook
+          (lambda () (setq file-name-handler-alist csb/init/file-name-handler-alist)))
+
+
+;; Something will end up wanting it eventually
+(require 'cl)
 
 ;; load gentoo installed stuff
 (require 'site-gentoo nil t)
