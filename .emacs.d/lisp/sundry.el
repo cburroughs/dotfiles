@@ -1,8 +1,10 @@
 ;; misc changes and variable settings
 
-(use-package esup
-  :ensure t
-  :defer 1)
+
+;; Appears to now work with emacs > 26 https://github.com/jschaf/esup/issues/54
+;;(use-package esup
+;;  :ensure t
+;;  :defer 1)
 
 
 ;; make the y or n suffice for a yes or no question
