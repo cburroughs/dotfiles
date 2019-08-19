@@ -29,6 +29,7 @@
 ;; TODO: revisit lsp-java
 ;; TODO: Consider elgot vs lsp-mode again
 ;; TODO: Still not happy with company being bound to TAB, too much funkyness
+;; TODO Chck out https://github.com/cireu/counsel-ffdata
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be
