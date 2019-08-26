@@ -2,13 +2,25 @@
 
 
 ;; imenu
-(setq imenu-auto-rescan 't)
-(setq imenu-auto-rescan-maxout (* 1024 1024))
 
+;; Turn on imenu in any mode that supports it
 ;; https://www.emacswiki.org/emacs/ImenuMode
-(defun try-to-add-imenu ()
+(defun csb/try-to-add-imenu ()
   (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
-(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+(add-hook 'font-lock-mode-hook 'csb/try-to-add-imenu)
+
+
+;; Auto-recan induces human noticible lag
+;; (setq imenu-auto-rescan 't)
+;; (setq imenu-auto-rescan-maxout (* 1024 1024))
+
+;; TODO: Need some sort of satety latch for large files
+(defun csb/maybe-imenu-rescan ()
+  ;; https://www.emacswiki.org/emacs/ImenuMode#toc4
+  (imenu--menubar-select imenu--rescan-item))
+(run-with-idle-timer 5 t 'csb/maybe-imenu-rescan)
+(add-hook 'focus-out-hook 'csb/maybe-imenu-rescan)
+
 
 
 ;; "dumb" jump to definition
