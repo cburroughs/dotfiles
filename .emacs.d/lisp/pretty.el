@@ -94,6 +94,7 @@
 
 ; TODO: What if the system does not have this font?
 (set-frame-font "DejaVu Sans Mono-11")
+(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; Note that the height is hard coded and depends on the resolution
@@ -172,10 +173,9 @@ fewer than 80 columns."
   :hook (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-height 22)
-  (setq doom-modeline-buffer-file-name-style 'buffer-name)
   (setq doom-modeline-minor-modes t)
-  (set-face-attribute 'mode-line nil :height 105)
-  (set-face-attribute 'mode-line-inactive nil :height 105))
+  (setq doom-modeline-buffer-file-name-style 'buffer-name)
+  (setq doom-modeline-minor-modes t))
 
 
 ;; Creates a "draw" of sorts for minor modes
