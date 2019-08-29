@@ -226,7 +226,6 @@ fewer than 80 columns."
         (and (string-prefix-p "magit" name)
              (not (file-name-extension name)))
 	  )))
-  ;;  (centaur-tabs-inherit-tabbar-faces)
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t))
 
