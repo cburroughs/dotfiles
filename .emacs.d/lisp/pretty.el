@@ -222,6 +222,7 @@ fewer than 80 columns."
      (let ((name (format "%s" x)))
        (or
         (string-prefix-p "*" name)
+        (string-prefix-p " *which-key*" name)
         (string-prefix-p "COMMIT_EDITMSG" name)
         (and (string-prefix-p "magit" name)
              (not (file-name-extension name)))
