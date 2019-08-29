@@ -160,7 +160,10 @@ fewer than 80 columns."
 ;; Dependency of doom-modeline
 (use-package all-the-icons
   :ensure t
-  :pin melpa-stable)
+  ;; NOTE: No releases to stable since new maintainer took over, missing
+  ;; https://github.com/domtronn/all-the-icons.el/pull/106 among other important
+  ;; changes
+  :pin melpa)
 
 ;; Fancy modelines
 (use-package doom-modeline
