@@ -172,6 +172,10 @@ fewer than 80 columns."
   :pin melpa-stable
   :hook (after-init . doom-modeline-mode)
   :config
+  ;; The icons are too nice, but lead to way too many finky problems
+  ;; https://github.com/seagle0128/doom-modeline/issues/215
+  ;; https://github.com/ema2159/centaur-tabs/issues/41
+  (setq doom-modeline-icon nil)
   (setq doom-modeline-height 22)
   (setq doom-modeline-minor-modes t)
   (setq doom-modeline-buffer-file-name-style 'buffer-name)
