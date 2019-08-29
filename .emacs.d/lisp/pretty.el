@@ -97,9 +97,10 @@
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 
 ;; Start nice and tall, but should still be 80 char wide
-;; Note that the height is hard coded and depends on the resolution
+;; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
 (if window-system
-  (setq initial-frame-alist '((width . 80) (height . 55))))
+    (add-to-list 'default-frame-alist '(fullscreen . fullheight)))
+
 
 ;; http://emacs-fu.blogspot.com/2008/12/zooming-inout.html
 (defun djcb-zoom (n)
