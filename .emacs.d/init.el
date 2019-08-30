@@ -133,6 +133,7 @@
 (load-library "keybindings")
 (load-library "efuncs")
 (load-library "sundry")
+(load-library "palette")
 (load-library "pretty")
 (load-library "modes")
 (load-library "prog-modes")

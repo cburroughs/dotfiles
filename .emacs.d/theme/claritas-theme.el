@@ -27,6 +27,12 @@
 
 ;;; Code:
 
+;; for lighten/darken
+(require 'doom-themes)
+
+;; NOTE: "palette" library is already pre-loaded
+
+
 (deftheme claritas
   "claritas theme")
 
