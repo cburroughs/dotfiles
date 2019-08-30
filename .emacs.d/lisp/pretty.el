@@ -94,7 +94,12 @@
 
 ; TODO: What if the system does not have this font?
 (set-frame-font "DejaVu Sans Mono-11")
+(set-face-font 'default "DejaVu Sans Mono-11")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
+;; https://endlessparentheses.com/manually-choose-a-fallback-font-for-unicode.html
+;; Maybe also try symbola?
+(set-fontset-font "fontset-default" nil
+                  (font-spec :size 11 :name "Noto Color Emoji"))
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
@@ -189,12 +194,9 @@ fewer than 80 columns."
   :ensure t
   :pin melpa-stable
   :config
-  (setq  minions-mode-line-lighter
-         (all-the-icons-octicon  "tools"
-                                 :height 1.0 :v-adjust .05))
+  (setq  minions-mode-line-lighter "🔨")
+  (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
   (minions-mode 1))
-
-
 
 ;; Alternative tabs
 (use-package centaur-tabs
