@@ -99,7 +99,7 @@
 ;; https://endlessparentheses.com/manually-choose-a-fallback-font-for-unicode.html
 ;; Maybe also try symbola?
 (set-fontset-font "fontset-default" nil
-                  (font-spec :size 11 :name "Noto Color Emoji"))
+                  (font-spec :size 11 :name "Symbola"))
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
@@ -284,6 +284,7 @@ fewer than 80 columns."
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
   (setq dashboard-set-footer nil)
+  (setq dashboard-banner-logo-title "🐧🐧🐧 Weclome to Emacs! 🐃🐃🐃")
   (setq dashboard-items '((recents  . 10)
                           (bookmarks . 5)
                           (projects . 5)))
