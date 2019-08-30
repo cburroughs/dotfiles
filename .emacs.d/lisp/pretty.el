@@ -185,6 +185,8 @@ fewer than 80 columns."
   (setq doom-modeline-height 22)
   (setq doom-modeline-minor-modes t)
   (setq doom-modeline-buffer-file-name-style 'buffer-name)
+  ;; see below for minions
+  (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
   (setq doom-modeline-minor-modes t))
 
 
@@ -195,7 +197,6 @@ fewer than 80 columns."
   :pin melpa-stable
   :config
   (setq  minions-mode-line-lighter "🔨")
-  (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
   (minions-mode 1))
 
 ;; Alternative tabs
