@@ -157,7 +157,18 @@
                                                :foreground ,palette/monokai/green))))
  `(company-template-field ((t (:background ,palette/monokai/highlight-line
                                            :foreground ,palette/monokai/blue))))
- 
+
+ ;; outline and org mode
+ '(outline-1 ((t (:foreground "LightSkyBlue"))))
+ '(outline-2 ((t (:foreground "LightGoldenrod"))))
+ `(outline-3 ((t (:foreground ,palette/monokai/green))))
+ `(outline-4 ((t (:foreground ,palette/monokai/orange))))
+ `(outline-5 ((t (:foreground ,palette/monokai/blue))))
+ `(outline-6 ((t (:foreground ,palette/monokai/red-d))))
+ `(outline-6 ((t (:foreground ,(doom-lighten palette/monokai/green 0.25)))))
+ `(outline-7 ((t (:foreground ,(doom-lighten palette/monokai/orange 0.25)))))
+ `(outline-8 ((t (:foreground ,(doom-lighten palette/monokai/violet 0.25)))))
+
 )
 
 
