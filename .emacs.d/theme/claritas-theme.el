@@ -134,6 +134,29 @@
  `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected))))
  '(centaur-tabs-unselected-modified ((t (:inherit 'centaur-tabs-unselected))))
  '(centaur-tabs-active-bar-face ((t :background "black")))
+
+   ;; company-mode
+ `(company-tooltip ((t (:background ,palette/monokai/highlight-line
+                                   :foreground ,palette/monokai/emphasis))))
+ `(company-tooltip-selection ((t (:background ,palette/monokai/blue
+                                              :foreground ,palette/monokai/background))))
+ `(company-tooltip-mouse ((t (:background ,palette/monokai/blue
+                                          :foreground ,palette/monokai/background))))
+ `(company-tooltip-common ((t (:foreground ,palette/monokai/blue
+                                           :underline t))))
+ `(company-tooltip-common-selection ((t (:foreground ,palette/monokai/background
+                                                     :background ,palette/monokai/blue
+                                                     :underline t))))
+ `(company-preview ((t (:background ,palette/monokai/highlight-line
+                                    :foreground ,palette/monokai/emphasis))))
+ `(company-preview-common ((t (:foreground ,palette/monokai/blue
+                                           :underline t))))
+ `(company-scrollbar-bg ((t (:background ,palette/monokai/gray))))
+ `(company-scrollbar-fg((t (:background ,palette/monokai/comments))))
+ `(company-tooltip-annotation ((t (:background ,palette/monokai/highlight-line
+                                               :foreground ,palette/monokai/green))))
+ `(company-template-field ((t (:background ,palette/monokai/highlight-line
+                                           :foreground ,palette/monokai/blue))))
  
 )
 
