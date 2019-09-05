@@ -125,8 +125,15 @@
  '(hl-line ((t (:background "gray18"))))
  '(swiper-line-face ((t (:background "gray28"))))
 
- ;; tabs
- 
+ ;; centaur-tabs
+ '(centaur-tabs-default ((t (:background "black" :foreground "black"))))
+ `(centaur-tabs-selected ((t (:weight bold :height 0.91
+                                      :background "#31343E" :foreground ,palette/monokai/cyan-d))))
+ '(centaur-tabs-unselected ((t (:height 0.91
+                                      :background "#3D3C3D":foreground "grey50"))))
+ `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected))))
+ '(centaur-tabs-unselected-modified ((t (:inherit 'centaur-tabs-unselected))))
+ '(centaur-tabs-active-bar-face ((t :background "black")))
  
 )
 
