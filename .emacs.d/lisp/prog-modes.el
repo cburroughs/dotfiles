@@ -46,7 +46,7 @@
       (indent-for-tab-command))))
 
 ;; https://emacsredux.com/blog/2016/01/31/use-tab-to-indent-or-complete/
-(setq tab-always-indent 'complete)
+(setq tab-always-indent 't)
 
 ;; The above together are needed to make company mode not go totally crazy
 ;; fighting with existing auto-compete or indentation.  Python indentation is
@@ -56,15 +56,17 @@
   :ensure t
   :defer t
   :hook (prog-mode . company-mode)
-  :bind (("<tab>" . company-except-in-minibuffer))
+  :bind (("M-`" . company-complete)
+         (:map company-active-map
+               ("C-n" . company-select-next)
+               ("C-p" . company-select-previous)))
   :config
   (setq company-tooltip-limit 16)
   (setq company-tooltip-align-annotations t)
   (setq company-idle-delay nil)
   (setq company-selection-wrap-around t)
   ;; leave it to hippie
-  (setq company-backends (delete 'company-dabbrev company-backends))
-  (company-tng-configure-default))
+  (setq company-backends (delete 'company-dabbrev company-backends)))
 
 
 ;;; Javascript

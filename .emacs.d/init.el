@@ -28,7 +28,6 @@
 ;; TODO: Look into hydra again & https://gitlab.com/jjzmajic/hercules.el
 ;; TODO: revisit lsp-java
 ;; TODO: Consider elgot vs lsp-mode again
-;; TODO: Still not happy with company being bound to TAB, too much funkyness
 ;; TODO Chck out https://github.com/cireu/counsel-ffdata
 ;; TODO: https://github.com/Fuco1/free-keys and bind-keys
 
