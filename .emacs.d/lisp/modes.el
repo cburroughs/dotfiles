@@ -4,15 +4,11 @@
 (delete-selection-mode t) ; delete selected text
 
 ;; more paren highlighting goodness
-(use-package highlight-parentheses
-             :ensure t
-             :pin melpa-stable
-             :config
-             (highlight-parentheses-mode)
-             (add-hook 'after-change-major-mode-hook
-                       (lambda () (highlight-parentheses-mode 1))))
-
-
+(use-package rainbow-delimiters
+  :ensure t
+  :pin melpa-stable
+  :init
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; from esk : display column number in modeline
 (setq column-number-mode t)

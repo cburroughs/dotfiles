@@ -17,6 +17,7 @@
 (setq inhibit-startup-message t)
 
 ;; defaults to showing parens
+(setq show-paren-delay 0)
 (show-paren-mode t)
 
 (set-scroll-bar-mode 'right)
