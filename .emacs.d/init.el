@@ -30,6 +30,7 @@
 ;; TODO: Consider elgot vs lsp-mode again
 ;; TODO: Still not happy with company being bound to TAB, too much funkyness
 ;; TODO Chck out https://github.com/cireu/counsel-ffdata
+;; TODO: https://github.com/Fuco1/free-keys and bind-keys
 
 ;; My .emacs "file".  All this stuff that has been accumulated and
 ;; borrowed is probably under the GPL or public domain.  But to be
