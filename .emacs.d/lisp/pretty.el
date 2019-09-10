@@ -96,7 +96,7 @@
 ; TODO: What if the system does not have this font?
 (set-frame-font "DejaVu Sans Mono-11")
 (set-face-font 'default "DejaVu Sans Mono-11")
-(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
+;;(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-11")
 ;; https://endlessparentheses.com/manually-choose-a-fallback-font-for-unicode.html
 ;; Maybe also try symbola?
 (set-fontset-font "fontset-default" nil
@@ -174,21 +174,80 @@ fewer than 80 columns."
   :pin melpa)
 
 ;; Fancy modelines
-(use-package doom-modeline
-  :ensure t
-  :pin melpa-stable
-  :hook (after-init . doom-modeline-mode)
-  :config
-  ;; The icons are too nice, but lead to way too many finky problems
-  ;; https://github.com/seagle0128/doom-modeline/issues/215
-  ;; https://github.com/ema2159/centaur-tabs/issues/41
-  (setq doom-modeline-icon nil)
-  (setq doom-modeline-height 22)
-  (setq doom-modeline-minor-modes t)
-  (setq doom-modeline-buffer-file-name-style 'buffer-name)
-  ;; see below for minions
-  (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
-  (setq doom-modeline-minor-modes t))
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :pin melpa-stable
+;;   :hook (after-init . doom-modeline-mode)
+;;   :config
+;;   ;; The icons are too nice, but lead to way too many finky problems
+;;   ;; https://github.com/seagle0128/doom-modeline/issues/215
+;;   ;; https://github.com/ema2159/centaur-tabs/issues/41
+;;   (setq doom-modeline-icon nil)
+;;   (setq doom-modeline-unicode-fallback 't)
+;;   (setq doom-modeline-height 22)
+;;   (setq doom-modeline-minor-modes t)
+;;   (setq doom-modeline-buffer-file-name-style 'buffer-name)
+;;   ;; see below for minions
+;;   (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
+;;   (setq doom-modeline-minor-modes t))
+
+
+;; https://emacs.stackexchange.com/questions/5529/how-to-right-align-some-items-in-the-modeline
+(defun csb/align-mode-line (left right)
+  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
+  (let* ((available-width (- (window-total-width) (+ (length (format-mode-line left)) (length (format-mode-line right))))))
+    (append left (list (format (format "%%%ds" available-width) "")) right)))
+
+;; adapted from  doom-modeline-update-buffer-file-state-icon 
+(defun csb/mode-line-buffer-file-state-icon  ()
+  (ignore-errors
+    (cond (buffer-read-only
+           (propertize "🔒" 'face '(:height 1.1)))
+          ((and buffer-file-name (buffer-modified-p))
+           (propertize "💾" 'face '(:height 1.1)))
+           ((and buffer-file-name
+                 (not (file-exists-p buffer-file-name)))
+            (propertize "🚫"  'face  '(:foreground "Pink" :height 1.1)))
+           ('t "-"))))
+
+
+(defun csb/lsp-state-icon ()
+  (ignore-errors
+    (if (bound-and-true-p lsp-mode)
+        (if (lsp-workspaces)
+            (propertize "🚀" 'face '(:height 1.1))
+            (propertize "💥" 'face '(:height 1.1)))
+            "-")))
+
+(setq-default mode-line-format
+              '(
+                :eval
+                (csb/align-mode-line
+                 ;; left
+                 '("%e" mode-line-front-space
+                   " "
+                   ;; don't display the '-' for local directories, just '@' on remote
+                   (:eval (when (and (stringp default-directory) (file-remote-p default-directory))
+                            'mode-line-remote))
+                   (:eval (propertize "%b" 'face 'bold))
+                   " "
+                   "%l:%c "
+                   mode-line-percent-position
+                   )
+                 ;; right
+                 '(" "
+                   mode-line-modes
+                   " "
+                   mode-line-mule-info
+                   mode-line-client
+                   (:eval (csb/lsp-state-icon))
+                   (:eval (csb/mode-line-buffer-file-state-icon))
+                   mode-line-frame-identification
+                   " "
+                   (vc-mode vc-mode)
+                   mode-line-misc-info
+                   " "
+                   mode-line-end-spaces))))
 
 
 ;; Creates a "draw" of sorts for minor modes
@@ -197,7 +256,9 @@ fewer than 80 columns."
   :ensure t
   :pin melpa-stable
   :config
-  (setq  minions-mode-line-lighter "🔨")
+  (setq minions-mode-line-delimiters nil)
+  (setq minions-mode-line-lighter "🔨")
+  (set-face-attribute 'minions-mode-line-lighter nil :height 1.1) ; TODO: upstream
   (minions-mode 1))
 
 ;; Alternative tabs
