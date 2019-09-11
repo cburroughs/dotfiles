@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 ;;
-;; A personal custimzation of the clarity theme.  (Built on the prot fo clarity
+;; A personal custimzation of the clarity theme.  (Built on the port of clarity
 ;; from from `color-themes')
 
 ;;; Code:
@@ -46,12 +46,12 @@
 
  '(help-highlight-face ((t (:underline t))))
  '(list-matching-lines-face ((t (:bold t :weight bold))))
- '(view-highlight-face ((t (:background "darkolivegreen"))))
- '(widget-mouse-face ((t (:background "darkolivegreen"))))
+ '(view-highlight-face ((t (:background "DarkOliveGreen"))))
+ '(widget-mouse-face ((t (:background "DarkOliveGreen"))))
 
  '(CUA-global-mark-face ((t (:background "cyan" :foreground "black"))))
  '(CUA-rectangle-face ((t (:background "maroon" :foreground "white"))))
- '(CUA-rectangle-noselect-face ((t (:background "dimgray" :foreground "white"))))
+ '(CUA-rectangle-noselect-face ((t (:background "DimGray" :foreground "white"))))
  '(bold ((t (:bold t :weight bold))))
  '(bold-italic ((t (:italic t :bold t :slant italic :weight bold))))
  '(border ((t (:background "white"))))
@@ -84,19 +84,19 @@
  '(ibuffer-title-face ((t (:foreground "PaleGreen"))))
  '(fringe ((t (:background "grey10"))))
  '(header-line ((t (:box (:line-width -1 :style released-button) :foreground "grey20" :background "grey90" :box nil))))
- '(highlight ((t (:background "darkolivegreen"))))
+ '(highlight ((t (:background "DarkOliveGreen"))))
  '(ibuffer-deletion-face ((t (:foreground "red"))))
  '(ibuffer-marked-face ((t (:foreground "green"))))
- '(isearch ((t (:background "palevioletred2" :foreground "brown4"))))
- '(isearch-lazy-highlight-face ((t (:background "paleturquoise4"))))
+ '(isearch ((t (:background "PaleVioletRed2" :foreground "brown4"))))
+ '(isearch-lazy-highlight-face ((t (:background "PaleTurquoise4"))))
  '(italic ((t (:italic t :slant italic))))
  '(menu ((t (nil))))
- '(mode-line ((t (:foreground "yellow" :background "darkslateblue"
+ '(mode-line ((t (:foreground "yellow" :background "DarkSlateBlue"
                   :box (:line-width -1 :style released-button)))))
  '(mouse ((t (:background "white"))))
  '(region ((t (:background "blue"))))
  '(scroll-bar ((t (nil))))
- '(secondary-selection ((t (:background "darkslateblue"))))
+ '(secondary-selection ((t (:background "DarkSlateBlue"))))
  '(show-block-face1 ((t (:background "gray10"))))
  '(show-block-face2 ((t (:background "gray15"))))
  '(show-block-face3 ((t (:background "gray20"))))
@@ -110,16 +110,16 @@
  '(show-paren-mismatch-face ((t (:background "purple" :foreground "white"))))
  '(tool-bar ((t (:background "grey75" :foreground "black"
                  :box (:line-width 1 :style released-button)))))
- '(tooltip ((t (:background "lightyellow" :foreground "black"))))
+ '(tooltip ((t (:background "LightYellow" :foreground "black"))))
  '(trailing-whitespace ((t (:background "red"))))
  '(underline ((t (:underline t))))
  '(variable-pitch ((t (:family "helv"))))
  '(widget-button-face ((t (:bold t :weight bold))))
  '(widget-button-pressed-face ((t (:foreground "red"))))
- '(widget-documentation-face ((t (:foreground "lime green"))))
- '(widget-field-face ((t (:background "dim gray"))))
- '(widget-inactive-face ((t (:foreground "light gray"))))
- '(widget-single-line-field-face ((t (:background "dim gray"))))
+ '(widget-documentation-face ((t (:foreground "LimeGreen"))))
+ '(widget-field-face ((t (:background "DimGray"))))
+ '(widget-inactive-face ((t (:foreground "LightGray"))))
+ '(widget-single-line-field-face ((t (:background "DimGray"))))
 
 ;; hightlighting lines
  '(hl-line ((t (:background "gray18"))))
