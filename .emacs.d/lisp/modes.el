@@ -81,12 +81,7 @@
 (use-package sql-indent
   :ensure t
   :pin gnu
-  :defer 1
-  :init
-  (eval-after-load "sql"
-    '(load-library "sql-indent"))
-  :config
-  (setq sql-indent-offset 4))
+  :hook (sql-mode . sqlind-minor-mode))
 
 
 ;; dot files
