@@ -186,6 +186,8 @@
  `(rainbow-delimiters-unmatched-face ((t (:foreground ,palette/monokai/red :weight bold
                                                       :inverse-video t))))
  '(rainbow-delimiters-mismatched-face ((t (:inherit 'rainbow-delimiters-unmatched-face))))
+
+ ;; TODO: diff mode
 )
 
 

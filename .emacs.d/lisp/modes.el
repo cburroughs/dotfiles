@@ -109,12 +109,6 @@
          ("\\.md" . markdown-mode)
          ("\\.page" . markdown-mode)))
 
-;; colorize diffs.
-(eval-after-load 'diff-mode
-  '(progn
-     (set-face-foreground 'diff-added "DodgerBlue2")
-     (set-face-foreground 'diff-removed "firebrick2")))
-
 ;; TODO: easy way to change this the unreadable style common in java code
 ;; Probably don't want this on by default but useful if I start
 ;; coding in maximized windows
