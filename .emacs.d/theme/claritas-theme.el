@@ -83,7 +83,9 @@
  '(ibuffer-special-buffer-face ((t (:foreground "Cyan"))))
  '(ibuffer-title-face ((t (:foreground "PaleGreen"))))
  '(fringe ((t (:background "grey10"))))
- '(header-line ((t (:box (:line-width -1 :style released-button) :foreground "grey20" :background "grey90" :box nil))))
+ ;; TODO: Straighten out out centaur tabs interacts with the header-line faces.
+ ;; Setting the foreground at least makes things legible
+ '(header-line ((t (:box (:line-width -1 :style released-button) :foreground "yellow" :background "grey90" :box nil))))
  '(highlight ((t (:background "DarkOliveGreen"))))
  '(ibuffer-deletion-face ((t (:foreground "red"))))
  '(ibuffer-marked-face ((t (:foreground "green"))))
