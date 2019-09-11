@@ -9,12 +9,9 @@
 ;; todo: spell check not comments (ie for svn commit messages)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
-;; todo: turn off hl-p in vc annotate mode
-;; todo: http://www.emacswiki.org/emacs/SearchBuffers look here for replace
 ;; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
 ;; todo: next time I am hacking lisp code I really should look at paredit
 ;; todo: http://www.neilvandyke.org/quack/
-;; todo: http://edward.oconnor.cx/elisp/hl-sexp.el
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
