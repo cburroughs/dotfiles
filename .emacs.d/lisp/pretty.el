@@ -157,6 +157,7 @@ fewer than 80 columns."
 ;; environment.
 (use-package olivetti
   :ensure t
+  :defer 1
   :pin melpa-stable)
 
 (defun prose-time ()
@@ -260,6 +261,7 @@ fewer than 80 columns."
   (setq minions-mode-line-lighter "🔨")
   (set-face-attribute 'minions-mode-line-lighter nil :height 1.1) ; TODO: upstream
   (minions-mode 1))
+
 
 ;; Alternative tabs
 (use-package centaur-tabs

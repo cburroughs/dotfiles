@@ -25,6 +25,7 @@
 
 ;; "dumb" jump to definition
 
+;; TODO: Consider M-g basd keybinding with hydra
 (use-package dumb-jump
   :ensure t
   :pin melpa-stable

@@ -127,18 +127,6 @@
 (use-package dash :ensure t)
 (use-package diminish :ensure t)
 
-
-;; load the files with the rest of my info
-;; try to put in order of least likely to break
-(load-library "keybindings")
-(load-library "efuncs")
-(load-library "sundry")
-(load-library "palette")
-(load-library "pretty")
-(load-library "modes")
-(load-library "prog-modes")
-(load-library "external")
-
 ;; --------------------------
 ;; Putting Files places
 
@@ -192,9 +180,25 @@
 (setq semanticdb-default-save-directory "/tmp/")
 
 ;; https://www.emacswiki.org/emacs/SavePlace
-(save-place-mode 1) 
-(setq save-place-file "~/.config/emacs/places/emacs-places")
-(setq save-place-forget-unreadable-files nil)
+(use-package save-place-mode
+  :defer 1
+  :config
+  (setq save-place-file "~/.config/emacs/places/emacs-places")
+  (setq save-place-forget-unreadable-files nil)
+  (save-place-mode 1))
+
+
+;; --------------------------
+;; load the files with the rest of my info
+;; try to put in order of least likely to break
+(load-library "keybindings")
+(load-library "efuncs")
+(load-library "sundry")
+(load-library "palette")
+(load-library "pretty")
+(load-library "modes")
+(load-library "prog-modes")
+(load-library "external")
 
 
 ;; fin

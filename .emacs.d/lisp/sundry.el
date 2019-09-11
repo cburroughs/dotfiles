@@ -43,14 +43,17 @@
         try-complete-lisp-symbol))
 
 ;; Try to avoid giving buffers dumb names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
-(setq uniquify-separator "/")
-(setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+(use-package uniquify
+  :defer 1
+  :config
+  (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-separator "/")
+  (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
+  (setq uniquify-ignore-buffers-re "^\\*")) ; don't muck with special buffers
 
 ;; find files recursivly
-(require 'find-recursive)
+(use-package find-recursive
+  :defer 2)
 
 ;; default to firefox in new tab
 (setq browse-url-default-browser 'browse-url-firefox-program)
@@ -62,8 +65,9 @@
 ;; TODO: deprecated in 24,
 ;; https://www.emacswiki.org/emacs/IcompleteMode
 ;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
-(require 'iswitchb)
-(iswitchb-mode 1)
+(use-package iswitchb
+  :config
+  (iswitchb-mode 1))
 
 
 (use-package projectile
@@ -89,10 +93,12 @@
 
 
 (use-package lorem-ipsum
-             :ensure t)
+  :ensure t
+  :defer 2)
 
 (use-package neotree
   :ensure t
+  :defer 1
   :pin melpa-stable
   :bind ([f8] . neotree-toggle)
   :config
@@ -191,5 +197,6 @@
 (use-package eyebrowse
   :ensure t
   :pin melpa-stable
+  :defer 1
   :config
   (eyebrowse-mode t))

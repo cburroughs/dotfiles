@@ -14,11 +14,12 @@
 
 ;; langtool grammar check
 (use-package langtool
-             :ensure t
-             :pin melpa
-             :config
-             (setq langtool-bin "/usr/bin/languagetool")
-             (setq langtool-disabled-rules '("WHITESPACE_RULE"
-                                             "EN_UNPAIRED_BRACKETS"
-                                             "COMMA_PARENTHESIS_WHITESPACE"
-                                             "EN_QUOTES")))
+  :ensure t
+  :pin melpa
+  :defer 2
+  :config
+  (setq langtool-bin "/usr/bin/languagetool")
+  (setq langtool-disabled-rules '("WHITESPACE_RULE"
+				  "EN_UNPAIRED_BRACKETS"
+				  "COMMA_PARENTHESIS_WHITESPACE"
+				  "EN_QUOTES")))

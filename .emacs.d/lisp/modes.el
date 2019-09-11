@@ -7,7 +7,6 @@
 (use-package rainbow-delimiters
   :ensure t
   :pin melpa-stable
-  :init
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; from esk : display column number in modeline
@@ -80,13 +79,14 @@
 
 ;; sql indenting
 (use-package sql-indent
-             :ensure t
-             :pin gnu
-             :init
-             (eval-after-load "sql"
-               '(load-library "sql-indent"))
-             :config
-             (setq sql-indent-offset 4))
+  :ensure t
+  :pin gnu
+  :defer 1
+  :init
+  (eval-after-load "sql"
+    '(load-library "sql-indent"))
+  :config
+  (setq sql-indent-offset 4))
 
 
 ;; dot files
@@ -118,7 +118,9 @@
 ;; TODO: easy way to change this the unreadable style common in java code
 ;; Probably don't want this on by default but useful if I start
 ;; coding in maximized windows
-(require 'highlight-80+)
+(use-package highlight-80+
+  :defer 2)
+
 (defun enable-highlight-80+ ()
   (interactive)
   (highlight-80+-mode)
@@ -145,7 +147,9 @@
 
 
 ;; whitespace
-(require 'show-wspace)
+(use-package show-wspace
+  :defer 2)
+
 (defun show-white-space ()
     (iteractive)
     (show-ws-toggle-show-hard-spaces)
@@ -174,6 +178,7 @@
 
 (use-package undo-tree
   :ensure t
+  :defer 1
   :config
   (progn
     (global-undo-tree-mode)
