@@ -229,13 +229,14 @@ fewer than 80 columns."
                  '(" "
                    mode-line-modes
                    " "
+                   (vc-mode vc-mode)
+                   " "
                    mode-line-mule-info
                    mode-line-client
                    (:eval (csb/lsp-state-icon))
                    (:eval (csb/mode-line-buffer-file-state-icon))
                    mode-line-frame-identification
                    " "
-                   (vc-mode vc-mode)
                    mode-line-misc-info
                    " "
                    mode-line-end-spaces))))
