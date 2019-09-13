@@ -210,6 +210,7 @@ fewer than 80 columns."
             (propertize "💥" 'face '(:height 1.1)))
             "-")))
 
+;; https://occasionallycogent.com/custom_emacs_modeline/index.html
 (setq-default mode-line-format
               '(
                 :eval
