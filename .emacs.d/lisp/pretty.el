@@ -286,6 +286,16 @@ fewer than 80 columns."
               (centaur-tabs-set-template bufset nil)
               (centaur-tabs-display-update)))
           (setq centaur-tabs-last-focused-buffer-group current-group)))))
+  (defun csb/centaur-tabs-group-by-mode ()
+    (interactive)
+    (setq centaur-tabs-buffer-groups-function 'csb/centaur-tabs-mode-buffer-groups)
+    (centaur-tabs-force-update))
+  (defun csb/centaur-tabs-mode-buffer-groups ()
+     (cond
+      ((or (string-prefix-p "*" (buffer-name))
+           (string-prefix-p " *" (buffer-name)))
+       '("Emacs"))
+      (nnnt  (list (symbol-name major-mode)))))
   :bind
   ;; TODO: Switch to only using terminal style PageUp/Down for fewer conflicts?
   ([(C-S-iso-lefttab)] . centaur-tabs-backward)
@@ -293,6 +303,7 @@ fewer than 80 columns."
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)
   ("C-c t s" . centaur-tabs-counsel-switch-group)
+  ("C-c t m" . csb/centaur-tabs-group-by-mode)
   ("C-c t p" . centaur-tabs-group-by-projectile-project)
   ("C-c t g" . centaur-tabs-group-buffer-groups)
   :hook
