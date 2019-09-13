@@ -30,9 +30,9 @@
 (ergo-movement-mode 1)
 
 
-;; For when I get confused
-(global-set-key "\M-p" 'previous-logical-line)
-(global-set-key "\M-n" 'next-logical-line)
+;; http://pragmaticemacs.com/emacs/scrolling-and-moving-by-line/
+(global-set-key "\M-p" (lambda () (interactive) (scroll-up-command 1)))
+(global-set-key "\M-n" (lambda () (interactive) (scroll-down-command 1)))
 
 ;; spell checking
 (global-set-key [f7] 'ispell-buffer)

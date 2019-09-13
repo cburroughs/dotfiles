@@ -25,6 +25,12 @@
 ;; graphviz dot mode requires this to be set, unclear how it is different from the above
 (setq-default default-tab-width 4)
 
+
+;; smooth scrolling
+(setq scroll-conservatively 1000)
+(setq scroll-preserve-screen-position t)
+
+
 ;; prefer hippie-expand over deavrez
 (global-set-key (kbd "M-/") 'hippie-expand)
 
