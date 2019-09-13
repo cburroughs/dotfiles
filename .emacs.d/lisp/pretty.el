@@ -258,20 +258,53 @@ fewer than 80 columns."
 (use-package centaur-tabs
   :ensure t
   :demand
+  :after (projectile counsel)
+  :init
+  ;; https://github.com/ema2159/centaur-tabs/issues/29
+  ;; adapated from centaur-tabs-adjust-buffer-order
+  (defun csb/centaur-tabs-adjust-buffer-order-lexicographically ()
+    ""
+    ;; Don't trigger by centaur-tabs command, it's annoying.
+    (unless (or (string-prefix-p "centaur-tabs" (format "%s" this-command))
+                (string-prefix-p "mouse-drag-header-line" (format "%s" this-command))
+                (string-prefix-p "(lambda (event) (interactive e)" (format "%s" this-command)))
+      ;; Just continue when the buffer has changed.
+      (when (and centaur-tabs-adjust-buffer-order
+                 (not (eq (current-buffer) centaur-tabs-last-focused-buffer)) ;;???
+                 (not (minibufferp)))
+        (let* ((current (current-buffer))
+               (current-group (cl-first (funcall centaur-tabs-buffer-groups-function))))
+          (setq centaur-tabs-last-focused-buffer current)
+          ;; Just continue if two buffers are in the same group.
+          (when (string= current-group centaur-tabs-last-focused-buffer-group)
+            (let* ((bufset (centaur-tabs-get-tabset current-group))
+                   (current-group-tabs (centaur-tabs-tabs bufset)))
+              (setq new-group-tabs (sort current-group-tabs
+                                         (lambda (x y)
+                                           (string< (buffer-name (car x)) (buffer-name (car y))))))
+              (set bufset new-group-tabs)
+              (centaur-tabs-set-template bufset nil)
+              (centaur-tabs-display-update)))
+          (setq centaur-tabs-last-focused-buffer-group current-group)))))
   :bind
   ;; TODO: Switch to only using terminal style PageUp/Down for fewer conflicts?
   ([(C-S-iso-lefttab)] . centaur-tabs-backward)
   ([(control tab)] . centaur-tabs-forward)
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward)
-  ("C-c t" . centaur-tabs-counsel-switch-group)
+  ("C-c t s" . centaur-tabs-counsel-switch-group)
+  ("C-c t p" . centaur-tabs-group-by-projectile-project)
+  ("C-c t g" . centaur-tabs-group-buffer-groups)
   :hook
   (dired-mode . centaur-tabs-local-mode)
   (term-mode . centaur-tabs-local-mode)
   (calendar-mode . centaur-tabs-local-mode)
   (org-agenda-mode . centaur-tabs-local-mode)
   :config
-;;  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-adjust-buffer-order 't)
+  (setq centaur-tabs-adjust-buffer-order-function
+        'csb/centaur-tabs-adjust-buffer-order-lexicographically)
+  (centaur-tabs-enable-buffer-reordering)
   (setq centaur-tabs-set-close-button nil)
   (setq centaur-tabs-set-modified-marker t)
   (setq centaur-tabs-modified-marker "*")
