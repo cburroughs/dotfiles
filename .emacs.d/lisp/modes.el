@@ -34,16 +34,19 @@
     (goto-char (point-min))))
 
 
-;; remember
-(require 'remember)
-;;(require 'remember-autoloads)
-(setq remember-data-file "~/Documents/org/notes.txt") ;; will change
-(global-set-key (kbd "C-c r") 'remember)
-(defun wicked/remember-review-file ()
-  "Open `remember-data-file'."
-  (interactive)
-  (find-file-other-window remember-data-file))
-(global-set-key (kbd "C-c R") 'wicked/remember-review-file)
+;; TODO: replace with org capture. "Capture lets you quickly store notes with
+;; little interruption of your work flow. Org's method for capturing new items
+;; is heavily inspired by John Wiegley excellent remember.el package. "
+;; ;; remember
+;; (require 'remember)
+;; (setq remember-data-file "~/Documents/org/notes.txt") ;; will change
+;; (global-set-key (kbd "C-c r") 'remember)
+;; (defun wicked/remember-review-file ()
+;;   "Open `remember-data-file'."
+;;   (interactive)
+;;   (find-file-other-window remember-data-file))
+;; (global-set-key (kbd "C-c R") 'wicked/remember-review-file)
+
 
 ;; -------------
 ;; org mode stuff
