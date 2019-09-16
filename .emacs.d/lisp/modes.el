@@ -50,28 +50,41 @@
 
 ;; -------------
 ;; org mode stuff
+
+
 ;; TODO: https://emacs.stackexchange.com/questions/7432/make-visual-line-mode-more-compatible-with-org-mode/12437
 ;; ^^ How can I get visual-line-mode/visual-fill-column mode to play nice with org-mode. By not wrapping headings?
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(setq org-hide-leading-stars t)
-; Should this stuff all done only after loading org-mode
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-(setq org-todo-keywords '("TODO" "WAITING" "DONE"))
-(setq org-agenda-include-diary t)
-(setq org-agenda-include-all-todo t)
-(setq org-deadline-warning-days 14)
-(require 'find-lisp)
-(setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$"))
-(add-hook 'org-mode-hook
-          '(lambda ()
-             ;; Undefine C-c [ and C-c ] since this breaks my
-             ;; org-agenda files when directories are include It
-             ;; expands the files in the directories individually
-             (org-defkey org-mode-map "\C-c[" 'undefined)
-             (org-defkey org-mode-map "\C-c]" 'undefined))
-          'append)
+
+
+(use-package find-lisp)
+
+(use-package org
+  :mode ("\\.org\\'" . org-mode)
+  :requires (find-lisp)
+  :init
+  ;; TODO: Not sure this is still needd
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               ;; Undefine C-c [ and C-c ] since this breaks my
+               ;; org-agenda files when directories are include It
+               ;; expands the files in the directories individually
+               (org-defkey org-mode-map "\C-c[" 'undefined)
+               (org-defkey org-mode-map "\C-c]" 'undefined))
+            'append)
+  :bind (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda))
+
+  :config
+  (setq org-hide-leading-stars t)
+  (setq org-log-done t)
+  (setq org-todo-keywords '("TODO" "WAITING" "DONE"))
+  (setq org-agenda-include-diary t)
+  (setq org-agenda-include-all-todo t)
+  (setq org-deadline-warning-days 14)
+  (setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$")))
+
+
+
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
 (use-package imenu-list
