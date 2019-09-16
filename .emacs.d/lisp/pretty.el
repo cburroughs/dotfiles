@@ -49,15 +49,16 @@
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
   (setq org-todo-keyword-faces
-        '(("TODO" . "#C16069")
-          ("WAITING" . "#dc752f")
-          ("DONE" . "#98be65")))
+        `(("TODO" . ,palette/doom-one/red)
+          ("WAITING" . ,palette/doom-one/orange)
+          ("DONE" . ,palette/doom-one/green)
+          ("CANCELED" . ,palette/doom-one/base6)))
   (load-theme 'claritas t))
 
 (defun light-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
-  (seq org-todo-keyword-faces nil)
+  (setq org-todo-keyword-faces nil)
   (setq leuven-scale-outline-headlines nil)
   (setq leuven-scale-org-agenda-structure nil)
   (load-theme 'leuven t))
@@ -77,11 +78,13 @@
 (defun space-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
+  (setq org-todo-keyword-faces nil)
   (load-theme 'spacemacs-dark t))
 
 (defun my-doom-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
+  (setq org-todo-keyword-faces nil)
   (load-theme 'doom-one t))
 
 

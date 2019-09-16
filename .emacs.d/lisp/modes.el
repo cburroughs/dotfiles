@@ -77,7 +77,8 @@
   :config
   (setq org-hide-leading-stars t)
   (setq org-log-done t)
-  (setq org-todo-keywords '("TODO" "WAITING" "DONE"))
+  (setq org-todo-keywords '("TODO(t)" "WAITING(w)" "|"
+                            "DONE(d)" "CANCELED(c)"))
   (setq org-agenda-include-diary t)
   (setq org-agenda-include-all-todo t)
   (setq org-deadline-warning-days 14)

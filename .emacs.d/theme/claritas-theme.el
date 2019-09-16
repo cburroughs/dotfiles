@@ -171,6 +171,13 @@
  `(outline-7 ((t (:foreground ,(doom-lighten palette/monokai/orange 0.25)))))
  `(outline-8 ((t (:foreground ,(doom-lighten palette/monokai/violet 0.25)))))
 
+ `(org-priority ((t (:foreground ,palette/doom-one/cyan))))
+ `(org-todo ((t (:foreground ,palette/doom-one/red))))
+ `(org-warning ((t (:foreground ,palette/doom-one/orange))))
+ `(org-upcoming-deadline ((t (:foreground ,palette/doom-one/yellow))))
+ `(org-done ((t (:foreground ,palette/doom-one/green))))
+
+
  ;; rainbow-delimiters
  ;; a rainbow, but with subtle earthy instead of psychedelic tones
  `(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
