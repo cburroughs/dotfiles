@@ -75,7 +75,6 @@
          ("C-c a" . org-agenda))
 
   :config
-  (setq org-hide-leading-stars t)
   (setq org-log-done t)
   (setq org-todo-keywords '("TODO(t)" "WAITING(w)" "|"
                             "DONE(d)" "CANCELED(c)"))
@@ -84,7 +83,12 @@
   (setq org-deadline-warning-days 14)
   (setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$")))
 
-
+(use-package org-bullets
+  :ensure t
+  :pin melpa-stable
+  :hook (org-mode . org-bullets-mode)
+  :init
+  (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○")))
 
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
