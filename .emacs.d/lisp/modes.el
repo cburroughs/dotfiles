@@ -64,8 +64,9 @@
          ("C-c o G" . counsel-org-goto-all)
          ("C-c o l" . org-store-link)
          ("C-c o o" . org-open-at-point)
+         ("C-c o p" . org-set-property)
+         ("C-c o t" . org-set-tags)
          ("C-c o r" . csb/refile-with-ivy))
-;; ?? alt shortcut for propertie and tags?
   :config
   ;; Do I like this being recursive?
   (setq csb/org-files (find-lisp-find-files  org-directory "\.org$"))
