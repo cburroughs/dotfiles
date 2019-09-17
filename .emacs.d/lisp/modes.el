@@ -34,54 +34,65 @@
     (goto-char (point-min))))
 
 
-;; TODO: replace with org capture. "Capture lets you quickly store notes with
-;; little interruption of your work flow. Org's method for capturing new items
-;; is heavily inspired by John Wiegley excellent remember.el package. "
-;; ;; remember
-;; (require 'remember)
-;; (setq remember-data-file "~/Documents/org/notes.txt") ;; will change
-;; (global-set-key (kbd "C-c r") 'remember)
-;; (defun wicked/remember-review-file ()
-;;   "Open `remember-data-file'."
-;;   (interactive)
-;;   (find-file-other-window remember-data-file))
-;; (global-set-key (kbd "C-c R") 'wicked/remember-review-file)
-
-
 ;; -------------
 ;; org mode stuff
 
 
 ;; TODO: https://emacs.stackexchange.com/questions/7432/make-visual-line-mode-more-compatible-with-org-mode/12437
-;; ^^ How can I get visual-line-mode/visual-fill-column mode to play nice with org-mode. By not wrapping headings?
+;; ^^ How can I get visual-line-mode/visual-fill-column mode to play nice with
+;; org-mode. By not wrapping headings?
 
 
 (use-package find-lisp)
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
-  :requires (find-lisp)
+  :requires (find-lisp ivy counsel)
   :init
-  ;; TODO: Not sure this is still needd
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               ;; Undefine C-c [ and C-c ] since this breaks my
-               ;; org-agenda files when directories are include It
-               ;; expands the files in the directories individually
-               (org-defkey org-mode-map "\C-c[" 'undefined)
-               (org-defkey org-mode-map "\C-c]" 'undefined))
-            'append)
-  :bind (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda))
-
+  ;; TODO: Can we use this trick in reverse (setting back to default) to keep
+  ;; the handful of things (minibuf, files buffers) "normal", and everything
+  ;; else ivy?
+  (defun csb/refile-with-ivy ()
+    (interactive)
+    (let ((completing-read-function 'ivy-completing-read))
+      (call-interactively 'org-refile)))
+  (setq org-directory "~/Documents/org")
+  :bind (("C-c o a" . org-agenda)
+         ("C-c o b" . org-switchb)
+         ("C-c o c" . org-capture)
+         ("C-c o g" . counsel-org-goto)
+         ("C-c o G" . counsel-org-goto-all)
+         ("C-c o l" . org-store-link)
+         ("C-c o o" . org-open-at-point)
+         ("C-c o r" . csb/refile-with-ivy))
+;; ?? alt shortcut for propertie and tags?
   :config
+  ;; Do I like this being recursive?
+  (setq csb/org-files (find-lisp-find-files  org-directory "\.org$"))
+  (setq org-default-notes-file (concat org-directory "/inbox.org"))
   (setq org-log-done t)
   (setq org-todo-keywords '("TODO(t)" "WAITING(w)" "|"
                             "DONE(d)" "CANCELED(c)"))
-  (setq org-agenda-include-diary t)
+  (setq org-agenda-files csb/org-files)
   (setq org-agenda-include-all-todo t)
+  (setq org-agenda-include-diary t)
+  (setq org-agenda-span 'fortnight)
   (setq org-deadline-warning-days 14)
-  (setq org-agenda-files (find-lisp-find-files  "~/Documents/org" "\.org$")))
+  ;; The ivy/org interaction here is super wonky
+  ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-capture-templates
+        '(("t" "Task" entry (file+headline "" "Tasks")
+           "* TODO %?\n  %u\n  %a" :kill-buffer t)
+          ("j" "Journal" entry (file+olp+datetree "" "Journal")
+           "* %?\nEntered on %u\n  %i\n  %a" :kill-buffer t)
+          ("n" "Note" entry (file+headline "" "Notes")
+           "* %?\n  %u\n  %a" :kill-buffer t)
+          ("u" "URL" entry (file+headline "" "URLs")
+           "* %x%?\n  %u\n  %a" :kill-buffer t)))
+  (setq org-refile-targets '((csb/org-files :maxlevel . 4))))
 
 (use-package org-bullets
   :ensure t
