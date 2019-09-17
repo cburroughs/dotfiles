@@ -26,6 +26,9 @@
 "emacs"
   Mod4 + e
 
+"emacs -fh --eval '(org-capture)'"
+  Mod4 + r
+
 "firefox"
   Mod4 + f
 
