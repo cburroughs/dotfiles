@@ -250,11 +250,13 @@ fewer than 80 columns."
 ;; https://manuel-uberti.github.io/emacs/2018/03/10/moody-and-minions/
 (use-package minions
   :ensure t
-  :pin melpa-stable
+  :pin melpa
+  :init
+  (defface csb/minions-mode-line-lighter '((t (:height 1.1))) "")
   :config
   (setq minions-mode-line-delimiters nil)
   (setq minions-mode-line-lighter "🔨")
-  (set-face-attribute 'minions-mode-line-lighter nil :height 1.1) ; TODO: upstream
+  (setq minions-mode-line-face 'csb/minions-mode-line-lighter)
   (minions-mode 1))
 
 
