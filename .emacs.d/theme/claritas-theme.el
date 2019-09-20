@@ -163,12 +163,12 @@
  ;; outline and org mode
  '(outline-1 ((t (:foreground "LightSkyBlue"))))
  '(outline-2 ((t (:foreground "LightGoldenrod"))))
- `(outline-3 ((t (:foreground ,palette/monokai/orange))))
- `(outline-4 ((t (:foreground ,palette/monokai/blue))))
- `(outline-5 ((t (:foreground ,palette/monokai/yellow))))
- `(outline-6 ((t (:foreground ,palette/monokai/magenta-l))))
- `(outline-7 ((t (:foreground ,palette/monokai/violet-l))))
- `(outline-8 ((t (:foreground ,palette/monokai/blue-l))))
+ `(outline-3 ((t (:foreground ,palette/monokai/cyan))))
+ `(outline-4 ((t (:foreground ,palette/monokai/orange))))
+ `(outline-5 ((t (:foreground ,palette/monokai/magenta))))
+ `(outline-6 ((t (:foreground ,palette/monokai/yellow))))
+ `(outline-7 ((t (:foreground ,palette/monokai/violet))))
+ `(outline-8 ((t (:foreground ,palette/monokai/orange-l))))
 
  `(org-priority ((t (:foreground ,palette/doom-one/cyan))))
  `(org-todo ((t (:foreground ,palette/doom-one/red))))
