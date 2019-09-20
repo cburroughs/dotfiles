@@ -100,7 +100,7 @@
   :pin melpa-stable
   :hook (org-mode . org-bullets-mode)
   :init
-  (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○")))
+  (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○" "★")))
 
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
