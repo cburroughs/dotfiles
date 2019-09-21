@@ -136,7 +136,7 @@ fewer than 80 columns."
 
 
 ;; fill, width, writing
-(setq-default fill-column 80)
+(setq-default fill-column 78)
 
 ;; http://emacshorrors.com/posts/longlines-mode.html
 (use-package visual-fill-column

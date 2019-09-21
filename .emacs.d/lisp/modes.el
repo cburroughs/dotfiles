@@ -196,7 +196,13 @@
 
 
 ;; nice commit messages
-(require 'git-commit)
+(use-package git-commit
+  :ensure t
+  :pin melpa-stable
+  :hook (git-commit-mode . (lambda () (setq fill-column 70)))
+  :config
+  (setq git-commit-summary-max-length 50))
+
 
 (use-package undo-tree
   :ensure t
