@@ -9,6 +9,7 @@ emacs:
 
 bash:
 	@echo $@
+	cp -a .inputrc ~
 	cp -a .bash_custom ~
 	@if  ! `grep -q bash_custom  ~/.bashrc`; then \
 	    echo "" >> ~/.bashrc; \
