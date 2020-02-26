@@ -56,8 +56,8 @@ alias grep='grep --color '
 alias fgrep='fgrep --color'
 alias egrep='egrep --color'
 alias epoch='date +%s'
-# from: http://www.shell-fu.org/lister.php?id=54
-alias webshare='python -m SimpleHTTPServer'
+# from: https://unix.stackexchange.com/questions/32182/simple-command-line-http-server
+alias webshare='python3 -m http.server'
 
 # made up commands
 mkcd() {
