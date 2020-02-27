@@ -1,0 +1,19 @@
+" NOTE: Not actually setup to be read (needs native doohicky?), but a basic start
+
+set newtab about:blank
+
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+set smoothscroll true
+
+set tabopencontaineraware true
+
+unbind <C-f>
+unbind ZZ
+
+set hintdelay 150
+
+blacklistadd mail.google.com/mail
+blacklistadd docs.google.com
+blacklistadd drive.google.com
+blacklistadd duckduckgo.com/
