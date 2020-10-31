@@ -544,12 +544,19 @@ if __name__ == '__main__':
 # * https://old.reddit.com/r/zfs/comments/7fqu1y/a_small_survey_of_zfs_remote_replication_tools
 
 # Example permissions
-# root@yggdrasil[~]# zfs allow  backup_y54 create,mount tank/backups/chris/y54
-# root@yggdrasil[~]# zfs allow -c allow,atime,clone,compression,create,destroy,diff,hold,logbias,mount,mountpoint,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
+# root@yggdrasil[~]# zfs allow  backup_y54 create,receive tank/backups/chris/y54/SIGIL
+# root@yggdrasil[~]# zfs allow -c allow,atime,clone,compression,create,destroy,diff,hold,logbias,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54/SIGIL
 
 # NOTE: Because mountpoint is replicated (seemed good to avoid errors) then
-# canmount=noauto needs to be set ot multiple datasets try to mount in the same
+# canmount=noauto needs to be set or multiple datasets try to mount in the same
 # place
+
+# NOTE: I ended up just not replicating mountpoint because of hard to debug
+# issues
+#cannot receive mountpoint property on tank/backups/chris/y54/delta: permission denied
+#cannot receive atime property on tank/backups/chris/y54/delta: permission denied
+# cannot receive compression property on tank/backups/chris/y54/delta: permission denied
+
 
 # DEBUG:  mount -o ro -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
 # ^^ zfs magic (delete queue?) may result in modifications when mounted
