@@ -2,7 +2,7 @@
 Name=Mozilla Thunderbird
 Comment=Mail & News Reader
 Exec=env LC_TIME=root.UTF-8 /usr/bin/thunderbird %u
-Icon=thunderbird-icon
+Icon=thunderbird
 Terminal=false
 Type=Application
 Categories=Office;Network;Email;
