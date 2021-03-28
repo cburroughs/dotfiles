@@ -1,0 +1,14 @@
+/* https://old.reddit.com/r/GreaseMonkey/comments/hx9vmn/repost_can_someone_please_help_eliminate_the_new/ */
+
+@-moz-document domain(amazon.com) {
+    #navbar #nav-flyout-ewc,
+    #navbar::before,
+    #navbar::after {
+        display: none!important;
+    }
+
+    body {
+        padding-right: 0!important
+                       
+    }
+}
