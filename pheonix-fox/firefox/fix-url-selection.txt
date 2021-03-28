@@ -1,0 +1,3 @@
+https://github.com/SebastianSimon/firefox-selection-fix
+
+NOTE: Must be applied after each firefox upgrade.  Probably less hassel than my own ebuild.
