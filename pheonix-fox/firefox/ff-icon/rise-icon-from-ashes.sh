@@ -40,7 +40,7 @@ for size in ${allSizes}
 do
     echo "xdg-icon-resource install --novendor --size ${size} default${size}.png firefox"
 done
-echo "cp cp default48.png /usr/share/pixmaps/firefox.png"
+echo "cp default48.png /usr/share/pixmaps/firefox.png"
 
 
 
