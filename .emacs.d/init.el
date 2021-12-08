@@ -46,15 +46,17 @@
 
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 ;; https://github.com/hlissner/doom-emacs/wiki/FAQ#how-is-dooms-startup-so-fast
-(setq csb/init/gc-cons-normal-threshold (* 1024 1024))
-(setq csb/init/gc-cons-large-threshold (* 48 1024 1024))
-(setq csb/init/gc-cons-percentage gc-cons-percentage)
+(setq csb/init/default-gc-threshold gc-cons-threshold
+      csb/init/default-gc-cons-percentage gc-cons-percentage
+      csb/init/gc-cons-normal-threshold (* 1024 1024)
+      csb/init/gc-cons-large-threshold (* 64 1024 1024))
 
 (setq gc-cons-threshold csb/init/gc-cons-large-threshold)
 (setq gc-cons-percentage 0.9)
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold csb/init/gc-cons-normal-threshold
-                           gc-cons-percentage csb/init/gc-cons-percentage)))
+          (lambda ()
+            (setq gc-cons-threshold csb/init/gc-cons-normal-threshold
+                  gc-cons-percentage csb/init/default-gc-cons-percentage)))
 (add-hook 'after-init-hook
           (lambda ()
              (message "init gc num:%i time:%f" gcs-done gc-elapsed)))
