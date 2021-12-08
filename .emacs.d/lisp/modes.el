@@ -7,8 +7,7 @@
 
 ;; more paren highlighting goodness
 (use-package rainbow-delimiters
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; from esk : display column number in modeline
@@ -98,8 +97,7 @@
   (setq org-refile-targets '((csb/org-files :maxlevel . 4))))
 
 (use-package org-bullets
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :hook (org-mode . org-bullets-mode)
   :init
   (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○" "★")))
@@ -107,28 +105,24 @@
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
 (use-package imenu-list
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :bind ([f9] . imenu-list-smart-toggle))
 
 
 ;; sql indenting
 (use-package sql-indent
-  :ensure t
-  :pin gnu
+  :straight t
   :hook (sql-mode . sqlind-minor-mode))
 
 
 ;; dot files
 (use-package graphviz-dot-mode
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :mode ("\\.dot$" . graphviz-dot-mode))
 
 ;; markdown-mode
 (use-package markdown-mode
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :config
   ;; Remove once this is in a newer markdown-mode release
   ;; https://github.com/jrblevin/markdown-mode/pull/252/files
@@ -165,9 +159,8 @@
 
 ;; might as well use emacs crazy powerful kill-ring
 (use-package kill-ring-search
-             :ensure t
-             :pin melpa-stable
-             :bind ("M-C-y" . kill-ring-search))
+  :straight t
+  :bind ("M-C-y" . kill-ring-search))
 
 
 ;; whitespace
@@ -192,22 +185,20 @@
 ;(command-frequency-autosave-mode 1)
 
 (use-package rainbow-mode
-             :ensure t
-             :pin gnu
-             :defer t)
+  :straight t
+  :defer t)
 
 
 ;; nice commit messages
 (use-package git-commit
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :hook (git-commit-mode . (lambda () (setq fill-column 70)))
   :config
   (setq git-commit-summary-max-length 50))
 
 
 (use-package undo-tree
-  :ensure t
+  :straight t
   :defer 1
   :config
   (progn

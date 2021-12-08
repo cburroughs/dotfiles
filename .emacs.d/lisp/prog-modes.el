@@ -29,8 +29,7 @@
 
 ;; TODO: Consider M-g basd keybinding with hydra
 (use-package dumb-jump
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :config
   (setq dumb-jump-selector 'ivy)
   (setq dumb-jump-aggressive nil)
@@ -56,7 +55,7 @@
 ;; still a little different, but hitting S-TAB works about as well as repeated
 ;; TAB to cycle
 (use-package company
-  :ensure t
+  :straight t
   :defer t
   :hook (prog-mode . company-mode)
   :bind (("M-`" . company-complete)
@@ -74,8 +73,7 @@
 
 ;;; Javascript
 (use-package js2-mode
-             :ensure t
-             :pin gnu
+             :straight t
              :defer t)
 
 
@@ -89,8 +87,7 @@
 
 ;; json
 (use-package json-mode
-             :ensure t
-             :pin melpa-stable
+             :straight t
              :mode "\\.json$")
 
 ;;; Python
@@ -145,15 +142,13 @@
   (setq nxml-child-indent 4 nxml-attribute-indent 2))
 
 (use-package vcl-mode
-             :ensure t
-             :pin gnu
+             :straight t
              :mode "\\.vcl$")
 
 (setq ruby-deep-indent-paren nil)
 
 (use-package web-mode
-             :ensure t
-             :pin melpa-stable
+             :straight t
              :mode ("\\.jinja$" "\\.mustache$"))
 
 (defun phab-php-mode ()
@@ -170,8 +165,7 @@
 
 ;; grooy
 (use-package groovy-mode
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :mode "\\.groovy$")
 
 
@@ -181,8 +175,7 @@
 ;; TODO: I would like to be able to stick with melpa-stable
 ;; TODO: in future versions, check out lsp-deferred
 (use-package lsp-mode
-  :ensure t
-  :pin melpa
+  :straight t
   :hook ((rust-mode . lsp)
          (python-mode . lsp)
          (python-mode . (lambda () (flymake-mode 0))))
@@ -206,37 +199,38 @@
       (progn
         (put 'csb/lsp-ui-doc-toggle 'state 't)
         (lsp-ui-doc-show))))
+  :config
+  (push 'company-lsp company-backends))
+  
 
-  (use-package lsp-ui
-    :ensure t
-    :pin melpa
-    :commands lsp-ui-mode
-    :bind (("C-c q" . csb/lsp-ui-doc-toggle))
-    :config
-    ;; not a fan of so much noise
-    (setq lsp-ui-flycheck-enable nil)
-    (setq lsp-prefer-flymake :none)
-    ;; the foo/bar format is less useful than the built in regex
-    ;; revisit after https://github.com/emacs-lsp/lsp-mode/issues/784 (post 6.0)
-    (setq lsp-ui-imenu-enable nil)
-    ;; Remove this crazy hack after https://github.com/emacs-lsp/lsp-ui/issues/234
-    ;; is stable
-    (with-eval-after-load 'lsp-ui
-      (run-at-time "1 sec" 4 'flymake-mode 0))
+(use-package lsp-ui
+  :straight t
+  :after (lsp-mode)
+  :commands lsp-ui-mode
+  :bind (("C-c q" . csb/lsp-ui-doc-toggle))
+  :config
+  ;; not a fan of so much noise
+  (setq lsp-ui-flycheck-enable nil)
+  (setq lsp-prefer-flymake :none)
+  ;; the foo/bar format is less useful than the built in regex
+  ;; revisit after https://github.com/emacs-lsp/lsp-mode/issues/784 (post 6.0)
+  (setq lsp-ui-imenu-enable nil)
+  ;; Remove this crazy hack after https://github.com/emacs-lsp/lsp-ui/issues/234
+  ;; is stable
+  (with-eval-after-load 'lsp-ui
+    (run-at-time "1 sec" 4 'flymake-mode 0))
 
-    (setq lsp-ui-sideline-enable nil)
-    (setq lsp-ui-peek-enable nil)
-    ;; I like the inline docs, but not how it pops up all the freaking time, see
-    ;; toggle fn above
-    (setq lsp-ui-doc-enable nil)
-    (setq lsp-ui-doc-header 't)
-    (setq lsp-ui-doc-include-signature 't)
-    (setq lsp-ui-doc-position 'top)
-    (setq lsp-ui-doc-use-childframe 't))
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-peek-enable nil)
+  ;; I like the inline docs, but not how it pops up all the freaking time, see
+  ;; toggle fn above
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-doc-header 't)
+  (setq lsp-ui-doc-include-signature 't)
+  (setq lsp-ui-doc-position 'top)
+  (setq lsp-ui-doc-use-childframe 't))
 
-  (use-package company-lsp
-    :ensure t
-    :pin melpa
-    :commands company-lsp)
-    :config
-    (push 'company-lsp company-backends))
+(use-package company-lsp
+  :straight t
+  :after (lsp-mode company)
+  :commands company-lsp)

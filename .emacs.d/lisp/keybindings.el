@@ -73,8 +73,7 @@
 
 (use-package which-key
   :defer 1
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :config
   (setq which-key-compute-remaps t)
   (which-key-mode 1))

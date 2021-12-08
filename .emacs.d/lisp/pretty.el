@@ -67,15 +67,12 @@
 
 
 (use-package spacemacs-theme
-  :pin melpa
-  :defer t
-  :ensure t)
+  :straight t
+  :defer t)
 
 (use-package doom-themes
-  :pin melpa
-  :defer t
-  :ensure t)
-
+  :straight t
+  :defer t)
 
 (defun space-theme ()
   (interactive)
@@ -142,18 +139,16 @@ fewer than 80 columns."
 
 ;; http://emacshorrors.com/posts/longlines-mode.html
 (use-package visual-fill-column
-             :ensure t
-             :pin melpa-stable
-             :init
-             (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
+  :straight t
+  :init
+  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
 
 
 ;; full screen margins: Olivetti is a simple Emacs minor mode for a nice writing
 ;; environment.
 (use-package olivetti
-  :ensure t
-  :defer 1
-  :pin melpa-stable)
+  :straight t
+  :defer 1)
 
 (defun prose-time ()
   "Full screen writing focus"
@@ -161,13 +156,10 @@ fewer than 80 columns."
   (olivetti-mode))
 
 
-;; Dependency of doom-modeline
+;; Dependency of doom-modeline; and kind of cool
 (use-package all-the-icons
-  :ensure t
-  ;; NOTE: No releases to stable since new maintainer took over, missing
-  ;; https://github.com/domtronn/all-the-icons.el/pull/106 among other important
-  ;; changes
-  :pin melpa)
+  :straight t)
+
 
 ;; Fancy modelines
 ;; (use-package doom-modeline
@@ -251,8 +243,7 @@ fewer than 80 columns."
 ;; Creates a "draw" of sorts for minor modes
 ;; https://manuel-uberti.github.io/emacs/2018/03/10/moody-and-minions/
 (use-package minions
-  :ensure t
-  :pin melpa
+  :straight t
   :init
   (defface csb/minions-mode-line-lighter '((t (:height 1.1))) "")
   :config
@@ -264,7 +255,7 @@ fewer than 80 columns."
 
 ;; Alternative tabs
 (use-package centaur-tabs
-  :ensure t
+  :straight t
   :demand
   :after (projectile counsel)
   :init
@@ -378,8 +369,7 @@ fewer than 80 columns."
 
 
 (use-package dashboard
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :config
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)

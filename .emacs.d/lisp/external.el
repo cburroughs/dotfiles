@@ -16,8 +16,7 @@
 
 ;; langtool grammar check
 (use-package langtool
-  :ensure t
-  :pin melpa
+  :straight t
   :defer 2
   :config
   (setq langtool-bin "/usr/bin/languagetool")

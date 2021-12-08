@@ -62,26 +62,31 @@
 (load custom-file 'noerror)
 
 
-;; Bootstrap pkgs http://cachestocaches.com/2015/8/getting-started-use-package/
-(require 'package)
-(setq package-enable-at-startup nil)
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")))
+;; straight.el
+(setq straight-profiles `((nil .  "~/.emacs.d/straight.lockfile.el")))
 
-(package-initialize)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Use package! without the bootstrap
+(straight-use-package 'use-package)
 
 (eval-when-compile
   (require 'use-package))
 (require 'bind-key)
 
-(use-package dash :ensure t)
-(use-package diminish :ensure t)
+(use-package dash :straight t)
+(use-package diminish :straight t)
 
 ;; --------------------------
 ;; Putting Files places

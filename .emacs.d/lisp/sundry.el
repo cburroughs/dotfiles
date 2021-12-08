@@ -79,8 +79,7 @@
 
 
 (use-package projectile
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :config
   (setq projectile-known-projects-file "~/.config/emacs/projectile-bookmarks.el")
   (setq projectile-completion-system 'ivy)
@@ -101,13 +100,12 @@
 
 
 (use-package lorem-ipsum
-  :ensure t
+  :straight t
   :defer 2)
 
 (use-package neotree
-  :ensure t
+  :straight t
   :defer 1
-  :pin melpa-stable
   :bind ([f8] . neotree-toggle)
   :config
   (setq neo-autorefresh nil))
@@ -131,8 +129,7 @@
 ;; NOTE: Neither ivy nor counsel are "enabled" to take over standard buffer or
 ;; file operations.  But a number of other handy functions are enabled.
 (use-package ivy
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :demand t
   :bind ("C-c C-r" . ivy-resume)
   :config
@@ -142,9 +139,8 @@
 
 
 (use-package swiper
-  :ensure t
+  :straight t
   :after ivy
-  :pin melpa-stable
   ;; https://oremacs.com/2019/04/07/swiper-isearch/ Maybe revsit fully switching
   ;; to swiper instead of isearch in the future?  Sadly seems prone to 100% cpu
   ;; hangs.  https://github.com/abo-abo/swiper/issues/925 is perhaps a relevant
@@ -160,9 +156,8 @@
 
 
 (use-package counsel
-  :ensure t
+  :straight t
   :after ivy
-  :pin melpa-stable
   :demand t
   ;; remap only some standard keybindings; add new ones
   :bind (("<f1> f" . counsel-describe-function)
@@ -187,15 +182,13 @@
   (winner-mode 1))
 
 (use-package ace-window
-  :ensure t
-  ;; ran into a bug with the stable one?
-  :pin melpa
+  :straight t
   :bind (("M-o" . ace-window)))
 
 
 ;; Do I actually end up using this?
 (use-package avy
-  :ensure t
+  :straight t
   :bind (("C-;" . avy-goto-char-2)
          ("C-'" . avy-goto-line))
   :config (setq avy-all-windows 't))
@@ -203,8 +196,7 @@
 
 ;; Do I actually end up using this?
 (use-package eyebrowse
-  :ensure t
-  :pin melpa-stable
+  :straight t
   :defer 1
   :config
   (eyebrowse-mode t))
