@@ -2,7 +2,7 @@
  ("ace-window" . "c7cb315c14e36fded5ac4096e158497ae974bec9")
  ("all-the-icons.el" . "483dba65e897071c156cefec937edcf51aa333db")
  ("avy" . "e92cb37457b43336b765630dbfbea8ba4be601fa")
- ("centaur-tabs" . "5860a5c40c2318797f1274ea4c6907ae77ea1ec9")
+ ("centaur-tabs" . "050ac2156ad0eaa10b9e2c263d50d0ee246932db")
  ("company-lsp" . "f921ffa0cdc542c21dc3dd85f2c93df4288e83bd")
  ("company-mode" . "8b58e5895c2eaf8686de0e25c807b00fdb205c7a")
  ("dash.el" . "da167c51e9fd167a48d06c7c0ee8e3ac7abd9718")
