@@ -73,9 +73,6 @@
           (lambda () (setq file-name-handler-alist csb/init/file-name-handler-alist)))
 
 
-;; Something will end up wanting it eventually
-(require 'cl)
-
 ;; load gentoo installed stuff
 (require 'site-gentoo nil t)
 
