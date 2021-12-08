@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; emacs modes I use, their customization, and setup.
 
 (transient-mark-mode t) ; redundant, still does not work in ubuntu

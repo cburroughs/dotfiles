@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; misc changes and variable settings
 
 

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Emacs 27.1 introduced early-init.el, which is run before init.el, before
 ;; package and UI initialization happens, and before site files are loaded.
 

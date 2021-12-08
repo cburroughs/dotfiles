@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Cosmetic changes
 
 ;; I don't blink on the terminal, let's try being consistent

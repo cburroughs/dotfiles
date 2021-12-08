@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Some handy or popular color pallets
 
 ;; https://github.com/bbatsov/zenburn-emacs

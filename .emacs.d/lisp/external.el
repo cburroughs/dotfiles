@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; talk to external programs
 
 ;; use mzscheme, obviously it must be installed

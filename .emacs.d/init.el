@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Chris Burroughs
 ;; My dot emacs
 

@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Programming modes in a separate file
 
 

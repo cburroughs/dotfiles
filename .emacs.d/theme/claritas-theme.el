@@ -1,4 +1,4 @@
-;;; claritas-theme.el --- claritas theme
+;;; claritas-theme.el --- claritas theme -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2003 by Richard Wellum
 ;; Copyright (C) 2013 by Syohei YOSHIDA

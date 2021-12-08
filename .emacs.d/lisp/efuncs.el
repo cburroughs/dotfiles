@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Functions and such
 
 ;; Insertion of Dates.

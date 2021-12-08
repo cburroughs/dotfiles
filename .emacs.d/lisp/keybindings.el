@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; General Custom keybindings
 
 ;; in case of old emacs versions
