@@ -169,13 +169,20 @@
 
 ;; I expect the os package manager to take care of
 
+;; app-emacs/apache-mode
+;; app-emacs/color-theme
 ;; app-emacs/crontab-mode
-;; app-emacs/ecb +java
+;; app-emacs/ebuild-mode
 ;; app-emacs/graphviz-dot-mode
 ;; app-emacs/jde
+;; app-emacs/lua-mode
 ;; app-emacs/matlab
+;; app-emacs/org-mode
 ;; app-emacs/ruby-mode
+;; app-emacs/rust-mode
+;; app-emacs/with-editor
 ;; app-emacs/yaml-mode
+;; app-emacs/zenburn
 
 ;; External:
 ;; dev-vcs/git
