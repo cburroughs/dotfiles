@@ -195,7 +195,8 @@ menupopup:not(.in-menulist) > menu {
 }
 /* Set color for active tab */
 .tabbrowser-tab[selected] .tab-background::before {
-  background-color: #0a84ff;
+    /* background-color: #0a84ff; */
+    background-color: Highlight !important; /* -moz-accent-color */
 }
 /* Set color for other selected tabs */
 .tabbrowser-tab[multiselected]:not([selected]) .tab-background::before {
