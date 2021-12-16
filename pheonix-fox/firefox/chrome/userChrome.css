@@ -118,6 +118,8 @@ menupopup:not(.in-menulist) > menu {
 }
 
 
+/* NOTE: A lot most 89 crazyness can be fixed by setting browser.uidensity to 1 (compact) */
+
 
 /* https://www.userchrome.org/firefox-89-styling-proton-ui.html#tabstyler* /
 /*** Proton Tabs Tweaks ***/
