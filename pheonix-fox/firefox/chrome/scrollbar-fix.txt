@@ -1,0 +1,6 @@
+Most 91 scrollbars sometimes?!?! get all messed up and not native.  Possible magic fix?
+
+widget.content.gtk-theme-override	TraditionalOk	
+widget.disable-native-theme-for-content	false	
+
+widget.non-native-theme.enabled	false
