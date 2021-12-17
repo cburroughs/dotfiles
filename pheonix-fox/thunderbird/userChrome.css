@@ -3,6 +3,14 @@
 /* copy this down there?*/
 treechildren::-moz-tree-cell-text(newMessages-true) {color: black !important;}
 
+/* https://bugzilla.mozilla.org/show_bug.cgi?id=1682065 */
+#folderTree treechildren::-moz-tree-cell-text(folderNameCol, newMessages-true) {
+  margin-inline-start: unset !important; 
+  padding-inline-start: unset !important;
+  background-image: unset !important;
+  background-repeat: unset !important;
+  background-position: unset !important;
+}
 
 /* https://www.reddit.com/r/Thunderbird/comments/ju0hox/guide_how_to_revert_back_to_the_old_icons/ */
 /* https://blog.mozilla.org/nnethercote/2015/11/05/moz-icon-a-curious-corner-of-firefox/ */
