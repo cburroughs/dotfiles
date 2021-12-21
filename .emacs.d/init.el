@@ -35,6 +35,15 @@
 ;; sure, check the notice in each file.
 
 
+;; 2020s refresh
+;; Box some goals, see if I can get it working
+;; - revisit themes, white on black may not actually be the best for visibility? Decade of clarity enough?
+;; - I love clearlooks gtk2 scrollsbars, but has some downsides for not being emacs-y; and who knows when gnome authors will mess it up more?
+;; - Can I get by without tabs? Again, emacs-y and long term downsides
+;; (Previous two depends on at least part on leveling up buffer management, selection, etc.
+;; - Choose a light theme I like more; or at least not a local fork
+;; - try https://github.com/tarsius/moody again
+
 ;; load gentoo installed stuff
 (require 'site-gentoo nil t)
 
