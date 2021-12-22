@@ -22,7 +22,10 @@
 (setq show-paren-delay 0)
 (show-paren-mode t)
 
-(set-scroll-bar-mode 'right)
+;; 💓 Clearlooks gtk2 forever
+(push '(vertical-scroll-bars) default-frame-alist)
+(setq scroll-bar-mode nil)
+;; (set-scroll-bar-mode 'right)
 
 ; try to have a decent name
 (setq frame-title-format '(buffer-file-name "%b -- %f" ( "%b" ) ) )
@@ -235,9 +238,7 @@ RIGHT aligned respectively."
                             'mode-line-remote))
                    (:eval (propertize "%b" 'face 'bold))
                    " "
-                   "%l:%c "
-                   mode-line-percent-position
-                   )
+                   "%l:%c ")
                  ;; right
                  '(" "
                    mode-line-modes
