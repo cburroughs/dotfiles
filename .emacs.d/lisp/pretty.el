@@ -163,9 +163,15 @@ fewer than 80 columns."
 
 ;; https://emacs.stackexchange.com/questions/5529/how-to-right-align-some-items-in-the-modeline
 (defun csb/align-mode-line (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
-  (let* ((available-width (- (window-total-width) (+ (length (format-mode-line left)) (length (format-mode-line right))))))
-    (append left (list (format (format "%%%ds" available-width) "")) right)))
+  "Return a string of `window-width' length containing LEFT, and
+RIGHT aligned respectively."
+  (let* ((available-width
+          (- (window-total-width)
+             (+ (length (format-mode-line left))
+                (length (format-mode-line right))))))
+    (append left
+            (list (format (format "%%%ds" available-width) ""))
+            right)))
 
 ;; adapted from  doom-modeline-update-buffer-file-state-icon 
 (defun csb/mode-line-buffer-file-state-icon  ()
