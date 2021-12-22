@@ -162,16 +162,30 @@ fewer than 80 columns."
 
 
 ;; https://emacs.stackexchange.com/questions/5529/how-to-right-align-some-items-in-the-modeline
-(defun csb/align-mode-line (left right)
+(defun csb/align-mode-line (left right &optional resered-right-width)
   "Return a string of `window-width' length containing LEFT, and
 RIGHT aligned respectively."
-  (let* ((available-width
-          (- (window-total-width)
+  (let* ((align-mode-line-width ; how much is avilable for us to align
+          (if resered-right-width
+              (- (window-total-width) resered-right-width)
+            (window-total-width)))
+         (available-width
+          (- align-mode-line-width
              (+ (length (format-mode-line left))
                 (length (format-mode-line right))))))
     (append left
             (list (format (format "%%%ds" available-width) ""))
             right)))
+
+;; https://github.com/jdtsmith/mlscroll/issues/11
+(defun csb/mlscroll-mode-right-reserved ()
+    "How much does mlscroll mode need for the magic on the right hand side?"
+  (if (and (bound-and-true-p mlscroll-mode)
+           (bound-and-true-p mlscroll-width-chars)
+           (not (bound-and-true-p mlscroll-alter-percent-position)))
+      mlscroll-width-chars
+    0))
+
 
 ;; adapted from  doom-modeline-update-buffer-file-state-icon 
 (defun csb/mode-line-buffer-file-state-icon  ()
@@ -193,6 +207,18 @@ RIGHT aligned respectively."
             (propertize "🚀" 'face '(:height 1.1))
             (propertize "💥" 'face '(:height 1.1)))
             "-")))
+
+
+(use-package mlscroll
+  :straight t
+  :config
+  (setq mlscroll-shortfun-min-width nil)
+  (setq mlscroll-alter-percent-position nil)
+  (setq mlscroll-right-align t)
+  (setq mlscroll-width-chars 16)
+  (setq mlscroll-minimum-current-width 12)
+  (mlscroll-mode 1))
+
 
 ;; https://occasionallycogent.com/custom_emacs_modeline/index.html
 (setq-default mode-line-format
@@ -224,7 +250,8 @@ RIGHT aligned respectively."
                    " "
                    mode-line-misc-info
                    " "
-                   mode-line-end-spaces))))
+                   mode-line-end-spaces)
+                 (csb/mlscroll-mode-right-reserved))))
 
 
 ;; Creates a "draw" of sorts for minor modes
