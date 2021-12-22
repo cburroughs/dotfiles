@@ -161,25 +161,6 @@ fewer than 80 columns."
   :straight t)
 
 
-;; Fancy modelines
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :pin melpa-stable
-;;   :hook (after-init . doom-modeline-mode)
-;;   :config
-;;   ;; The icons are too nice, but lead to way too many finky problems
-;;   ;; https://github.com/seagle0128/doom-modeline/issues/215
-;;   ;; https://github.com/ema2159/centaur-tabs/issues/41
-;;   (setq doom-modeline-icon nil)
-;;   (setq doom-modeline-unicode-fallback 't)
-;;   (setq doom-modeline-height 22)
-;;   (setq doom-modeline-minor-modes t)
-;;   (setq doom-modeline-buffer-file-name-style 'buffer-name)
-;;   ;; see below for minions
-;;   (set-face-attribute 'doom-modeline-buffer-minor-mode nil :height 1.25 :weight 'normal)
-;;   (setq doom-modeline-minor-modes t))
-
-
 ;; https://emacs.stackexchange.com/questions/5529/how-to-right-align-some-items-in-the-modeline
 (defun csb/align-mode-line (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
