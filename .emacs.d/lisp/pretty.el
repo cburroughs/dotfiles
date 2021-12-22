@@ -175,7 +175,8 @@ RIGHT aligned respectively."
                 (length (format-mode-line right))))))
     (append left
             (list (format (format "%%%ds" available-width) ""))
-            right)))
+            right
+            '(mode-line-end-spaces))))
 
 ;; https://github.com/jdtsmith/mlscroll/issues/11
 (defun csb/mlscroll-mode-right-reserved ()
@@ -183,8 +184,9 @@ RIGHT aligned respectively."
   (if (and (bound-and-true-p mlscroll-mode)
            (bound-and-true-p mlscroll-width-chars)
            (not (bound-and-true-p mlscroll-alter-percent-position)))
-      mlscroll-width-chars
-    0))
+      ;; magic guess padding for mode-line-end-spaces
+      (+ mlscroll-width-chars 2)
+         2))
 
 
 ;; adapted from  doom-modeline-update-buffer-file-state-icon 
@@ -249,8 +251,7 @@ RIGHT aligned respectively."
                    mode-line-frame-identification
                    " "
                    mode-line-misc-info
-                   " "
-                   mode-line-end-spaces)
+                   "|")
                  (csb/mlscroll-mode-right-reserved))))
 
 
