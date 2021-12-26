@@ -77,6 +77,27 @@
   :straight t
   :defer t)
 
+(use-package color-theme-sanityinc-tomorrow
+  :straight t
+  :defer t)
+
+(use-package monokai-theme
+  :straight t
+  :defer t)
+
+(use-package dracula-theme
+  :straight t
+  :defer t)
+
+(use-package zenburn-theme
+  :straight t
+  :defer t)
+
+(use-package solarized-theme
+  :straight t
+  :defer t)
+
+
 (defun space-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
