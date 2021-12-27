@@ -154,6 +154,7 @@
 ;; try to put in order of least likely to break
 (load-library "keybindings")
 (load-library "efuncs")
+(load-library "completing")
 (load-library "sundry")
 (load-library "palette")
 (load-library "pretty")
