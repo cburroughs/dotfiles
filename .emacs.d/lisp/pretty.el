@@ -235,6 +235,77 @@ RIGHT aligned respectively."
             "-")))
 
 
+
+;; Keep `doom-modeline-current-window' up-to-date
+(defun csb/modeline-get-current-window (&optional frame)
+  "Get the current window but should exclude the child windows."
+  (if (and (fboundp 'frame-parent) (frame-parent frame))
+      (frame-selected-window (frame-parent frame))
+    (frame-selected-window frame)))
+
+(defvar csb/modeline-current-window (csb/modeline-get-current-window))
+
+;; From https://github.com/seagle0128/doom-modeline/blob/dc93cdec543e25022db7b034af49d57b6ee1c289/doom-modeline-core.el#L840
+(defun csb/modeline-active-p ()
+  "Whether is an active window."
+  (unless (and (bound-and-true-p mini-frame-frame)
+               (and (frame-live-p mini-frame-frame)
+                    (frame-visible-p mini-frame-frame)))
+    (and csb/modeline-current-window
+         (eq (csb/modeline-get-current-window) csb/modeline-current-window))))
+
+(defun csb/modeline-set-selected-window (&rest _)
+  "Set `doom-modeline-current-window' appropriately."
+  (let ((win (csb/modeline-get-current-window)))
+    (setq csb/modeline-current-window
+          (if (minibuffer-window-active-p win)
+              (minibuffer-selected-window)
+            win))))
+
+(defun csb/modeline-unset-selected-window ()
+  "Unset `doom-modeline-current-window' appropriately."
+  (setq csb/modeline-current-window nil))
+
+(add-hook 'pre-redisplay-functions #'csb/modeline-set-selected-window)
+
+
+
+(setq csb/modeline-enable-word-count nil)
+
+;; From https://github.com/seagle0128/doom-modeline/blob/master/doom-modeline-segments.el#L1117
+(defun csb/modeline-selection-info ()
+  "Information about the current selection, such as how many characters and
+lines are selected, or the NxM dimensions of a block selection."
+  (when (and (or mark-active (and (bound-and-true-p evil-local-mode)
+                                  (eq evil-state 'visual)))
+             (csb/modeline-active-p))
+    (cl-destructuring-bind (beg . end)
+      (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
+          (cons evil-visual-beginning evil-visual-end)
+        (cons (region-beginning) (region-end)))
+      (propertize
+       (let ((lines (count-lines beg (min end (point-max)))))
+         (concat " "
+                 (cond ((or (bound-and-true-p rectangle-mark-mode)
+                            (and (bound-and-true-p evil-visual-selection)
+                                 (eq 'block evil-visual-selection)))
+                        (let ((cols (abs (- (csb/modeline-column end)
+                                            (csb/modeline-column beg)))))
+                          (format "%dx%dB" lines cols)))
+                       ((and (bound-and-true-p evil-visual-selection)
+                             (eq evil-visual-selection 'line))
+                        (format "%dL" lines))
+                       ((> lines 1)
+                        (format "%dC %dL" (- end beg) lines))
+                       (t
+                        (format "%dC" (- end beg))))
+                 (when csb/modeline-enable-word-count
+                   (format " %dW" (count-words beg end)))))
+       'face 'italic))))
+;; TODO: ^^ Should probably be mode-line-highlight but I want italics and not
+;; bold.  Maybe different color; but that also is a theme thing?
+
+
 (use-package mlscroll
   :straight t
   :config
@@ -259,7 +330,9 @@ RIGHT aligned respectively."
                             'mode-line-remote))
                    (:eval (propertize "%b" 'face 'bold))
                    " "
-                   "%l:%c ")
+                   "%l:%c "
+                   (:eval (csb/modeline-selection-info))
+                   )
                  ;; right
                  '(" "
                    mode-line-modes
