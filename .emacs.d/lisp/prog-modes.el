@@ -35,40 +35,10 @@
   (setq dumb-jump-aggressive nil)
   (dumb-jump-mode))
 
-;; Completion
-
-
-;; https://www.emacswiki.org/emacs/CompanyMode
-(defun company-except-in-minibuffer ()
-  (interactive)
-  (if (minibufferp)
-      (minibuffer-complete)
-    (if (derived-mode-p 'prog-mode)
-        (company-indent-or-complete-common)
-      (indent-for-tab-command))))
 
 ;; https://emacsredux.com/blog/2016/01/31/use-tab-to-indent-or-complete/
 (setq tab-always-indent 't)
 
-;; The above together are needed to make company mode not go totally crazy
-;; fighting with existing auto-compete or indentation.  Python indentation is
-;; still a little different, but hitting S-TAB works about as well as repeated
-;; TAB to cycle
-(use-package company
-  :straight t
-  :defer t
-  :hook (prog-mode . company-mode)
-  :bind (("M-`" . company-complete)
-         (:map company-active-map
-               ("C-n" . company-select-next)
-               ("C-p" . company-select-previous)))
-  :config
-  (setq company-tooltip-limit 16)
-  (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay nil)
-  (setq company-selection-wrap-around t)
-  ;; leave it to hippie
-  (setq company-backends (delete 'company-dabbrev company-backends)))
 
 
 ;;; Javascript

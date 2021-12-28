@@ -33,22 +33,6 @@
 (setq scroll-preserve-screen-position t)
 
 
-;; prefer hippie-expand over deavrez
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-;; http://trey-jackson.blogspot.com/2007/12/emacs-tip-5-hippie-expand.html
-(setq hippie-expand-try-functions-list
-      '(try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-dabbrev
-        try-expand-dabbrev-visible
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
 
 ;; Try to avoid giving buffers dumb names
 (use-package uniquify
@@ -67,15 +51,6 @@
 (setq browse-url-default-browser 'browse-url-firefox-program)
 (setq browse-url-browser-function 'browse-url-firefox)
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
-
-
-;; Better buffer switching
-;; TODO: deprecated in 24,
-;; https://www.emacswiki.org/emacs/IcompleteMode
-;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
-(use-package iswitchb
-  :config
-  (iswitchb-mode 1))
 
 
 (use-package projectile

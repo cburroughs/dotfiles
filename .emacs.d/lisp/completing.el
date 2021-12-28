@@ -3,6 +3,34 @@
 ;; fancy completion and (many) friends
 
 
+;; prefer hippie-expand over deavrez
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+;; http://trey-jackson.blogspot.com/2007/12/emacs-tip-5-hippie-expand.html
+(setq hippie-expand-try-functions-list
+      '(try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-all-abbrevs
+        try-expand-dabbrev
+        try-expand-dabbrev-visible
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-expand-list
+        try-expand-line
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
+
+
+
+;; Better buffer switching
+;; TODO: deprecated in 24,
+;; https://www.emacswiki.org/emacs/IcompleteMode
+;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
+(use-package iswitchb
+  :config
+  (iswitchb-mode 1))
+
+
 ;; NOTE: Neither ivy nor counsel are "enabled" to take over standard buffer or
 ;; file operations.  But a number of other handy functions are enabled.
 (use-package ivy
@@ -50,3 +78,36 @@
   (setq enable-recursive-minibuffers t)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
+
+
+;; Company
+
+;; https://www.emacswiki.org/emacs/CompanyMode
+(defun company-except-in-minibuffer ()
+  (interactive)
+  (if (minibufferp)
+      (minibuffer-complete)
+    (if (derived-mode-p 'prog-mode)
+        (company-indent-or-complete-common)
+      (indent-for-tab-command))))
+
+
+;; The above together are needed to make company mode not go totally crazy
+;; fighting with existing auto-compete or indentation.  Python indentation is
+;; still a little different, but hitting S-TAB works about as well as repeated
+;; TAB to cycle
+(use-package company
+  :straight t
+  :defer t
+  :hook (prog-mode . company-mode)
+  :bind (("M-`" . company-complete)
+         (:map company-active-map
+               ("C-n" . company-select-next)
+               ("C-p" . company-select-previous)))
+  :config
+  (setq company-tooltip-limit 16)
+  (setq company-tooltip-align-annotations t)
+  (setq company-idle-delay nil)
+  (setq company-selection-wrap-around t)
+  ;; leave it to hippie
+  (setq company-backends (delete 'company-dabbrev company-backends)))
