@@ -3,6 +3,8 @@
 ;; fancy completion and (many) friends
 
 
+;; Hippie 💓💓💓 so simple; so often better than fancy alternatives
+
 ;; prefer hippie-expand over deavrez
 (global-set-key (kbd "M-/") 'hippie-expand)
 
@@ -20,6 +22,8 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
+
+;;  completing-read
 
 
 ;; Better buffer switching
@@ -80,7 +84,7 @@
 
 
 
-;; Company
+;; completion-in-region
 
 ;; https://www.emacswiki.org/emacs/CompanyMode
 (defun company-except-in-minibuffer ()
