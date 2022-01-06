@@ -69,6 +69,93 @@
 ;; Delete upt to the occurance of a character
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
+
+
+;; Fromhttps://github.com/ergoemacs/ergoemacs-mode/blob/8ea6d54c7d576da0ebdf44e11c7398859f8dc834/ergoemacs-functions.el
+
+(defvar csb/ergoemacs-user-buffer-functions nil
+  "A user buffer is one whose name does not start with *, or for which
+any of the functions in `csb/ergoemacs-user-buffer-functions' returns
+true; otherwise it is an emacs buffer. Each function takes a buffer as
+argument.")
+
+(defun csb/ergoemacs-user-buffer-p (buffer)
+  "Is BUFFER a user buffer?
+A user buffer is one whose name does not start with *, or for which
+any of the functions in `csb/ergoemacs-user-buffer-functions' returns
+true; otherwise it is an emacs buffer."
+  (or
+   (not (string= "*" (substring (buffer-name buffer) 0 1)))
+   (cl-some
+    (lambda (func)
+      (funcall func buffer))
+    csb/ergoemacs-user-buffer-functions)))
+
+(defun csb/ergoemacs-change-buffer (&optional number previous-buffer-p emacs-buffer-p)
+  "Switch to the next/previous emacs/user buffer.
+By default this switches to the next user buffer.
+This function switches forward/backward NUMBER emacs/user buffers.
+This can be specified by a prefix argument.
+When PREVIOUS-BUFFER-P is non-nil, switch to a previous buffer.
+When EMACS-BUFFER-P is non-nil switch to an emacs buffer.  A user
+buffer is one whose name does not start with *, or for which any of
+the functions in `csb/ergoemacs-user-buffer-functions' returns true;
+otherwise it is an emacs buffer."
+  (interactive)
+  (let ((curr-buffer (current-buffer))
+        (number (or (and number (abs number)) 1))
+        (i 0))
+    (while (< i number)
+      (if previous-buffer-p
+          (previous-buffer)
+        (next-buffer))
+      (while (and (or (and (not emacs-buffer-p)
+                           (not (csb/ergoemacs-user-buffer-p (current-buffer))))
+                      (and emacs-buffer-p
+                           (csb/ergoemacs-user-buffer-p (current-buffer))))
+                  (not (eq curr-buffer (current-buffer))))
+        (if previous-buffer-p
+            (previous-buffer)
+          (next-buffer)))
+      (when (and (eq curr-buffer (current-buffer)) (= i 0))
+        (if emacs-buffer-p
+            (message "Could not find any %semacs buffers."
+                     (or (and (not (csb/ergoemacs-user-buffer-p (current-buffer))) "other ") ""))
+          (message "Could not find any %suser buffers."
+                   (or (and (csb/ergoemacs-user-buffer-p (current-buffer)) "other ") "")))
+        (setq i (+ number 1)))
+      (setq i (+ 1 i)))))
+
+(defun csb/ergoemacs-next-user-buffer (&optional number)
+  "Switch to the next user buffer.
+User buffers are those whose name does not start with *."
+  (interactive "p")
+  (csb/ergoemacs-change-buffer number))
+
+(defun csb/ergoemacs-previous-user-buffer (&optional number)
+  "Switch to the previous user buffer.
+User buffers are those whose name does not start with *."
+  (interactive "p")
+  (csb/ergoemacs-change-buffer number t))
+
+(defun csb/ergoemacs-next-emacs-buffer (&optional number)
+  "Switch to the next emacs buffer.
+Emacs buffers are those whose name starts with *."
+  (interactive "p")
+  (csb/ergoemacs-change-buffer number nil t))
+
+(defun csb/ergoemacs-previous-emacs-buffer (&optional number)
+  "Switch to the previous emacs buffer.
+Emacs buffers are those whose name starts with *."
+  (interactive "p")
+  (csb/ergoemacs-change-buffer number t t))
+
+(global-set-key (kbd "<C-prior>") 'csb/ergoemacs-previous-user-buffer)
+(global-set-key (kbd "<C-next>") 'csb/ergoemacs-next-user-buffer)
+(global-set-key (kbd "<C-S-prior>") 'csb/ergoemacs-previous-emacs-buffer)
+(global-set-key (kbd "<C-S-next>") 'csb/ergoemacs-next-emacs-buffer)
+
+
 ;; meta
 
 (use-package which-key
