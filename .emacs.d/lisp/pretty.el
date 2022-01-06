@@ -339,7 +339,6 @@ lines are selected, or the NxM dimensions of a block selection."
                  ;; right
                  '(" "
                    mode-line-modes
-                   " "
                    (vc-mode vc-mode)
                    " "
                    mode-line-mule-info
@@ -347,9 +346,7 @@ lines are selected, or the NxM dimensions of a block selection."
                    (:eval (csb/lsp-state-icon))
                    (:eval (csb/mode-line-buffer-file-state-icon))
                    mode-line-frame-identification
-                   " "
-                   mode-line-misc-info
-                   "|")
+                   mode-line-misc-info)
                  (csb/mlscroll-mode-right-reserved))))
 
 
