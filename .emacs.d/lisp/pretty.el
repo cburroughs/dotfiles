@@ -314,6 +314,9 @@ lines are selected, or the NxM dimensions of a block selection."
   (setq mlscroll-right-align t)
   (setq mlscroll-width-chars 16)
   (setq mlscroll-minimum-current-width 12)
+  ;; Override themes with hammer. NOTE: :overline and :underline are still finicky
+  (set-face-attribute 'mode-line nil :box nil)
+  (set-face-attribute 'mode-line-inactive nil :box nil)
   (mlscroll-mode 1))
 
 
