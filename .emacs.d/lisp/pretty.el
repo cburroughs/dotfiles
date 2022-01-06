@@ -41,6 +41,16 @@
 
 (setq hl-line-range-function 'visual-line-line-range)
 
+
+;;"LIN locally remaps the hl-line face to a style that is optimal for major
+;; modes where line selection is the primary mode of interaction."
+(use-package lin
+  :straight (lin :type git :host gitlab :repo "protesilaos/lin")
+  :config
+  (add-to-list 'lin-foreign-hooks 'completion-list-mode-hook)
+  (lin-add-to-many-modes))
+;; TODO: ^^ Customize faces
+
 ;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
 
