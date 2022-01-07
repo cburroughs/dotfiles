@@ -252,3 +252,38 @@
 (defconst palette/monokai/cyan-lc        "#4BBEAE")
 (defconst palette/monokai/green-hc       "#CCF47C")
 (defconst palette/monokai/green-lc       "#679A01")
+
+
+;;https://github.com/purcell/color-theme-sanityinc-tomorrow/
+(defconst palette/tomorrow-night/background "#1d1f21")
+(defconst palette/tomorrow-night/alt-background "#22a224a427a7")
+(defconst palette/tomorrow-night/current-line "#282a2e")
+(defconst palette/tomorrow-night/selection "#373b41")
+(defconst palette/tomorrow-night/foreground "#c5c8c6")
+(defconst palette/tomorrow-night/comment "#969896")
+(defconst palette/tomorrow-night/red "#cc6666")
+(defconst palette/tomorrow-night/orange "#de935f")
+(defconst palette/tomorrow-night/yellow "#f0c674")
+(defconst palette/tomorrow-night/green "#b5bd68")
+(defconst palette/tomorrow-night/aqua "#8abeb7")
+(defconst palette/tomorrow-night/blue "#81a2be")
+(defconst palette/tomorrow-night/purple "#b294bb")
+
+;; https://ethanschoonover.com/solarized/
+(defconst palette/solarized-dark/
+(defconst palette/solarized-dark/base03 "#002b36")
+(defconst palette/solarized-dark/base02 "#073642")
+(defconst palette/solarized-dark/base01 "#586e75")
+(defconst palette/solarized-dark/base00 "#657b83")
+(defconst palette/solarized-dark/base0  "#839496")
+(defconst palette/solarized-dark/base1  "#93a1a1")
+(defconst palette/solarized-dark/base2  "#eee8d5")
+(defconst palette/solarized-dark/base3  "#fdf6e3")
+(defconst palette/solarized-dark/yellow "#b58900")
+(defconst palette/solarized-dark/orange "#cb4b16")
+(defconst palette/solarized-dark/red    "#dc322f")
+(defconst palette/solarized-dark/magenta"#d33682")
+(defconst palette/solarized-dark/violet "#6c71c4")
+(defconst palette/solarized-dark/blue   "#268bd2")
+(defconst palette/solarized-dark/cyan   "#2aa198")
+(defconst palette/solarized-dark/green  "#859900")
