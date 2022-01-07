@@ -51,6 +51,17 @@
   (lin-add-to-many-modes))
 ;; TODO: ^^ Customize faces
 
+;; "solaire-mode is an aesthetic plugin designed to visually distinguish
+;; "real" buffers (i.e. file-visiting code buffers where you do most of your
+;; work) from "unreal" buffers (like popups, sidebars, log buffers, terminals,
+;; etc) by giving the latter a slightly different -- often darker --
+;; background:"
+(use-package solaire-mode
+  :straight t
+  :config
+  (solaire-global-mode +1))
+
+
 ;; themes
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
 
