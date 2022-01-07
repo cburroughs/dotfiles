@@ -51,6 +51,21 @@
   (lin-add-to-many-modes))
 ;; TODO: ^^ Customize faces
 
+
+(defun csb/real-ish-buffer-p (&optional buffer)
+   "Return t if the current buffer is a real buffer.  A buffer is
+   real if it belongs to a file, but also if it is something like
+   *scratch* that you interact with, or a buffer that just
+   doesn't have a file yet...  It is sort of fuzzy, call it 'real-ish"
+   (let* ((buffer (or buffer (buffer-base-buffer)))
+          (buffer-name (buffer-name buffer)))
+     (or (buffer-file-name buffer)
+         (and (not (string-prefix-p "*" buffer-name))
+              (not (string-prefix-p " " buffer-name)))
+         (or (string-equal buffer-name "*scratch*")
+             (string-equal buffer-name "*dashboard*")
+             (string-equal buffer-name "*Ibuffer*")))))
+
 ;; "solaire-mode is an aesthetic plugin designed to visually distinguish
 ;; "real" buffers (i.e. file-visiting code buffers where you do most of your
 ;; work) from "unreal" buffers (like popups, sidebars, log buffers, terminals,
@@ -59,6 +74,7 @@
 (use-package solaire-mode
   :straight t
   :config
+  (setq solaire-mode-real-buffer-fn #'csb/real-ish-buffer-p)
   (solaire-global-mode +1))
 
 
