@@ -68,10 +68,10 @@
  ;; Contrast 12.22:1, symetric offset
  '(default ((t (:background "#202020" :foreground "#dfdfdf"))))
 
- ;; Contrast  
- '(mode-line ((t (:foreground "yellow" :background "DarkSlateBlue"))))
+ ;; Contrast   8.25:1
+ `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
 
- 
+
 ;; '(default ((t (:background "black" :foreground "white"))))
 ;;  '(mouse ((t (:foregound "white"))))
 ;;  '(cursor ((t (:foregound "yellow"))))
