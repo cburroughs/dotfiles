@@ -270,7 +270,6 @@
 (defconst palette/tomorrow-night/purple "#b294bb")
 
 ;; https://ethanschoonover.com/solarized/
-(defconst palette/solarized-dark/
 (defconst palette/solarized-dark/base03 "#002b36")
 (defconst palette/solarized-dark/base02 "#073642")
 (defconst palette/solarized-dark/base01 "#586e75")
@@ -287,3 +286,41 @@
 (defconst palette/solarized-dark/blue   "#268bd2")
 (defconst palette/solarized-dark/cyan   "#2aa198")
 (defconst palette/solarized-dark/green  "#859900")
+
+
+;; https://github.com/morhetz/gruvbox
+(defconst palette/gruvbox/bg-hard "#1d2021")  ; bg0_h
+(defconst palette/gruvbox/bg-soft  "#32302f") ; bg0_s
+(defconst palette/gruvbox/bg-medium "#282828") ; bg0
+(defconst palette/gruvbox/bg-alt-hard "#0d1011") ; (self-defined)
+(defconst palette/gruvbox/bg-alt-soft "#282828") ; bg0
+(defconst palette/gruvbox/bg-alt-medium "#1d2021") ; bg_h
+(defconst palette/gruvbox/bg-alt2 "#504945") ; bg2 (for region, selection etc.)
+
+(defconst palette/gruvbox/base0      "#0d1011") ; (self-defined)
+(defconst palette/gruvbox/base1      "#1d2021") ; bg0_h
+(defconst palette/gruvbox/base2      "#282828") ; bg0
+(defconst palette/gruvbox/base3      "#3c3836") ; bg1
+(defconst palette/gruvbox/base4      "#665c54") ; bg3
+(defconst palette/gruvbox/base5      "#7c6f64") ; bg4
+(defconst palette/gruvbox/base6      "#928374") ; gray
+(defconst palette/gruvbox/base7      "#d5c4a1") ; fg2
+(defconst palette/gruvbox/base8      "#fbf1c7") ; fg0
+(defconst palette/gruvbox/fg         "#ebdbb2") ; fg/fg1
+(defconst palette/gruvbox/fg-alt     "#d5c4a1") ; fg2
+;; Standardized official colours from gruvbox
+(defconst palette/gruvbox/grey        "#928374") ; gray
+(defconst palette/gruvbox/red         "#fb4934") ; bright-red
+(defconst palette/gruvbox/magenta     "#cc241d") ; red
+(defconst palette/gruvbox/violet      "#d3869b") ; bright-purple
+(defconst palette/gruvbox/orange      "#fe8019") ; bright-orange
+(defconst palette/gruvbox/yellow      "#fabd2f") ; bright-yellow
+(defconst palette/gruvbox/dark-yellow "#d79921") ; yellow
+(defconst palette/gruvbox/teal        "#8ec07c") ; bright-aqua
+(defconst palette/gruvbox/green       "#b8bb26") ; bright-green
+(defconst palette/gruvbox/dark-green  "#98971a") ; green
+(defconst palette/gruvbox/blue        "#83a598") ; bright-blue
+(defconst palette/gruvbox/dark-blue   "#458588") ; blue
+(defconst palette/gruvbox/cyan        "#8ec07c") ; bright-aqua
+(defconst palette/gruvbox/my-black    "#37302f")
+(defconst palette/gruvbox/dark-cyan   "#689d6a") ; aqua
