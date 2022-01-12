@@ -92,6 +92,13 @@
  ;;'(default ((t (:background "#20232c" :foreground "#bfc6d3"))))
  
 
+ ;; + 8 over background (vibrant +- 8)
+ ;;'(hl-line ((t (:background "#242730"))))
+ ;; + 12 over background (vibrant +- 8)  (contrast with text drops to 8.58:1 )
+ '(hl-line ((t (:background "#282b34"))))
+ ;; + 16 over background (vibrant +- 8)
+ ;;'(hl-line ((t (:background "#2b2e37"))))
+
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
  ;; Explicitly retaining defaults
