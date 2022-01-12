@@ -377,7 +377,7 @@ fewer than 80 columns."
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
   (setq dashboard-set-footer nil)
-  (setq dashboard-banner-logo-title "🐧🐧🐧 Weclome to Emacs! 🐃🐃🐃")
+  (setq dashboard-banner-logo-title "🐧🐧🐧 Welcome to Emacs! 🐃🐃🐃")
   (setq dashboard-items '((recents  . 10)
                           (bookmarks . 5)
                           (projects . 5)))
