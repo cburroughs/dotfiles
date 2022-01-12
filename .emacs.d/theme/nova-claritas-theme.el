@@ -94,6 +94,9 @@
 
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
+ ;; Explicitly retaining defaults
+ `(mode-line-inactive ((t (:foreground "grey80" :background "grey30"))))
+
 
 ;; '(default ((t (:background "black" :foreground "white"))))
 ;;  '(mouse ((t (:foregound "white"))))
