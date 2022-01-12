@@ -63,14 +63,37 @@
  ;; monokai: 13.94:1 
  ;; doom-vibrant: 8.33:1 
  ;; tomorrow:  9.8:1
+ ;; spacemacs:  6.69:1
  ;; solarized (dark): 4.74:1 
 
- ;; Contrast 12.22:1, symetric offset
- '(default ((t (:background "#202020" :foreground "#dfdfdf"))))
+ ;; Contrast 12.22:1, symetric 0x20 offset
+ ;;'(default ((t (:background "#202020" :foreground "#dfdfdf"))))
+ ;; Contrast  8.47:1 , symetric 0x30 offset
+ ;;'(default ((t (:background "#303030" :foreground "#cfcfcf"))))
+ ;; Contrast 11.21:1 , symetric 0x24 offset
+ ;;'(default ((t (:background "#242424" :foreground "#dbdbdb"))))
+
+ ;;`(default ((t (:background ,palette/monokai/background
+ ;;:foreground ,palette/monokai/foreground))))
+ 
+ ;; gruvbox MODIFIED
+ ;;'(default ((t (:background "#1d1f21" :foreground "#c5c8c6"))))
+
+ ;; dark+
+;; '(default ((t (:background "#1e1e1e" :foreground "#d4d4d4"))))
+
+
+  ;; VIBRANT
+ ;; '(default ((t (:background "#242730" :foreground "#bbc2cf"))))
+ ;; vibrant +- 8
+ '(default ((t (:background "#1c1f28" :foreground "#c3cad7"))))
+
+ ;; vibrant +- 4
+ ;;'(default ((t (:background "#20232c" :foreground "#bfc6d3"))))
+ 
 
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
-
 
 ;; '(default ((t (:background "black" :foreground "white"))))
 ;;  '(mouse ((t (:foregound "white"))))
