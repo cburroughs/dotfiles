@@ -99,6 +99,10 @@
  ;; + 16 over background (vibrant +- 8)
  ;;'(hl-line ((t (:background "#2b2e37"))))
 
+ ;; Preserve the distinctive yellow cursor from clarity, but be a little less
+ ;; harsh.  Estiamted contrast of 11.55:1
+ `(cursor ((t (:background ,palette/monokai/yellow))))
+
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
  ;; Explicitly retaining defaults
