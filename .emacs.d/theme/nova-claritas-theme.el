@@ -103,6 +103,10 @@
  ;; harsh.  Estiamted contrast of 11.55:1
  `(cursor ((t (:background ,palette/monokai/yellow))))
 
+ ;; Partially implemented, doom vibrant style region selection
+ `(region ((t (:background ,palette/doom-vibrant/base4))))
+
+
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
  ;; Explicitly retaining defaults
