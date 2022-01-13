@@ -3,21 +3,21 @@
 ;; General Custom keybindings
 
 ;; in case of old emacs versions
-(global-set-key "\M-g" 'goto-line)
+(global-set-key (kbd "M-g") 'goto-line)
 
 ;; Item 2: Invoke M-x without the Alt key
-(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key (kbd "C-x C-m") 'execute-extended-command)
 
 ;;Item 3: Prefer backward-kill-word over Backspace
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
+(global-set-key (kbd "C-w") 'backward-kill-word)
+(global-set-key (kbd "C-x C-k") 'kill-region)
+(global-set-key (kbd "C-c C-k") 'kill-region)
 
 ;; Item 9: Master Emacs's regular expressions
 (defalias 'qrr 'query-replace-regexp)
 
 ;; Need to force this some times?
-(global-set-key "\C-c\C-c" 'comment-region)
+(global-set-key (kbd "C-c C-c") 'comment-region)
 
 ;; cua-like
 (global-set-key [home] 'beginning-of-buffer)
@@ -33,8 +33,8 @@
 
 
 ;; http://pragmaticemacs.com/emacs/scrolling-and-moving-by-line/
-(global-set-key "\M-p" (lambda () (interactive) (scroll-up-command 1)))
-(global-set-key "\M-n" (lambda () (interactive) (scroll-down-command 1)))
+(global-set-key (kbd "M-p") (lambda () (interactive) (scroll-up-command 1)))
+(global-set-key (kbd "M-n") (lambda () (interactive) (scroll-down-command 1)))
 
 ;; spell checking
 (global-set-key [f7] 'ispell-buffer)
