@@ -389,7 +389,8 @@ lines are selected, or the NxM dimensions of a block selection."
     (set-fontset-font
      "fontset-csb modeline"
      'unicode (font-spec :name "Symbola"))
-    (set-face-attribute 'mode-line nil :fontset "fontset-csb modeline")))
+    (set-face-attribute 'mode-line nil :fontset "fontset-csb modeline")
+    (set-face-attribute 'mode-line-inactive nil :fontset "fontset-csb modeline")))
 
 
 ;; Creates a "draw" of sorts for minor modes
