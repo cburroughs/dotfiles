@@ -42,6 +42,8 @@
   ;; or
   ;; <https://tatham.blog/2008/10/13/why-light-text-on-dark-background-is-a-bad-idea/>
 
+  ;; General color stuff: https://notes.neeasade.net/color-spaces.html
+
   ;; However! Many modern themes have so little contrast between their
   ;; dark-but-not-pure-black and kinda-gray-ish white that I can not for the
   ;; life of me get use to them.  Using an even lighter shade of gray for the
