@@ -90,12 +90,7 @@
 (defun dark-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
-  (setq org-todo-keyword-faces
-        `(("TODO" . ,palette/doom-one/red)
-          ("WAITING" . ,palette/doom-one/orange)
-          ("DONE" . ,palette/doom-one/green)
-          ("CANCELED" . ,palette/doom-one/base6)))
-  (load-theme 'claritas t))
+  (load-theme 'doom-nova-claritas t))
 
 (defun light-theme ()
   (interactive)
