@@ -354,6 +354,9 @@ lines are selected, or the NxM dimensions of a block selection."
   ;; Override themes with hammer. NOTE: :overline and :underline are still finicky
   (set-face-attribute 'mode-line nil :box nil)
   (set-face-attribute 'mode-line-inactive nil :box nil)
+  ;; Setto something neutral for now
+  ;; https://github.com/jdtsmith/mlscroll/issues/12
+  (setq mlscroll-in-color "gray40")
   (mlscroll-mode 1))
 
 
