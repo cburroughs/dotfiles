@@ -148,8 +148,9 @@
 ;;(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-11")
 ;; https://endlessparentheses.com/manually-choose-a-fallback-font-for-unicode.html
 ;; Maybe also try symbola?
-(set-fontset-font "fontset-default" nil
-                  (font-spec :size 11 :name "Symbola"))
+;; TODO: I'm prettu sure this needs an explicit 'unicode See modeline below
+; (set-fontset-font "fontset-default" nil
+;;                  (font-spec :size 11 :name "Symbola"))
 
 ;; Start nice and tall, but should still be 80 char wide
 ;; https://emacs.stackexchange.com/questions/2999/how-to-maximize-my-emacs-frame-on-start-up
