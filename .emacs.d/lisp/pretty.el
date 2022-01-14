@@ -49,7 +49,6 @@
   :config
   (add-to-list 'lin-foreign-hooks 'completion-list-mode-hook)
   (lin-add-to-many-modes))
-;; TODO: ^^ Customize faces
 
 
 (defun csb/real-ish-buffer-p (&optional buffer)
