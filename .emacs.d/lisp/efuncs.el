@@ -281,3 +281,12 @@ scan-error if not."
     (fill-paragraph nil region)))
 ;; Handy key definition
 (define-key global-map "\M-Q" 'unfill-paragraph)
+
+
+(defun csb/gentoo-emacs-vcs-p ()
+  "Basd on the version string, is this instance probably a vcs
+build on gentoo?"
+  (and (require 'site-gentoo nil 'noerror)
+       ;; The emacs version conention for x.y.z is that y is 0 for pre-release
+       (string= (nth 1 (split-string emacs-version "\\."))
+                "0")))
