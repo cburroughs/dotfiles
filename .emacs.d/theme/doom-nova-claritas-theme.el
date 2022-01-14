@@ -188,6 +188,9 @@
    (rainbow-delimiters-depth-10-face :foreground palette/srcery/bright-orange)
    (rainbow-delimiters-depth-11-face :foreground palette/srcery/bright-white)
 
+   ;; TODO: Investiage paren-face package, or at least harmony with it
+   (paren-face-match    :background orange :weight 'ultra-bold)
+   (paren-face-mismatch :foreground base0 :background red :weight 'ultra-bold)
    )
 
   ;;;; Base theme variable overrides
