@@ -33,6 +33,7 @@
 
 ;; NOTE: "palette" library is already pre-loaded
 
+;; STATUS: Currently left off in favor of the DOOM hatchery. asdf
 
 (deftheme nova-claritas
   "nova-claritas theme")
@@ -63,7 +64,7 @@
  ;; monokai: 13.94:1 
  ;; doom-vibrant: 8.33:1 
  ;; tomorrow:  9.8:1
- ;; spacemacs:  6.69:1
+ ;; spacemacs:  6.69:1 
  ;; solarized (dark): 4.74:1 
 
  ;; Contrast 12.22:1, symetric 0x20 offset
@@ -75,6 +76,8 @@
 
  ;;`(default ((t (:background ,palette/monokai/background
  ;;:foreground ,palette/monokai/foreground))))
+ 
+;; UGH lost myself;;  pure gray not quiet right; think I wwant to try halfway between gruvbox-hard and pure gray if I can calculate thatout
  
  ;; gruvbox MODIFIED
  ;;'(default ((t (:background "#1d1f21" :foreground "#c5c8c6"))))
@@ -105,14 +108,39 @@
 
  ;; Partially implemented, doom vibrant style region selection
  `(region ((t (:background ,palette/doom-vibrant/base4))))
-
-
+ 
  ;; Contrast   8.25:1
  `(mode-line ((t (:foreground ,palette/monokai/yellow-l :background "DarkSlateBlue"))))
  ;; Explicitly retaining defaults
  `(mode-line-inactive ((t (:foreground "grey80" :background "grey30"))))
+ ;; TODO: mlscroll
 
 
+ ;; LEFT oFF: How many of these can be switchted to a different (consistent?) pallet??
+ '(font-lock-builtin-face ((t (:foreground "LightSteelBlue"))))
+ '(font-lock-comment-face ((t (:foreground "OrangeRed"))))
+ '(font-lock-constant-face ((t (:foreground "Aquamarine"))))
+ '(font-lock-doc-face ((t (:foreground "LightSalmon"))))
+ '(font-lock-function-name-face ((t (:foreground "LightSkyBlue"))))
+ ;;'(font-lock-keyword-face ((t (:foreground "Cyan"))))
+ `(font-lock-keyword-face ((t (:foreground ,palette/doom-vibrant/cyan)))) 
+ '(font-lock-keyword-face ((t (:foreground "#5cEfFF"))))
+ '(font-lock-string-face ((t (:foreground "LightSalmon"))))
+ ;;'(font-lock-type-face ((t (:foreground "PaleGreen"))))
+ `(font-lock-type-face ((t (:foreground ,palette/doom-vibrant/green)))) 
+ ;; '(font-lock-variable-name-face ((t (:foreground "LightGoldenrod"))))
+ `(font-lock-variable-name-face ((t (:foreground ,palette/doom-vibrant/yellow))))
+ 
+ '(font-lock-warning-face ((t (:bold t :foreground "Pink" :weight bold))))
+
+ 
+  
+ ;; key parts: cursur
+ ;; hl-line, lin/swiper
+ ;; solarized/alt stuff
+ ;;Comments and other key builtins, can I follow a pallet?
+
+ 
 ;; '(default ((t (:background "black" :foreground "white"))))
 ;;  '(mouse ((t (:foregound "white"))))
 ;;  '(cursor ((t (:foregound "yellow"))))
@@ -240,7 +268,7 @@
 ;;  `(outline-3 ((t (:foreground ,palette/monokai/cyan))))
 ;;  `(outline-4 ((t (:foreground ,palette/monokai/orange))))
 ;;  `(outline-5 ((t (:foreground ,palette/monokai/magenta))))
-;;  `(outline-6 ((t (:foreground ,palette/monokai/yellow))))
+;;  `(outline-6 ((t (:foreground ,palette/monokai/yellow)))) ;; TODO: Change re cursor
 ;;  `(outline-7 ((t (:foreground ,palette/monokai/violet))))
 ;;  `(outline-8 ((t (:foreground ,palette/monokai/orange-l))))
 
