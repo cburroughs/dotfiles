@@ -378,17 +378,17 @@ lines are selected, or the NxM dimensions of a block selection."
 ;; Keep the modline unicode symbols single color
 ;; Otherwise wit emacs-28 and harfbuzz we get colorfull madness
 ;; https://archive.casouri.cat/note/2021/fontset/index.html
-(create-fontset-from-fontset-spec
- (font-xlfd-name
-  (font-spec :name "DejaVu Sans Mono"
-             :size 11
-             :registry "fontset-csb modeline")))
-
-(set-fontset-font
- "fontset-csb modeline"
- 'unicode (font-spec :name "Symbola"))
-
-(set-face-attribute 'mode-line nil :fontset "fontset-csb modeline")
+(when (display-graphic-p)
+  (progn
+    (create-fontset-from-fontset-spec
+     (font-xlfd-name
+      (font-spec :name "DejaVu Sans Mono"
+                 :size 11
+                 :registry "fontset-csb modeline")))
+    (set-fontset-font
+     "fontset-csb modeline"
+     'unicode (font-spec :name "Symbola"))
+    (set-face-attribute 'mode-line nil :fontset "fontset-csb modeline")))
 
 
 ;; Creates a "draw" of sorts for minor modes
