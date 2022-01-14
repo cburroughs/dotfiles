@@ -59,10 +59,6 @@
   (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
   (setq uniquify-ignore-buffers-re "^\\*")) ; don't muck with special buffers
 
-;; find files recursivly
-(use-package find-recursive
-  :defer 2)
-
 ;; default to firefox in new tab
 (setq browse-url-default-browser 'browse-url-firefox-program)
 (setq browse-url-browser-function 'browse-url-firefox)
