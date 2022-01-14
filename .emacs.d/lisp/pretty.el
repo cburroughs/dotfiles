@@ -95,11 +95,7 @@
 (defun light-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
-  (setq org-todo-keyword-faces nil)
-  (setq leuven-scale-outline-headlines nil)
-  (setq leuven-scale-org-agenda-structure nil)
-  (load-theme 'leuven t))
-
+  (modus-themes-load-operandi))
 
 (use-package spacemacs-theme
   :straight t
@@ -129,18 +125,13 @@
   :straight t
   :defer t)
 
+;; Note: built into emacs-28
+(use-package modus-themes
+  :straight t
+  :init
+  ;; Load the theme files before enabling a theme
+  (modus-themes-load-themes))
 
-(defun space-theme ()
-  (interactive)
-  (mapcar #'disable-theme custom-enabled-themes)
-  (setq org-todo-keyword-faces nil)
-  (load-theme 'spacemacs-dark t))
-
-(defun my-doom-theme ()
-  (interactive)
-  (mapcar #'disable-theme custom-enabled-themes)
-  (setq org-todo-keyword-faces nil)
-  (load-theme 'doom-one t))
 
 
 ;; https://emacs.stackexchange.com/questions/7151/is-there-a-way-to-detect-that-emacs-is-running-in-a-terminal
@@ -148,7 +139,7 @@
     (dark-theme)
   (progn
     (global-hl-line-mode 0)
-    (load-theme 'wheatgrass t)))
+    (modus-themes-load-vivendi)))
 
 
 ; TODO: What if the system does not have this font?
