@@ -3,6 +3,45 @@
 ;; misc changes and variable settings
 
 
+
+;; make the builtin ibuffer list nicer
+(add-hook 'ibuffer-hook '(lambda ()
+                           (setq ibuffer-show-empty-filter-groups nil)
+	                       (ibuffer-auto-mode 1)
+                           (unless (eq ibuffer-sorting-mode 'alphabetic)
+                             (ibuffer-do-sort-by-alphabetic))))
+
+
+(use-package all-the-icons-ibuffer
+  :straight t
+  :init
+  (setq all-the-icons-ibuffer-human-readable-size t)
+  (all-the-icons-ibuffer-mode 1))
+
+
+(use-package ibuffer-projectile
+  :straight t
+  :init
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (setq ibuffer-filter-groups
+                    (append (ibuffer-projectile-generate-filter-groups)
+	                        '(("Files" (and (filename . ".*")
+                                            (not (name . "^\\*"))))
+		                      ("Planner" (or
+				                          (name . "^\\*Calendar\\*$")
+				                          (name . "^\\*Org Agenda\\*")))
+                              ("shell" (or (mode . eshell-mode)
+                                           (mode . shell-mode)
+                                           (derived-mode . term-mode)))
+		                      ("dired" (mode . dired-mode))
+		                      ("magit" (name . "^magit"))
+                              ("Help" (or (name . "\*Help\*")
+		                                  (name . "\*Apropos\*")
+		                                  (name . "\*info\*")))
+                              ("emacs" (name . "^\\*"))))))))
+
+
 ;; Appears to now work with emacs > 26 https://github.com/jschaf/esup/issues/54
 ;;(use-package esup
 ;;  :ensure t
