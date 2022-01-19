@@ -315,6 +315,7 @@ class RecvCmd(ShellCmd):
     def cmd_line(self):
         return f'zfs recv {self.force_flag} -{self.resume_flag}du {self.dest.dataset}'
 
+
 ##### cmds #####
 
 
@@ -483,6 +484,48 @@ def cmd_backup(args):
         DestroyPoolSnapshotCmd(config.pool, eldest.as_str()).check_call()
 
 
+# Sort of confused why this is needed, I had the impression that -F would
+# delete old snapshots.  See above TODO
+def cmd_remote_prune_stale(args):
+    config = Config.load_config(args.config)
+
+    check_feature_compatibility(config)
+
+    raw_local_snaps = ListDatasetSnapshotsCmd(config.pool).check_output().decode()
+    local_snap_set = set(map(lambda s: s.split('@')[1],
+                             filter(lambda s: s, raw_local_snaps.split('\n'))))
+    LOG.debug(f'local snapshots names: {local_snap_set}')
+
+    raw_remote_snaps = RemoteShellCmd(
+        config.destination,
+        ListDatasetSnapshotsCmd(config.destination.dataset)).check_output().decode()
+    remote_snap_set = set(map(lambda s: s.split('@')[1],
+                                filter(lambda s: s, raw_remote_snaps.split('\n'))))
+    LOG.debug(f'remote snapshots names: {remote_snap_set}')
+
+    # a snapshot is stale if it is on the remote, but not local.  Again I'm
+    # fuzzy why force recv doesn't take care of these.
+    stale_snapshots = remote_snap_set - local_snap_set
+    LOG.info(f'local snaps: {len(local_snap_set)} remote snaps: {len(remote_snap_set)} stale-remote-snaps: {len(stale_snapshots)}')
+
+    cmds = []
+    for snapshot in sorted(stale_snapshots):
+        cmd = RemoteShellCmd(config.destination,
+                             DestroyPoolSnapshotCmd(config.destination.dataset,
+                                                    snapshot))
+        cmds.append(cmd)
+    if not cmds:
+        LOG.info('no stale remote snapshots, nothing to do')
+        return
+    LOG.info('prune commands...')
+    for cmd in cmds:
+        LOG.info(f'     {cmd.cmd_line()}')
+        if not args.dry_run:
+            cmd.check_call()
+    if not args.dry_run:
+        LOG.info('all remote snapshots destroyed')
+
+
 ##### mainline #####
 
 
@@ -514,6 +557,12 @@ def make_parser():
     b_p.set_defaults(force_recv=False)
     b_p.set_defaults(prune=True)
     b_p.set_defaults(func=cmd_backup)
+
+    rps_p = subparsers.add_parser('remote-prune-stale')
+    rps_p.add_argument('--dry-run', dest='dry_run', action='store_true')
+    rps_p.add_argument('--no-dry-run', dest='dry_run', action='store_false')
+    rps_p.set_defaults(dry_run=False)
+    rps_p.set_defaults(func=cmd_remote_prune_stale)
 
     return parser
 
@@ -559,4 +608,3 @@ if __name__ == '__main__':
 # cannot receive mountpoint property on tank/backups/chris/y54/delta: permission denied
 # cannot receive atime property on tank/backups/chris/y54/delta: permission denied
 # cannot receive compression property on tank/backups/chris/y54/delta: permission denied
-
