@@ -31,7 +31,7 @@
 (use-package dumb-jump
   :straight t
   :config
-  (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-selector 'completing-read)
   (setq dumb-jump-aggressive nil)
   (dumb-jump-mode))
 
