@@ -99,6 +99,18 @@
   (marginalia-mode))
 
 
+(use-package orderless
+  :straight t
+  ;; SPC should never complete: use it for `orderless' groups.
+  :bind ((:map minibuffer-local-completion-map)
+         ("SPC" . nil)
+         ("?" . nil))
+  :init
+  ;; based on prot
+  ;; See also https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
+  (setq completion-styles '(basic substring partial-completion orderless))
+  (setq completion-category-overrides
+        '((file (styles . (basic partial-completion orderless))))))
 
 ;; completion-in-region
 
