@@ -82,7 +82,13 @@
 ;;   (setq enable-recursive-minibuffers t)
 ;;   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
-
+;; Minibuffer and Completions in Tandem
+(use-package mct
+  :straight t
+  :init
+  (setq mct-hide-completion-mode-line t)
+  (setq mct-completion-passlist '(switch-to-buffer))
+  (mct-minibuffer-mode 1))
 
 ;; completion-in-region
 
