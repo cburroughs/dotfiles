@@ -90,6 +90,16 @@
   (setq mct-completion-passlist '(switch-to-buffer))
   (mct-minibuffer-mode 1))
 
+
+(use-package marginalia
+  :straight t
+  :bind ((:map minibuffer-local-map
+               ("M-A" . marginalia-cycle)))
+  :init
+  (marginalia-mode))
+
+
+
 ;; completion-in-region
 
 ;; https://www.emacswiki.org/emacs/CompanyMode
