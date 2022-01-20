@@ -23,7 +23,7 @@
         try-complete-lisp-symbol))
 
 
-;;  completing-read
+;;;;  completing-read ;;;;
 
 
 ;; ;; Better buffer switching
@@ -217,8 +217,25 @@ more generic outline version"
   ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
 )
 
+;; Switch betwen action->object and object->action among completion objects
+;; Literal paradigm switch
+;; https://karthinks.com/software/fifteen-ways-to-use-embark/
+(use-package embark
+  :straight t
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command))
 
-;; completion-in-region
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :straight t
+  :after (embark consult))
+
+;;;; completion-in-region ;;;;
 
 ;; https://www.emacswiki.org/emacs/CompanyMode
 ;; (defun company-except-in-minibuffer ()
