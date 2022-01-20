@@ -2,9 +2,6 @@
 
 ;; General Custom keybindings
 
-;; in case of old emacs versions
-(global-set-key "\M-g" 'goto-line)
-
 ;; Item 2: Invoke M-x without the Alt key
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 
