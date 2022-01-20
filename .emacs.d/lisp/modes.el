@@ -48,15 +48,8 @@
 
 (use-package org
   :mode ("\\.org\\'" . org-mode)
-  :requires (find-lisp ivy counsel)
+  :requires (find-lisp)
   :init
-  ;; TODO: Can we use this trick in reverse (setting back to default) to keep
-  ;; the handful of things (minibuf, files buffers) "normal", and everything
-  ;; else ivy?
-  (defun csb/refile-with-ivy ()
-    (interactive)
-    (let ((completing-read-function 'ivy-completing-read))
-      (call-interactively 'org-refile)))
   (setq org-directory "~/Documents/org")
   :bind (("C-c o a" . org-agenda)
          ("C-c o b" . org-switchb)
@@ -67,7 +60,7 @@
          ("C-c o o" . org-open-at-point)
          ("C-c o p" . org-set-property)
          ("C-c o t" . org-set-tags)
-         ("C-c o r" . csb/refile-with-ivy))
+         ("C-c o r" . org-refile))
   :config
   ;; Do I like this being recursive?
   (setq csb/org-files (find-lisp-find-files  org-directory "\.org$"))
@@ -80,7 +73,6 @@
   (setq org-agenda-include-diary t)
   (setq org-agenda-span 'fortnight)
   (setq org-deadline-warning-days 14)
-  ;; The ivy/org interaction here is super wonky
   ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-use-outline-path 'file)

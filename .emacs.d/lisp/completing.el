@@ -26,62 +26,6 @@
 ;;;;  completing-read ;;;;
 
 
-;; ;; Better buffer switching
-;; ;; TODO: deprecated in 24,
-;; ;; https://www.emacswiki.org/emacs/IcompleteMode
-;; ;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
-;; (use-package iswitchb
-;;   :config
-;;   (iswitchb-mode 1))
-
-
-;; ;; NOTE: Neither ivy nor counsel are "enabled" to take over standard buffer or
-;; ;; file operations.  But a number of other handy functions are enabled.
-;; (use-package ivy
-;;   :straight t
-;;   :demand t
-;;   :bind ("C-c C-r" . ivy-resume)
-;;   :config
-;;   (setq ivy-use-virtual-buffers nil)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   (ivy-mode 0))
-
-
-;; (use-package swiper
-;;   :straight t
-;;   :after ivy
-;;   ;; https://oremacs.com/2019/04/07/swiper-isearch/ Maybe revsit fully switching
-;;   ;; to swiper instead of isearch in the future?  Sadly seems prone to 100% cpu
-;;   ;; hangs.  https://github.com/abo-abo/swiper/issues/925 is perhaps a relevant
-;;   ;; issue
-;;   :bind (("M-s" . swiper)
-;;          ("M-r" . swiper-backward)
-;;          ;;("M-s" . isearch-forward)
-;;          ;;("M-r" . isearch-backward)
-;;          ;; https://oremacs.com/2016/07/29/brand-new-swiper-all/
-;;          ("C-c s" . swiper-all))
-;;   :config
-;;   (setq swiper-stay-on-quit nil))
-
-
-;; (use-package counsel
-;;   :straight t
-;;   :after ivy
-;;   :demand t
-;;   ;; remap only some standard keybindings; add new ones
-;;   :bind (("<f1> f" . counsel-describe-function)
-;;          ("<f1> v" . counsel-describe-variable)
-;;          ("<f1> l" . counsel-find-library)
-;;          ("<f1> u" . counsel-unicode-char)
-;;          ("C-c g" . counsel-git)
-;;          ("C-c j" . counsel-git-grep))
-;;   :config
-;;   ;; Why does this have to be defined here and not above?
-;;   (global-set-key (kbd "C-c C-j") 'counsel-imenu)
-;;   ;; Provisional, unclear on side effects
-;;   (setq enable-recursive-minibuffers t)
-;;   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
-
 ;; Minibuffer and Completions in Tandem
 (use-package mct
   :straight t
@@ -113,13 +57,6 @@
         '((file (styles . (basic partial-completion orderless))))))
 
 
-(defun csb/consult-outline-or-org-heading (&rest args)
-  " Call org specific funtion in that mode, otherwise call the
-more generic outline version"
-  (interactive)
-  (if (eq major-mode 'org-mode)
-      (apply 'consult-org-heading args)
-    (apply 'consult-outline args)))
 
 ;; NOTE: consult has *many* more completing-read commands to consider
 (use-package consult
@@ -160,6 +97,13 @@ more generic outline version"
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
   :init
+  (defun csb/consult-outline-or-org-heading (&rest args)
+    " Call org specific funtion in that mode, otherwise call the
+more generic outline version"
+    (interactive)
+    (if (eq major-mode 'org-mode)
+        (apply 'consult-org-heading args)
+      (apply 'consult-outline args)))
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
@@ -217,6 +161,7 @@ more generic outline version"
   ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
 )
 
+
 ;; Switch betwen action->object and object->action among completion objects
 ;; Literal paradigm switch
 ;; https://karthinks.com/software/fifteen-ways-to-use-embark/
@@ -230,12 +175,14 @@ more generic outline version"
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command))
 
-;; Consult users will also want the embark-consult package.
+
 (use-package embark-consult
   :straight t
   :after (embark consult))
 
+
 ;;;; completion-in-region ;;;;
+
 
 (use-package corfu
   :straight t
@@ -253,6 +200,7 @@ more generic outline version"
   (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
 
 (use-package cape
   :straight t
@@ -294,33 +242,3 @@ more generic outline version"
   (add-to-list 'completion-at-point-functions #'cape-dict)
   (add-to-list 'completion-at-point-functions #'cape-symbol)
   (add-to-list 'completion-at-point-functions #'cape-line))
-
-;; https://www.emacswiki.org/emacs/CompanyMode
-;; (defun company-except-in-minibuffer ()
-;;   (interactive)
-;;   (if (minibufferp)
-;;       (minibuffer-complete)
-;;     (if (derived-mode-p 'prog-mode)
-;;         (company-indent-or-complete-common)
-;;       (indent-for-tab-command))))
-
-
-;; ;; The above together are needed to make company mode not go totally crazy
-;; ;; fighting with existing auto-compete or indentation.  Python indentation is
-;; ;; still a little different, but hitting S-TAB works about as well as repeated
-;; ;; TAB to cycle
-;; (use-package company
-;;   :straight t
-;;   :defer t
-;;   :hook (prog-mode . company-mode)
-;;   :bind (("M-`" . company-complete)
-;;          (:map company-active-map
-;;                ("C-n" . company-select-next)
-;;                ("C-p" . company-select-previous)))
-;;   :config
-;;   (setq company-tooltip-limit 16)
-;;   (setq company-tooltip-align-annotations t)
-;;   (setq company-idle-delay nil)
-;;   (setq company-selection-wrap-around t)
-;;   ;; leave it to hippie
-;;   (setq company-backends (delete 'company-dabbrev company-backends)))
