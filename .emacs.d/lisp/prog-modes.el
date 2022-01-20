@@ -170,7 +170,8 @@
         (put 'csb/lsp-ui-doc-toggle 'state 't)
         (lsp-ui-doc-show))))
   :config
-  (push 'company-lsp company-backends))
+  (setq lsp-completion-provider :capf))
+
   
 
 (use-package lsp-ui
@@ -199,8 +200,3 @@
   (setq lsp-ui-doc-include-signature 't)
   (setq lsp-ui-doc-position 'top)
   (setq lsp-ui-doc-use-childframe 't))
-
-(use-package company-lsp
-  :straight t
-  :after (lsp-mode company)
-  :commands company-lsp)

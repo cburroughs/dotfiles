@@ -237,6 +237,24 @@ more generic outline version"
 
 ;;;; completion-in-region ;;;;
 
+(use-package corfu
+  :straight t
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  :bind (("C-c c p" . completion-at-point)) ;; capf
+  :init
+  (corfu-global-mode))
+
+
+(use-package kind-icon
+  :straight t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+
 ;; https://www.emacswiki.org/emacs/CompanyMode
 ;; (defun company-except-in-minibuffer ()
 ;;   (interactive)
