@@ -99,6 +99,32 @@
 (defconst palette/doom-one/cyan       "#46D9FF")
 (defconst palette/doom-one/dark-cyan  "#5699AF")
 
+(defconst palette/doom-vibrant/bg         "#242730")
+(defconst palette/doom-vibrant/fg         "#bbc2cf")
+(defconst palette/doom-vibrant/bg-alt     "#2a2e38")
+(defconst palette/doom-vibrant/fg-alt     "#5D656B")
+(defconst palette/doom-vibrant/base0      "#1c1f24")
+(defconst palette/doom-vibrant/base1      "#1c1f24")
+(defconst palette/doom-vibrant/base2      "#21272d")
+(defconst palette/doom-vibrant/base3      "#23272e")
+(defconst palette/doom-vibrant/base4      "#484854")
+(defconst palette/doom-vibrant/base5      "#62686E")
+(defconst palette/doom-vibrant/base6      "#757B80")
+(defconst palette/doom-vibrant/base7      "#9ca0a4")
+(defconst palette/doom-vibrant/base8      "#DFDFDF")
+(defconst palette/doom-vibrant/grey       palette/doom-vibrant/base4)
+(defconst palette/doom-vibrant/red        "#ff665c")
+(defconst palette/doom-vibrant/orange     "#e69055")
+(defconst palette/doom-vibrant/green      "#7bc275")
+(defconst palette/doom-vibrant/teal       "#4db5bd")
+(defconst palette/doom-vibrant/yellow     "#FCCE7B")
+(defconst palette/doom-vibrant/blue       "#51afef")
+(defconst palette/doom-vibrant/dark-blue  "#1f5582")
+(defconst palette/doom-vibrant/magenta    "#C57BDB")
+(defconst palette/doom-vibrant/violet     "#a991f1")
+(defconst palette/doom-vibrant/cyan       "#5cEfFF")
+(defconst palette/doom-vibrant/dark-cyan  "#6A8FBF")
+
 
 ;; https://github.com/nashamri/spacemacs-theme
 (defconst palette/spacemacs/act1          "#222226")
@@ -226,3 +252,75 @@
 (defconst palette/monokai/cyan-lc        "#4BBEAE")
 (defconst palette/monokai/green-hc       "#CCF47C")
 (defconst palette/monokai/green-lc       "#679A01")
+
+
+;;https://github.com/purcell/color-theme-sanityinc-tomorrow/
+(defconst palette/tomorrow-night/background "#1d1f21")
+(defconst palette/tomorrow-night/alt-background "#22a224a427a7")
+(defconst palette/tomorrow-night/current-line "#282a2e")
+(defconst palette/tomorrow-night/selection "#373b41")
+(defconst palette/tomorrow-night/foreground "#c5c8c6")
+(defconst palette/tomorrow-night/comment "#969896")
+(defconst palette/tomorrow-night/red "#cc6666")
+(defconst palette/tomorrow-night/orange "#de935f")
+(defconst palette/tomorrow-night/yellow "#f0c674")
+(defconst palette/tomorrow-night/green "#b5bd68")
+(defconst palette/tomorrow-night/aqua "#8abeb7")
+(defconst palette/tomorrow-night/blue "#81a2be")
+(defconst palette/tomorrow-night/purple "#b294bb")
+
+;; https://ethanschoonover.com/solarized/
+(defconst palette/solarized-dark/base03 "#002b36")
+(defconst palette/solarized-dark/base02 "#073642")
+(defconst palette/solarized-dark/base01 "#586e75")
+(defconst palette/solarized-dark/base00 "#657b83")
+(defconst palette/solarized-dark/base0  "#839496")
+(defconst palette/solarized-dark/base1  "#93a1a1")
+(defconst palette/solarized-dark/base2  "#eee8d5")
+(defconst palette/solarized-dark/base3  "#fdf6e3")
+(defconst palette/solarized-dark/yellow "#b58900")
+(defconst palette/solarized-dark/orange "#cb4b16")
+(defconst palette/solarized-dark/red    "#dc322f")
+(defconst palette/solarized-dark/magenta"#d33682")
+(defconst palette/solarized-dark/violet "#6c71c4")
+(defconst palette/solarized-dark/blue   "#268bd2")
+(defconst palette/solarized-dark/cyan   "#2aa198")
+(defconst palette/solarized-dark/green  "#859900")
+
+
+;; https://github.com/morhetz/gruvbox
+(defconst palette/gruvbox/bg-hard "#1d2021")  ; bg0_h
+(defconst palette/gruvbox/bg-soft  "#32302f") ; bg0_s
+(defconst palette/gruvbox/bg-medium "#282828") ; bg0
+(defconst palette/gruvbox/bg-alt-hard "#0d1011") ; (self-defined)
+(defconst palette/gruvbox/bg-alt-soft "#282828") ; bg0
+(defconst palette/gruvbox/bg-alt-medium "#1d2021") ; bg_h
+(defconst palette/gruvbox/bg-alt2 "#504945") ; bg2 (for region, selection etc.)
+
+(defconst palette/gruvbox/base0      "#0d1011") ; (self-defined)
+(defconst palette/gruvbox/base1      "#1d2021") ; bg0_h
+(defconst palette/gruvbox/base2      "#282828") ; bg0
+(defconst palette/gruvbox/base3      "#3c3836") ; bg1
+(defconst palette/gruvbox/base4      "#665c54") ; bg3
+(defconst palette/gruvbox/base5      "#7c6f64") ; bg4
+(defconst palette/gruvbox/base6      "#928374") ; gray
+(defconst palette/gruvbox/base7      "#d5c4a1") ; fg2
+(defconst palette/gruvbox/base8      "#fbf1c7") ; fg0
+(defconst palette/gruvbox/fg         "#ebdbb2") ; fg/fg1
+(defconst palette/gruvbox/fg-alt     "#d5c4a1") ; fg2
+;; Standardized official colours from gruvbox
+(defconst palette/gruvbox/grey        "#928374") ; gray
+(defconst palette/gruvbox/red         "#fb4934") ; bright-red
+(defconst palette/gruvbox/magenta     "#cc241d") ; red
+(defconst palette/gruvbox/violet      "#d3869b") ; bright-purple
+(defconst palette/gruvbox/orange      "#fe8019") ; bright-orange
+(defconst palette/gruvbox/yellow      "#fabd2f") ; bright-yellow
+(defconst palette/gruvbox/dark-yellow "#d79921") ; yellow
+(defconst palette/gruvbox/teal        "#8ec07c") ; bright-aqua
+(defconst palette/gruvbox/green       "#b8bb26") ; bright-green
+(defconst palette/gruvbox/dark-green  "#98971a") ; green
+(defconst palette/gruvbox/blue        "#83a598") ; bright-blue
+(defconst palette/gruvbox/dark-blue   "#458588") ; blue
+(defconst palette/gruvbox/cyan        "#8ec07c") ; bright-aqua
+(defconst palette/gruvbox/my-black    "#37302f")
+(defconst palette/gruvbox/dark-cyan   "#689d6a") ; aqua

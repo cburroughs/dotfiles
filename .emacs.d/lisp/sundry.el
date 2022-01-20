@@ -8,6 +8,14 @@
 ;;  :ensure t
 ;;  :defer 1)
 
+;; from gentoo site-package
+(use-package with-editor
+  :init
+  (if (csb/gentoo-emacs-vcs-p)
+      (setq with-editor-emacsclient-executable
+            (concat "emacsclient-emacs-"
+                    (nth 0 (split-string emacs-version "\\."))
+                    "-vcs"))))
 
 ;; make the y or n suffice for a yes or no question
 (fset 'yes-or-no-p 'y-or-n-p)

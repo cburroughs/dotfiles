@@ -49,3 +49,15 @@
 (setq package-enable-at-startup nil)
 
 
+
+;; More Magic from DOOM
+
+;; Premature redisplays can substantially affect startup times and produce
+;; ugly flashes of unstyled Emacs.
+(setq-default inhibit-redisplay t
+              inhibit-message t)
+(add-hook 'window-setup-hook
+          (lambda ()
+            (setq-default inhibit-redisplay nil
+                          inhibit-message nil)
+            (redisplay)))
