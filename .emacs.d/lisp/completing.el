@@ -274,6 +274,14 @@ more generic outline version"
   :custom
   (cape-dict-file "/usr/share/dict/words")
   :init
+  ;; from wiki
+  ;; and https://takeonrules.com/2022/01/17/switching-from-company-to-corfu-for-emacs-completion/
+  (defun csb/corfu-move-to-minibuffer ()
+    (interactive)
+    (let (completion-cycle-threshold completion-cycling)
+      (apply #'consult-completion-in-region completion-in-region--data)))
+  (define-key corfu-map (kbd "M-m") #'csbcorfu-move-to-minibuffer)
+
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-tex)
