@@ -3,6 +3,45 @@
 ;; misc changes and variable settings
 
 
+
+;; make the builtin ibuffer list nicer
+(add-hook 'ibuffer-hook '(lambda ()
+                           (setq ibuffer-show-empty-filter-groups nil)
+	                       (ibuffer-auto-mode 1)
+                           (unless (eq ibuffer-sorting-mode 'alphabetic)
+                             (ibuffer-do-sort-by-alphabetic))))
+
+
+(use-package all-the-icons-ibuffer
+  :straight t
+  :init
+  (setq all-the-icons-ibuffer-human-readable-size t)
+  (all-the-icons-ibuffer-mode 1))
+
+
+(use-package ibuffer-projectile
+  :straight t
+  :init
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (setq ibuffer-filter-groups
+                    (append (ibuffer-projectile-generate-filter-groups)
+	                        '(("Files" (and (filename . ".*")
+                                            (not (name . "^\\*"))))
+		                      ("Planner" (or
+				                          (name . "^\\*Calendar\\*$")
+				                          (name . "^\\*Org Agenda\\*")))
+                              ("shell" (or (mode . eshell-mode)
+                                           (mode . shell-mode)
+                                           (derived-mode . term-mode)))
+		                      ("dired" (mode . dired-mode))
+		                      ("magit" (name . "^magit"))
+                              ("Help" (or (name . "\*Help\*")
+		                                  (name . "\*Apropos\*")
+		                                  (name . "\*info\*")))
+                              ("emacs" (name . "^\\*"))))))))
+
+
 ;; Appears to now work with emacs > 26 https://github.com/jschaf/esup/issues/54
 ;;(use-package esup
 ;;  :ensure t
@@ -41,22 +80,6 @@
 (setq scroll-preserve-screen-position t)
 
 
-;; prefer hippie-expand over deavrez
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-;; http://trey-jackson.blogspot.com/2007/12/emacs-tip-5-hippie-expand.html
-(setq hippie-expand-try-functions-list
-      '(try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-dabbrev
-        try-expand-dabbrev-visible
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
 
 ;; Try to avoid giving buffers dumb names
 (use-package uniquify
@@ -73,20 +96,11 @@
 (setq browse-url-firefox-new-window-is-tab 't) ; why does this not work?
 
 
-;; Better buffer switching
-;; TODO: deprecated in 24,
-;; https://www.emacswiki.org/emacs/IcompleteMode
-;; http://superuser.com/questions/811454/why-was-iswitchb-removed-from-gnu-emacs-24
-(use-package iswitchb
-  :config
-  (iswitchb-mode 1))
-
-
 (use-package projectile
   :straight t
   :config
   (setq projectile-known-projects-file "~/.config/emacs/projectile-bookmarks.el")
-  (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'auto)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (add-to-list 'projectile-globally-ignored-directories "build/")
   (add-to-list 'projectile-globally-ignored-directories "dist/")
@@ -130,52 +144,6 @@
         ("Asia/Tokyo" "Tokyo")))
 
 
-;; NOTE: Neither ivy nor counsel are "enabled" to take over standard buffer or
-;; file operations.  But a number of other handy functions are enabled.
-(use-package ivy
-  :straight t
-  :demand t
-  :bind ("C-c C-r" . ivy-resume)
-  :config
-  (setq ivy-use-virtual-buffers nil)
-  (setq ivy-count-format "(%d/%d) ")
-  (ivy-mode 0))
-
-
-(use-package swiper
-  :straight t
-  :after ivy
-  ;; https://oremacs.com/2019/04/07/swiper-isearch/ Maybe revsit fully switching
-  ;; to swiper instead of isearch in the future?  Sadly seems prone to 100% cpu
-  ;; hangs.  https://github.com/abo-abo/swiper/issues/925 is perhaps a relevant
-  ;; issue
-  :bind (("M-s" . swiper)
-         ("M-r" . swiper-backward)
-         ;;("M-s" . isearch-forward)
-         ;;("M-r" . isearch-backward)
-         ;; https://oremacs.com/2016/07/29/brand-new-swiper-all/
-         ("C-c s" . swiper-all))
-  :config
-  (setq swiper-stay-on-quit nil))
-
-
-(use-package counsel
-  :straight t
-  :after ivy
-  :demand t
-  ;; remap only some standard keybindings; add new ones
-  :bind (("<f1> f" . counsel-describe-function)
-         ("<f1> v" . counsel-describe-variable)
-         ("<f1> l" . counsel-find-library)
-         ("<f1> u" . counsel-unicode-char)
-         ("C-c g" . counsel-git)
-         ("C-c j" . counsel-git-grep))
-  :config
-  ;; Why does this have to be defined here and not above?
-  (global-set-key (kbd "C-c C-j") 'counsel-imenu)
-  ;; Provisional, unclear on side effects
-  (setq enable-recursive-minibuffers t)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 
 
