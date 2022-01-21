@@ -5,27 +5,18 @@
 
 ;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
 ;; todo: more insert date options
-;; todo: look into running emacsclient for terminal stuff
 ;; todo: open in firefox (new tab?)
-;; todo: spell check not comments (ie for svn commit messages)
 ;; todo: http://www.emacswiki.org/cgi-bin/wiki/RectangleMark
 ;; todo: http://emacs-fu.blogspot.com/2008/12/working-with-rectangular-selections.html
 ;; todo: surround word with punctuation mode.  hitting ' in middle of word quotes it
-;; todo: next time I am hacking lisp code I really should look at paredit
-;; todo: http://www.neilvandyke.org/quack/
 ;; todo: http://www.emacsblog.org/2009/05/18/copying-lines-not-killing/
 ;; todo: http://linuxcommando.blogspot.com/2008/05/root-edit-file-using-emacs-in-same.html
 ;; todo: http://emacsworld.blogspot.com/2009/11/quick-way-of-looking-up-colours-in.html , also html colors?
 ;; todo: Textmate ExecuteExternalCommand bridge
-;; todo: is there an easy way to switch all modes to 2 or 4 sapce indent?
 ;; TODO: revisit snippets
-;; TODO: Untangle  https://www.emacswiki.org/emacs/GitCommitMode
-;; TODO: https://github.com/alpaker/Fill-Column-Indicator
 ;; TODO revisit shell usage https://manuel-uberti.github.io/emacs/2017/10/07/m-x-shell/
 ;; TODO: Look into defining some abbreviations http://ergoemacs.org/emacs/emacs_abbrev_mode.html
 ;; TODO: Look into hydra again & https://gitlab.com/jjzmajic/hercules.el
-;; TODO: revisit lsp-java
-;; TODO: Consider elgot vs lsp-mode again
 ;; TODO Chck out https://github.com/cireu/counsel-ffdata
 ;; TODO: https://github.com/Fuco1/free-keys and bind-keys
 
