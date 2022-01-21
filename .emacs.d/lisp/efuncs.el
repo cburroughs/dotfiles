@@ -96,8 +96,8 @@
   (setq lineno (line-number-at-pos (point)))
   (isearch-forward-regexp)
   (goto-line lineno)
-  (setq replace (read-from-minibuffer (concat "Replace regexp " (first regexp-search-ring) " with: ")))
-  (while (re-search-forward (first regexp-search-ring) nil t)
+  (setq replace (read-from-minibuffer (concat "Replace regexp " (car regexp-search-ring) " with: ")))
+  (while (re-search-forward (car regexp-search-ring) nil t)
         (replace-match replace)))
 
 ;; Same as above, but for backwards
@@ -107,8 +107,8 @@
   (setq lineno (line-number-at-pos (point)))
   (isearch-backward-regexp)
   (goto-line lineno)
-  (setq replace (read-from-minibuffer (concat "Replace regexp " (first regexp-search-ring) " with: ")))
-  (while (re-search-backward (first regexp-search-ring) nil t)
+  (setq replace (read-from-minibuffer (concat "Replace regexp " (car regexp-search-ring) " with: ")))
+  (while (re-search-backward (car regexp-search-ring) nil t)
         (replace-match replace)))
 
 ;; I just want bash anyway
