@@ -242,6 +242,7 @@ scan-error if not."
         ;; This would override `fill-column' if it's an integer.
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
+;; Handy key definition
 (define-key global-map "\M-Q" 'unfill-paragraph)
 
 
@@ -269,18 +270,6 @@ scan-error if not."
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
-
-
-;; https://www.emacswiki.org/emacs/UnfillParagraph
-(defun unfill-paragraph (&optional region)
-  "Takes a multi-line paragraph and makes it into a single line of text."
-  (interactive (progn (barf-if-buffer-read-only) '(t)))
-  (let ((fill-column (point-max))
-        ;; This would override `fill-column' if it's an integer.
-        (emacs-lisp-docstring-fill-column t))
-    (fill-paragraph nil region)))
-;; Handy key definition
-(define-key global-map "\M-Q" 'unfill-paragraph)
 
 
 (defun csb/gentoo-emacs-vcs-p ()
