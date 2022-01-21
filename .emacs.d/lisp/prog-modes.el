@@ -39,22 +39,6 @@
 ;; https://emacsredux.com/blog/2016/01/31/use-tab-to-indent-or-complete/
 (setq tab-always-indent 't)
 
-
-
-;;; Javascript
-(use-package js2-mode
-             :straight t
-             :defer t)
-
-
-(setq inferior-js-program-command "rhino")
-(add-hook 'js2-mode-hook '(lambda ()
-                            (local-set-key "\C-x\C-e" 'js-send-last-sexp)
-                            (local-set-key "\C-\M-x" 'js-send-last-sexp-and-go)
-                            (local-set-key "\C-cb" 'js-send-buffer)
-                            (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
-                            (local-set-key "\C-cl" 'js-load-file-and-go)))
-
 ;; json
 (use-package json-mode
              :straight t
