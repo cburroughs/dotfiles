@@ -290,3 +290,5 @@ build on gentoo?"
        ;; The emacs version conention for x.y.z is that y is 0 for pre-release
        (string= (nth 1 (split-string emacs-version "\\."))
                 "0")))
+
+(provide 'csb/efuncs)

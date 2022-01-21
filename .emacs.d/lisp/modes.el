@@ -220,3 +220,6 @@
 (setq undo-limit (* 1024 80 10))
 (setq undo-strong-limit (* 2 undo-limit))
 (setq undo-outer-limit 24000000)
+
+
+(provide 'csb/modes)

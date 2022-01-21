@@ -24,3 +24,5 @@
 				  "EN_UNPAIRED_BRACKETS"
 				  "COMMA_PARENTHESIS_WHITESPACE"
 				  "EN_QUOTES")))
+
+(provide 'csb/external)

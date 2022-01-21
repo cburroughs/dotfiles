@@ -30,7 +30,8 @@
 ;; for lighten/darken
 (require 'doom-themes)
 
-;; NOTE: "palette" library is already pre-loaded
+
+(require 'csb/palette)
 
 
 (deftheme claritas

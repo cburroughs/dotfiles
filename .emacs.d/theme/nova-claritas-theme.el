@@ -30,8 +30,7 @@
 
 ;; for lighten/darken
 (require 'doom-themes)
-
-;; NOTE: "palette" library is already pre-loaded
+(require 'csb/palette)
 
 ;; STATUS: Currently left off in favor of the DOOM hatchery. asdf
 

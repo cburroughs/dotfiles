@@ -144,15 +144,15 @@
 ;; --------------------------
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
-(load-library "keybindings")
-(load-library "efuncs")
-(load-library "completing")
-(load-library "sundry")
-(load-library "palette")
-(load-library "pretty")
-(load-library "modes")
-(load-library "prog-modes")
-(load-library "external")
+(require 'csb/keybindings "keybindings")
+(require 'csb/efuncs "efuncs")
+(require 'csb/completing "completing")
+(require 'csb/sundry "sundry")
+(require 'csb/palette "palette")
+(require 'csb/pretty "pretty")
+(require 'csb/modes "modes")
+(require 'csb/prog-modes "prog-modes")
+(require 'csb/external "external")
 
 
 ;; fin

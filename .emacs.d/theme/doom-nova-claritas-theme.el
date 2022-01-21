@@ -21,7 +21,7 @@
 ;;; Code:
 
 (require 'doom-themes)
-;; NOTE: "palette" library is already pre-loaded.  Probably a better way to do this?
+(require 'csb/palette)
 
 
 ;;

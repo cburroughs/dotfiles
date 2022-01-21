@@ -184,3 +184,6 @@
   (setq lsp-ui-doc-include-signature 't)
   (setq lsp-ui-doc-position 'top)
   (setq lsp-ui-doc-use-childframe 't))
+
+
+(provide 'csb/prog-modes)

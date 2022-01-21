@@ -324,3 +324,6 @@
 (defconst palette/gruvbox/cyan        "#8ec07c") ; bright-aqua
 (defconst palette/gruvbox/my-black    "#37302f")
 (defconst palette/gruvbox/dark-cyan   "#689d6a") ; aqua
+
+
+(provide 'csb/palette)

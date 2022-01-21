@@ -419,3 +419,6 @@ lines are selected, or the NxM dimensions of a block selection."
                           (bookmarks . 5)
                           (projects . 5)))
   (dashboard-setup-startup-hook))
+
+
+(provide 'csb/pretty)
