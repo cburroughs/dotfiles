@@ -139,6 +139,8 @@
   (save-place-mode 1))
 
 
+(setq bookmark-file "~/.config/emacs/bookmarks")
+
 ;; --------------------------
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
