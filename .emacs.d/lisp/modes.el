@@ -199,6 +199,13 @@
   :defer t)
 
 
+;; for git-commit
+(use-package transient
+  :straight t
+  :defer 1
+  :config
+  (setq transient-history-file "~/.config/emacs/transient/history.el"))
+
 ;; nice commit messages
 (use-package git-commit
   :straight t
