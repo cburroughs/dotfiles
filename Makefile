@@ -5,7 +5,7 @@ most: emacs bash git bin-utils x11
 
 emacs:
 	@echo $@
-	rsync -va --exclude=elpa --exclude=straight --delete .emacs.d/ ~/.emacs.d/
+	rsync -va --exclude=elpa --exclude=straight --exclude=eln-cache --delete .emacs.d/ ~/.emacs.d/
 
 straight-slurp-lock:
 	@echo $@
