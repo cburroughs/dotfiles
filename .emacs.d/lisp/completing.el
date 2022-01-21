@@ -194,6 +194,13 @@ more generic outline version"
   (corfu-global-mode))
 
 
+;; for kind-icon
+(use-package svg-lib
+  :straight t
+  :config
+  (setq svg-lib-icons-dir "~/.config/emacs/.cache/svg-lib/"))
+
+
 (use-package kind-icon
   :straight t
   :after corfu
