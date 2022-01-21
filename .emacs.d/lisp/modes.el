@@ -47,6 +47,7 @@
 (use-package find-lisp)
 
 (use-package org
+  :straight nil ;; use gentoo package
   :mode ("\\.org\\'" . org-mode)
   :requires (find-lisp)
   :init
@@ -88,11 +89,42 @@
            "* %x%?\n  %u\n  %a" :kill-buffer t)))
   (setq org-refile-targets '((csb/org-files :maxlevel . 4))))
 
+
 (use-package org-bullets
   :straight t
+  :after org
   :hook (org-mode . org-bullets-mode)
   :init
   (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○" "★")))
+
+
+;; (use-package org-roam
+;;   :straight t
+;;   :defer 1
+;;   :custom
+;;   (org-roam-directory (file-truename "/tmp/roam"))
+;;   (org-roam-completion-everywhere t)
+;;   :bind (("C-c r l" . org-roam-buffer-toggle)
+;;          ("C-c r f" . org-roam-node-find)
+;;          ("C-c r g" . org-roam-graph)
+;;          ("C-c r i" . org-roam-node-insert)
+;;          ("C-c r c" . org-roam-capture)
+;;          ;; Dailies
+;;          ("C-c r j" . org-roam-dailies-capture-today))
+;;   :config
+;;   ;; If you're using a vertical completion framework, you might want a more
+;;   ;; informative completion interface
+;;   (setq org-roam-node-display-template
+;;         (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+;;   ;; If using org-roam-protocol
+;;   (require 'org-roam-protocol)
+;;   :init
+;;   (setq org-roam-v2-ack t)
+;;   (org-roam-db-autosync-mode))
+
+;; (use-package org-roam-ui
+;;   :straight t
+;;   :after org-roam)
 
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
