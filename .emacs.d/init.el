@@ -90,6 +90,7 @@
 ;; system, not in /tmp where they can be lost when most needed
 
 (defvar csb-auto-save-dir "~/.config/emacs/autosaves/")
+(setq auto-save-list-file-prefix (concat csb-auto-save-dir "/.saves-"))
 
 (make-directory csb-auto-save-dir t)
 
