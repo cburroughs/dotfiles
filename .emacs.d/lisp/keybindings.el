@@ -159,5 +159,7 @@ Emacs buffers are those whose name starts with *."
   :defer 1
   :straight t
   :config
+  (setq which-key-idle-delay 0.5)
+  (setq which-key-idle-secondary-delay 0.1)
   (setq which-key-compute-remaps t)
   (which-key-mode 1))
