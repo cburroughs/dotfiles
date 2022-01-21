@@ -46,12 +46,6 @@
 (byte-recompile-directory "~/.emacs.d/site-lisp" 0)
 (byte-recompile-directory "~/.emacs.d/lisp")
 
-;; If I ever use customize crap I don't want it pooping on this file
-;; I assume this is automatically loaded
-(setq custom-file "~/.config/emacs/.emacs-custom.el")
-(load custom-file 'noerror)
-
-
 ;; straight.el
 (setq straight-profiles `((nil .  "~/.emacs.d/straight.lockfile.el")))
 
@@ -80,6 +74,11 @@
 
 ;; --------------------------
 ;; Putting Files places
+
+;; If I ever use customize crap I don't want it pooping on this file
+;; I assume this is automatically loaded
+(setq custom-file "~/.config/emacs/.emacs-custom.el")
+(load custom-file 'noerror)
 
 ;; copied from the internet
 ;; https://snarfed.org/gnu_emacs_backup_files
