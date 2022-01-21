@@ -90,12 +90,19 @@
   (setq org-refile-targets '((csb/org-files :maxlevel . 4))))
 
 
-(use-package org-bullets
+;; pseudo-successor to org-bullets
+(use-package org-superstar
   :straight t
   :after org
-  :hook (org-mode . org-bullets-mode)
-  :init
-  (setq org-bullets-bullet-list '("◉" "✸" "◆" "⚫" "✿" "◇" "○" "★")))
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-hide-leading-stars t)
+  (setq org-superstar-cycle-headline-bullets t)
+  (setq org-superstar-prettify-item-bullets nil)
+  (setq org-superstar-special-todo-items nil)
+  (setq org-superstar-headline-bullets-list
+        '("◉" "✸" "✻" "✿" "★" "◆" "🞛" "○" "◇"))) 
+
 
 
 ;; (use-package org-roam
