@@ -2,6 +2,8 @@
 
 ;; General Custom keybindings
 
+(require 'use-package)
+
 ;; Item 2: Invoke M-x without the Alt key
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
 

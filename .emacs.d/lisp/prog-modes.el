@@ -2,6 +2,7 @@
 
 ;; Programming modes in a separate file
 
+(require 'use-package)
 
 ;; imenu
 

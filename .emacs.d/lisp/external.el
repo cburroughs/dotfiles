@@ -2,6 +2,8 @@
 
 ;; talk to external programs
 
+(require 'use-package)
+
 ;; use mzscheme, obviously it must be installed
 (setq scheme-program-name "mzscheme")
 

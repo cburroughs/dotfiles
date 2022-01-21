@@ -2,6 +2,7 @@
 
 ;; fancy completion and (many) friends
 
+(require 'use-package)
 
 ;; Hippie 💓💓💓 so simple; so often better than fancy alternatives
 

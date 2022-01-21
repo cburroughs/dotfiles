@@ -2,7 +2,7 @@
 
 ;; misc changes and variable settings
 
-
+(require 'use-package)
 
 ;; make the builtin ibuffer list nicer
 (add-hook 'ibuffer-hook '(lambda ()

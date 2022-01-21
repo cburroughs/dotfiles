@@ -2,6 +2,8 @@
 
 ;; Cosmetic changes
 
+(require 'use-package)
+
 ;; I don't blink on the terminal, let's try being consistent
 (blink-cursor-mode -1)
 

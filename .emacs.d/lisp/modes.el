@@ -2,6 +2,8 @@
 
 ;; emacs modes I use, their customization, and setup.
 
+(require 'use-package)
+
 (transient-mark-mode t) ; redundant, still does not work in ubuntu
 (delete-selection-mode t) ; delete selected text
 
