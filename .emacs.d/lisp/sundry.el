@@ -42,10 +42,13 @@
                               ("emacs" (name . "^\\*"))))))))
 
 
-;; Appears to now work with emacs > 26 https://github.com/jschaf/esup/issues/54
-;;(use-package esup
-;;  :ensure t
-;;  :defer 1)
+;; Flaky with emacs > 26 https://github.com/jschaf/esup/issues/54
+(use-package esup
+  :straight t
+  :defer 1
+  :config
+  (setq esup-depth 0))
+
 
 ;; from gentoo site-package
 (use-package with-editor

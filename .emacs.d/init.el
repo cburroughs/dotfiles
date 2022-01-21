@@ -3,7 +3,6 @@
 ;; Chris Burroughs
 ;; My dot emacs
 
-;; todo: see if esup is working
 ;; todo: dictionary(?) integration (thesaurus would be super awesome too). http://www.emacswiki.org/emacs/ThesauriAndSynonyms
 ;; todo: more insert date options
 ;; todo: look into running emacsclient for terminal stuff
