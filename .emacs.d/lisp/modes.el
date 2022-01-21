@@ -164,29 +164,6 @@
          ("\\.md" . markdown-mode)
          ("\\.page" . markdown-mode)))
 
-;; TODO: easy way to change this the unreadable style common in java code
-;; Probably don't want this on by default but useful if I start
-;; coding in maximized windows
-(use-package highlight-80+
-  :defer 2)
-
-(defun enable-highlight-80+ ()
-  (interactive)
-  (highlight-80+-mode)
-  (add-hook 'after-change-major-mode-hook
-            (lambda () (highlight-80+-mode 1))))
-
-;; These do not work
-(defun hl80 ()
-  "Set highlight-80+-mode length to 80. "
-  (iteractive)
-  (setq highlight-80+-columns 80))
-
-(defun hl100 ()
-  "Set highlight-80+-mode length to 100. Is the enough for the java beast? "
-  (iteractive)
-  (setq highlight-80+-columns 100))
-
 
 ;; might as well use emacs crazy powerful kill-ring
 (use-package kill-ring-search
