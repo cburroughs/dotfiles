@@ -103,8 +103,7 @@
   :defer t)
 
 (use-package doom-themes
-  :straight t
-  :defer t)
+  :straight t)
 
 (use-package color-theme-sanityinc-tomorrow
   :straight t

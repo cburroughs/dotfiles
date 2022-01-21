@@ -28,23 +28,12 @@
 ;; load gentoo installed stuff
 (require 'site-gentoo nil t)
 
-;; Need to set up path for elisp files
-(defun add-path (p)
-  (add-to-list 'load-path p))
-
-(add-path "~/.emacs.d/lisp/")
-(add-path "~/.emacs.d/site-lisp/")
 
 
 ;; "Setting load-prefer-newer prevents stale elisp bytecode from shadowing more
 ;; up-to-date source files." (Better Defaults)
 (setq load-prefer-newer t)
 
-
-;; It is easy enough to byte compile everything, so we might as well
-;; The 0 option makes an .elc file even if one is not yet present
-(byte-recompile-directory "~/.emacs.d/site-lisp" 0)
-(byte-recompile-directory "~/.emacs.d/lisp")
 
 ;; straight.el
 (setq straight-profiles `((nil .  "~/.emacs.d/straight.lockfile.el")))
@@ -144,6 +133,13 @@
 ;; --------------------------
 ;; load the files with the rest of my info
 ;; try to put in order of least likely to break
+;; It is easy enough to byte compile everything, so we might as well
+(defun csb/add-path (p)
+  (add-to-list 'load-path p))
+
+(csb/add-path "~/.emacs.d/lisp/")
+(csb/add-path "~/.emacs.d/site-lisp/")
+
 (require 'csb/keybindings "keybindings")
 (require 'csb/efuncs "efuncs")
 (require 'csb/completing "completing")
@@ -154,6 +150,10 @@
 (require 'csb/prog-modes "prog-modes")
 (require 'csb/external "external")
 
+(when (and (fboundp 'native-compile-async) (native-comp-available-p))
+  (progn
+    (native-compile-async "~/.emacs.d/lisp" 'recursively)
+    (native-compile-async "~/.emacs.d/site-lisp" 'recursively)))
 
 ;; fin
 (garbage-collect)
