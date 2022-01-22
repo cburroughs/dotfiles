@@ -187,10 +187,13 @@ more generic outline version"
 
 (use-package corfu
   :straight t
+  :after which-key
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   :bind (("C-c c p" . completion-at-point)) ;; capf
   :init
+  (which-key-add-key-based-replacements
+    "C-c c" "capfs")
   (corfu-global-mode))
 
 

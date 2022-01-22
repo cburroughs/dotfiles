@@ -51,8 +51,10 @@
 (use-package org
   :straight nil ;; use gentoo package
   :mode ("\\.org\\'" . org-mode)
-  :requires (find-lisp)
+  :requires (find-lisp which-key)
   :init
+  (which-key-add-key-based-replacements
+    "C-c o" "org")
   (setq org-directory "~/Documents/org")
   :bind (("C-c o a" . org-agenda)
          ("C-c o b" . org-switchb)
@@ -110,6 +112,7 @@
 ;; (use-package org-roam
 ;;   :straight t
 ;;   :defer 1
+;;   :requires which-key
 ;;   :custom
 ;;   (org-roam-directory (file-truename "/tmp/roam"))
 ;;   (org-roam-completion-everywhere t)
@@ -128,6 +131,8 @@
 ;;   ;; If using org-roam-protocol
 ;;   (require 'org-roam-protocol)
 ;;   :init
+;;     (which-key-add-key-based-replacements
+;;       "C-c r" "org-roam")
 ;;   (setq org-roam-v2-ack t)
 ;;   (org-roam-db-autosync-mode))
 
