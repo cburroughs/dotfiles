@@ -196,6 +196,11 @@
    ;; TODO: Investiage paren-face package, or at least harmony with it
    (paren-face-match    :background orange :weight 'ultra-bold)
    (paren-face-mismatch :foreground base0 :background red :weight 'ultra-bold)
+
+   (all-the-icons-ibuffer-size-face :foreground violet)
+   (all-the-icons-ibuffer-mode-face :foreground fg)
+   (all-the-icons-ibuffer-file-face :foreground base7)
+
    )
 
   ;;;; Base theme variable overrides
