@@ -178,17 +178,6 @@
   :bind ("M-C-y" . kill-ring-search))
 
 
-;; whitespace
-(use-package show-wspace
-  :defer 2)
-
-(defun show-white-space ()
-    (interactive)
-    (show-ws-toggle-show-hard-spaces)
-    (show-ws-toggle-show-tabs)
-    (show-ws-toggle-show-trailing-whitespace))
-
-
 ;; http://xahlee.org/emacs/command-frequency.html
 ;; http://nflath.com/2009/08/command-frequency-mode/
 ;; Keep track of commands used, learning is good!
