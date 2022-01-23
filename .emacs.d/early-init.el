@@ -8,9 +8,13 @@
 
 ;; from https://www.emacswiki.org/emacs/OptimizingEmacsStartup
 (add-hook 'window-setup-hook
-          (lambda () (progn
-                       (setq csb/init/init-time (float-time (time-subtract (current-time) before-init-time)))
-                       (message "emacs-init-time: %.3f seconds" csb/init/init-time))))
+          (lambda ()
+            (progn
+              (setq csb/init/init-time
+                    (float-time (time-subtract (current-time) before-init-time)))
+              (message
+               "window-setup-hook-time: %.3f seconds (gc num:%i time:%f)"
+               csb/init/init-time gcs-done gc-elapsed))))
 
 
 ;; https://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
@@ -22,7 +26,7 @@
 
 (setq gc-cons-threshold csb/init/gc-cons-large-threshold)
 (setq gc-cons-percentage 0.9)
-(add-hook 'after-init-hook
+(add-hook 'emacs-startup-hook
           (lambda ()
             (setq gc-cons-threshold csb/init/gc-cons-normal-threshold
                   gc-cons-percentage csb/init/default-gc-cons-percentage)))
