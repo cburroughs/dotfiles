@@ -183,7 +183,7 @@
   :defer 2)
 
 (defun show-white-space ()
-    (iteractive)
+    (interactive)
     (show-ws-toggle-show-hard-spaces)
     (show-ws-toggle-show-tabs)
     (show-ws-toggle-show-trailing-whitespace))
