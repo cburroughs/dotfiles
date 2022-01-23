@@ -57,15 +57,15 @@
 ;; http://nflath.com/2009/08/cc-and-java-customizations/
 (require 'cc-mode)
 (add-hook 'c-mode-common-hook
-          '(lambda ()
-             (c-subword-mode 1)))
+          (lambda ()
+            (c-subword-mode 1)))
 
 
 ;;; Java
 (defun mrallen-java-mode ()
   (interactive)
   (add-hook 'java-mode-hook
-            '(lambda () (c-set-offset 'substatement-open 0))))
+            (lambda () (c-set-offset 'substatement-open 0))))
 
 ;;; accept evil tabs
 (defun faust-make-deal ()

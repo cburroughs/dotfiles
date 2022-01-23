@@ -5,11 +5,11 @@
 (require 'use-package)
 
 ;; make the builtin ibuffer list nicer
-(add-hook 'ibuffer-hook '(lambda ()
-                           (setq ibuffer-show-empty-filter-groups nil)
-	                       (ibuffer-auto-mode 1)
-                           (unless (eq ibuffer-sorting-mode 'alphabetic)
-                             (ibuffer-do-sort-by-alphabetic))))
+(add-hook 'ibuffer-hook (lambda ()
+                          (setq ibuffer-show-empty-filter-groups nil)
+	                      (ibuffer-auto-mode 1)
+                          (unless (eq ibuffer-sorting-mode 'alphabetic)
+                            (ibuffer-do-sort-by-alphabetic))))
 
 
 (use-package all-the-icons-ibuffer
