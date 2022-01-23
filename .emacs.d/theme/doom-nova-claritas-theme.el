@@ -201,6 +201,8 @@
    (all-the-icons-ibuffer-mode-face :foreground fg)
    (all-the-icons-ibuffer-file-face :foreground base7)
 
+   (completions-annotations :foreground base7)
+   (corfu-current :background (doom-darken region 0.1))
    )
 
   ;;;; Base theme variable overrides
