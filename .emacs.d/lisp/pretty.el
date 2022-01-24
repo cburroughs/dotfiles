@@ -330,6 +330,13 @@ lines are selected, or the NxM dimensions of a block selection."
 ;; bold.  Maybe different color; but that also is a theme thing?
 
 
+(defun csb/modeline-maybe-popper ()
+  "Has popper claimed this as a popup!?"
+  (if (and (boundp 'popper-popup-status)
+           popper-popup-status)
+      (propertize "¡POP!" 'face 'mode-line-emphasis)
+    ""))
+
 (use-package mlscroll
   :straight t
   :config
@@ -348,12 +355,13 @@ lines are selected, or the NxM dimensions of a block selection."
 
 
 ;; https://occasionallycogent.com/custom_emacs_modeline/index.html
-(setq-default mode-line-format
+(setq csb/mode-line-format
               '(
                 :eval
                 (csb/align-mode-line
                  ;; left
                  '("%e" mode-line-front-space
+                   ;;(:eval (csb/modeline-maybe-popper))
                    " "
                    ;; don't display the '-' for local directories, just '@' on remote
                    (:eval (when (and (stringp default-directory) (file-remote-p default-directory))
@@ -375,6 +383,9 @@ lines are selected, or the NxM dimensions of a block selection."
                    mode-line-frame-identification
                    mode-line-misc-info)
                  (csb/mlscroll-mode-right-reserved))))
+
+(setq-default mode-line-format csb/mode-line-format)
+
 
 ;; Keep the modline unicode symbols single color
 ;; Otherwise wit emacs-28 and harfbuzz we get colorfull madness

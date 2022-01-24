@@ -152,6 +152,27 @@
 
 ;;; Windows and jumping around
 
+
+;; (use-package popper
+;;   :straight t
+;;   :bind (("C-`"   . popper-toggle-latest)
+;;          ("M-`"   . popper-cycle)
+;;          ("C-M-`" . popper-toggle-type))
+;;   :init
+;;   ;; wondky?
+;;   (setq popper-mode-line mode-line-format)
+;;   (setq popper-reference-buffers
+;;         '("\\*Messages\\*"
+;;           "Output\\*$"
+;;           "\\*Async Shell Command\\*"
+;;           "\\*Backtrace\\*"          
+;;           help-mode
+;;           compilation-mode))
+;;   (setq popper-display-control nil)
+;;   (popper-mode +1)
+;;   (popper-echo-mode +1))
+
+
 ;; "undo" for window changes
 (when (fboundp 'winner-mode)
   (winner-mode 1))
