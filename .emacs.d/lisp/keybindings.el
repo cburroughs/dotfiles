@@ -158,7 +158,6 @@ Emacs buffers are those whose name starts with *."
 ;; meta
 
 (use-package which-key
-  :defer 1
   :straight t
   :config
   (setq which-key-idle-delay 0.5)
