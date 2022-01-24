@@ -42,6 +42,11 @@
                               ("emacs" (name . "^\\*"))))))))
 
 
+(use-package ctrlf
+  :straight t
+  :init
+  (ctrlf-mode +1))
+
 ;; Flaky with emacs > 26 https://github.com/jschaf/esup/issues/54
 (use-package esup
   :straight t

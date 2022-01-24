@@ -203,6 +203,9 @@
 
    (completions-annotations :foreground base7)
    (corfu-current :background (doom-darken region 0.1))
+
+   (isearch :background (doom-darken orange 0.15) :foreground base8)
+   (ctrlf-highlight-line :inherit 'lin-hl)
    )
 
   ;;;; Base theme variable overrides
