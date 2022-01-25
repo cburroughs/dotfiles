@@ -141,6 +141,19 @@
 ;;   :after org-roam)
 
 
+(use-package citar
+  :straight t
+  :bind (("C-c b" . citar-insert-citation)
+         :map minibuffer-local-map
+         ("M-b" . citar-insert-preset))
+  :custom
+  (citar-bibliography '("~/media/papers/library.bib"))
+  (citar-library-paths '("~/media/papers/"))
+  (org-cite-insert-processor 'citar)
+  (org-cite-follow-processor 'citar)
+  (org-cite-activate-processor 'citar))
+
+
 ;; "sidebar" outline for org-mode and anything that supports imenu
 (use-package imenu-list
   :straight t
