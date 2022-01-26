@@ -39,7 +39,8 @@
 (add-hook 'minibuffer-exit-hook
           (lambda ()
             (setq gc-cons-threshold csb/init/gc-cons-normal-threshold)))
-(add-hook 'focus-out-hook 'garbage-collect)
+(add-function :after after-focus-change-function
+              (lambda () (unless (frame-focus-state) (garbage-collect))))
 
 (defvar csb/init/file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)

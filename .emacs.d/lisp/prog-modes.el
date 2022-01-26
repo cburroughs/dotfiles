@@ -30,7 +30,7 @@
   ;; https://www.emacswiki.org/emacs/ImenuMode#toc4
   (imenu--menubar-select imenu--rescan-item))
 (run-with-idle-timer 5 t 'csb/maybe-imenu-rescan)
-(add-hook 'focus-out-hook 'csb/maybe-imenu-rescan)
+(add-function :after after-focus-change-function #'csb/maybe-imenu-rescan)
 
 
 ;; "sidebar" outline for org-mode and anything that supports imenu
