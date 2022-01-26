@@ -20,10 +20,6 @@
 ;; boo splash screens
 (setq inhibit-startup-message t)
 
-;; defaults to showing parens
-(setq show-paren-delay 0)
-(show-paren-mode t)
-
 ;; 💓 Clearlooks gtk2 forever
 (push '(vertical-scroll-bars) default-frame-alist)
 (setq scroll-bar-mode nil)
@@ -180,28 +176,6 @@ fewer than 80 columns."
         (let ((w2 (split-window w 82 t)))
           (smart-split-helper w2))))
   (smart-split-helper nil))
-
-
-;; fill, width, writing
-(setq-default fill-column 78)
-
-;; http://emacshorrors.com/posts/longlines-mode.html
-(use-package visual-fill-column
-  :straight t
-  :init
-  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
-
-
-;; full screen margins: Olivetti is a simple Emacs minor mode for a nice writing
-;; environment.
-(use-package olivetti
-  :straight t
-  :defer 1)
-
-(defun prose-time ()
-  "Full screen writing focus"
-  (interactive)
-  (olivetti-mode))
 
 
 ;; Dependency of doom-modeline; and kind of cool

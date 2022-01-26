@@ -1,40 +1,18 @@
 ;; -*- lexical-binding: t -*-
 
-;; emacs modes I use, their customization, and setup.
+;; Customization for text modes; org, LaTex and friends
 
 (require 'use-package)
 
-(transient-mark-mode t) ; redundant, still does not work in ubuntu
-(delete-selection-mode t) ; delete selected text
 
-;; more paren highlighting goodness
-(use-package rainbow-delimiters
+;; fill, width, writing
+(setq-default fill-column 78)
+
+;; http://emacshorrors.com/posts/longlines-mode.html
+(use-package visual-fill-column
   :straight t
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-;; from esk : display column number in modeline
-(setq column-number-mode t)
-;; from esk: says what it does
-(set-default 'indicate-empty-lines t)
-
-(setq visible-bell t)
-
-(setq diff-switches "-u")
-(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode))
-
-;; Finally found this.  page/updown can be undone
-(setq scroll-preserve-screen-position t)
-
-
-(defun esk-pp-json ()
-  "Pretty-print the json object following point."
-  (interactive)
-  (require 'json)
-  (let ((json-object (save-excursion (json-read))))
-    (switch-to-buffer "*json*")
-    (delete-region (point-min) (point-max))
-    (insert (pp json-object))
-    (goto-char (point-min))))
+  :init
+  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
 
 
 ;; -------------
@@ -154,23 +132,6 @@
   (org-cite-activate-processor 'citar))
 
 
-;; "sidebar" outline for org-mode and anything that supports imenu
-(use-package imenu-list
-  :straight t
-  :bind ([f9] . imenu-list-smart-toggle))
-
-
-;; sql indenting
-(use-package sql-indent
-  :straight t
-  :hook (sql-mode . sqlind-minor-mode))
-
-
-;; dot files
-(use-package graphviz-dot-mode
-  :straight t
-  :mode ("\\.dot$" . graphviz-dot-mode))
-
 ;; markdown-mode
 (use-package markdown-mode
   :straight t
@@ -185,57 +146,19 @@
          ("\\.page" . markdown-mode)))
 
 
-;; might as well use emacs crazy powerful kill-ring
-(use-package kill-ring-search
+
+;; full screen margins: Olivetti is a simple Emacs minor mode for a nice writing
+;; environment.
+(use-package olivetti
   :straight t
-  :bind ("M-C-y" . kill-ring-search))
+  :defer 1)
+
+(defun prose-time ()
+  "Full screen writing focus"
+  (interactive)
+  (olivetti-mode))
 
 
-;; http://xahlee.org/emacs/command-frequency.html
-;; http://nflath.com/2009/08/command-frequency-mode/
-;; Keep track of commands used, learning is good!
-;; todo: how to share this file among instances
-;(setq-default command-frequency-table-file "~/.emacs_frequencies")
-;(require 'command-frequency)
-;(command-frequency-table-load)
-;(command-frequency-mode 1)
-;(command-frequency-autosave-mode 1)
-
-(use-package rainbow-mode
-  :straight t
-  :defer t)
 
 
-;; for git-commit
-(use-package transient
-  :straight t
-  :defer 1
-  :config
-  (setq transient-history-file "~/.config/emacs/transient/history.el"))
-
-;; nice commit messages
-(use-package git-commit
-  :straight t
-  :hook (git-commit-mode . (lambda () (setq fill-column 70)))
-  :config
-  (setq git-commit-summary-max-length 50))
-
-
-(use-package undo-tree
-  :straight t
-  :defer 1
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-enable-undo-in-region nil)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
-
-;; see https://github.com/syl20bnr/spacemacs/issues/12110
-;; Setting to about 10x the default
-(setq undo-limit (* 1024 80 10))
-(setq undo-strong-limit (* 2 undo-limit))
-(setq undo-outer-limit 24000000)
-
-
-(provide 'csb/modes)
+(provide 'csb/text-modes)

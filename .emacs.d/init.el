@@ -146,7 +146,7 @@
 (require 'csb/sundry "sundry")
 (require 'csb/palette "palette")
 (require 'csb/pretty "pretty")
-(require 'csb/modes "modes")
+(require 'csb/text-modes "text-modes")
 (require 'csb/prog-modes "prog-modes")
 (require 'csb/external "external")
 

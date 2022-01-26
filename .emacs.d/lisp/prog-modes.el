@@ -4,6 +4,14 @@
 
 (require 'use-package)
 
+
+;; more paren highlighting goodness
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+
+
 ;; imenu
 
 ;; Turn on imenu in any mode that supports it
@@ -23,6 +31,25 @@
   (imenu--menubar-select imenu--rescan-item))
 (run-with-idle-timer 5 t 'csb/maybe-imenu-rescan)
 (add-hook 'focus-out-hook 'csb/maybe-imenu-rescan)
+
+
+;; "sidebar" outline for org-mode and anything that supports imenu
+(use-package imenu-list
+  :straight t
+  :bind ([f9] . imenu-list-smart-toggle))
+
+
+;; sql indenting
+(use-package sql-indent
+  :straight t
+  :hook (sql-mode . sqlind-minor-mode))
+
+
+;; dot files
+(use-package graphviz-dot-mode
+  :straight t
+  :mode ("\\.dot$" . graphviz-dot-mode))
+
 
 
 
