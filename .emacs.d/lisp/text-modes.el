@@ -159,6 +159,18 @@
   (olivetti-mode))
 
 
+;;; futzing with pdfs, which are almost like text
+
+(use-package pdf-tools
+  :straight t
+  :mode  ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (setq-default pdf-view-display-size 'fit-page)
+  (pdf-tools-install :no-query)
+  :init
+   ;; control-f package doesn't work for some reason
+  (add-hook 'pdf-view-mode-hook
+            (lambda () (ctrlf-local-mode -1))))
 
 
 (provide 'csb/text-modes)
