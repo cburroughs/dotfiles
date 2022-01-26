@@ -4,6 +4,19 @@
 
 (require 'use-package)
 
+
+;; open with arbitrary external files
+(use-package mediator
+  :straight '(mediator
+              :type git
+              :host github
+              :repo "dalanicolai/mediator")
+  :init
+  (with-eval-after-load 'embark
+    (define-key embark-file-map "o" 'mediator-open-file)))
+
+
+
 ;; use mzscheme, obviously it must be installed
 (setq scheme-program-name "mzscheme")
 
