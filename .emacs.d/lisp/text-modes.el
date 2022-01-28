@@ -87,36 +87,74 @@
 
 
 
-;; (use-package org-roam
-;;   :straight t
-;;   :defer 1
-;;   :requires which-key
-;;   :custom
-;;   (org-roam-directory (file-truename "/tmp/roam"))
-;;   (org-roam-completion-everywhere t)
-;;   :bind (("C-c r l" . org-roam-buffer-toggle)
-;;          ("C-c r f" . org-roam-node-find)
-;;          ("C-c r g" . org-roam-graph)
-;;          ("C-c r i" . org-roam-node-insert)
-;;          ("C-c r c" . org-roam-capture)
-;;          ;; Dailies
-;;          ("C-c r j" . org-roam-dailies-capture-today))
-;;   :config
-;;   ;; If you're using a vertical completion framework, you might want a more
-;;   ;; informative completion interface
-;;   (setq org-roam-node-display-template
-;;         (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-;;   ;; If using org-roam-protocol
-;;   (require 'org-roam-protocol)
-;;   :init
-;;     (which-key-add-key-based-replacements
-;;       "C-c r" "org-roam")
-;;   (setq org-roam-v2-ack t)
-;;   (org-roam-db-autosync-mode))
+(use-package org-roam
+  :straight t
+  :custom
+  (org-roam-directory (file-truename "~/Documents/zettelkasten"))
+  (org-roam-db-location "~/.config/emacs/org-roam.db")
+  (org-roam-completion-everywhere t)
+  (org-roam-db-gc-threshold csb/init/gc-cons-large-threshold)
+  :bind (("C-c r l" . org-roam-buffer-toggle)
+         ("C-c r f" . org-roam-node-find)
+         ("C-c r g" . org-roam-graph)
+         ("C-c r i" . org-roam-node-insert)
+         ("C-c r c" . org-roam-capture)
+         ;; Dailies
+         ("C-c r j" . org-roam-dailies-capture-today)
+         ;; custom
+         ("C-c r c" . csb/org-roam-node-from-cite))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more
+  ;; informative completion interface
+  (setq org-roam-node-display-template
+        (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  ;; The author’s recommended configuration is as follows: Crucially, the window
+  ;; is a regular window (not a side-window), and this allows for predictable
+  ;; navigation:
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+  (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode)
+  (setq org-roam-capture-templates
+        '(("m" "main" plain
+           "%?"
+           :if-new (file+head "main/${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("r" "reference" plain "%?"
+           :if-new
+           (file+head "reference/${title}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)))
+    ;; from https://jethrokuan.github.io/org-roam-guide/
+  (defun csb/org-roam-node-from-cite (keys-entries)
+    (interactive (list (citar-select-ref :multiple nil :rebuild-cache t)))
+    (let ((title (citar--format-entry-no-widths (cdr keys-entries)
+                                                "${author editor} :: ${title}")))
+      (org-roam-capture- :templates
+                         '(("r" "reference" plain "%?" :if-new
+                            (file+head "reference/${citekey}.org"
+                                       ":PROPERTIES:
+:ROAM_REFS: @${citekey}
+:END:
+#+title: ${title}
+[cite:@${citekey}]\n")
+                            :immediate-finish t
+                            :unnarrowed t))
+                         :info (list :citekey (car keys-entries))
+                         :node (org-roam-node-create :title title)
+                         :props '(:finalize find-file))))
+  (org-roam-db-autosync-mode)
+  (which-key-add-key-based-replacements
+    "C-c r" "org-roam"))
 
-;; (use-package org-roam-ui
-;;   :straight t
-;;   :after org-roam)
+(use-package org-roam-ui
+  :straight t
+  :after org-roam)
 
 
 (use-package citar
