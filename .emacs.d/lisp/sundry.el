@@ -27,6 +27,9 @@
 (setq scroll-preserve-screen-position t)
 
 
+(if (display-graphic-p)
+    (setq confirm-kill-emacs (lambda (prompt)
+                               (y-or-n-p-with-timeout prompt 5 nil))))
 
 
 ;; make the builtin ibuffer list nicer
