@@ -151,12 +151,13 @@
 ;; environment.
 (use-package olivetti
   :straight t
-  :defer 1)
+  :defer 1
+  :config
+  (defun prose-time ()
+    "Full screen writing focus"
+    (interactive)
+    (olivetti-mode)))
 
-(defun prose-time ()
-  "Full screen writing focus"
-  (interactive)
-  (olivetti-mode))
 
 
 ;;; futzing with pdfs, which are almost like text
