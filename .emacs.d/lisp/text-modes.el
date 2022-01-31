@@ -176,6 +176,7 @@
 
 (use-package citar
   :straight t
+  :commands citar-select-ref
   :bind (("C-c b" . citar-insert-citation)
          :map minibuffer-local-map
          ("M-b" . citar-insert-preset))
