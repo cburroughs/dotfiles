@@ -206,6 +206,7 @@
 
    (isearch :background (doom-darken orange 0.15) :foreground base8)
    (ctrlf-highlight-line :inherit 'lin-hl)
+   (ctrlf-in-buffer-message-face :foreground orange)
    )
 
   ;;;; Base theme variable overrides
