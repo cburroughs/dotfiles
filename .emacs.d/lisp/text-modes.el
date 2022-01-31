@@ -107,10 +107,6 @@
          ;; custom
          ("C-c r c" . csb/org-roam-node-from-cite))
   :config
-  ;; If you're using a vertical completion framework, you might want a more
-  ;; informative completion interface
-  (setq org-roam-node-display-template
-        (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   ;; The author’s recommended configuration is as follows: Crucially, the window
   ;; is a regular window (not a side-window), and this allows for predictable
   ;; navigation:
@@ -133,7 +129,7 @@
            (file+head "reference/${title}.org" "#+title: ${title}\n")
            :immediate-finish t
            :unnarrowed t)))
-    ;; from https://jethrokuan.github.io/org-roam-guide/
+  ;; from https://jethrokuan.github.io/org-roam-guide/
   (defun csb/org-roam-node-from-cite (keys-entries)
     (interactive (list (citar-select-ref :multiple nil :rebuild-cache t)))
     (let ((title (citar--format-entry-no-widths (cdr keys-entries)
@@ -151,6 +147,24 @@
                          :info (list :citekey (car keys-entries))
                          :node (org-roam-node-create :title title)
                          :props '(:finalize find-file))))
+  ;; from https://jethrokuan.github.io/org-roam-guide/
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE."
+    (condition-case nil
+        (file-name-nondirectory
+         (directory-file-name
+          (file-name-directory
+           (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (error "")))
+  ;; from https://jethrokuan.github.io/org-roam-guide/
+  (defun csb/tag-new-node-as-draft ()
+    (org-roam-tag-add '("draft")))
+  (add-hook 'org-roam-capture-new-node-hook #'csb/tag-new-node-as-draft)
+  ;; If you're using a vertical completion framework, you might want a more
+  ;; informative completion interface
+  (setq org-roam-node-display-template
+        (concat "${type:15} ${title:*} "
+                (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
   (which-key-add-key-based-replacements
     "C-c r" "org-roam"))
