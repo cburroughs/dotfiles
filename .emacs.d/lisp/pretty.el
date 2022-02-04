@@ -160,9 +160,13 @@
   (set-face-attribute 'default (selected-frame) :height
     (+ (face-attribute 'default :height) (* (if (> n 0) 1 -1) 10))))
 
-(global-set-key (kbd "C-+")      (lambda nil (interactive) (djcb-zoom 1)))
-(global-set-key (kbd "C--")      (lambda nil (interactive) (djcb-zoom -1)))
+(defun csb/zoom-font-in ()
+  (interactive)
+  (djcb-zoom 1))
 
+(defun csb/zoom-font-out ()
+  (interactive)
+  (djcb-zoom 1))
 
 (defun smart-split ()
   "Split the frame into 80-column sub-windows, and make sure no window has
