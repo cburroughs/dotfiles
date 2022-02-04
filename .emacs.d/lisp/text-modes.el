@@ -33,7 +33,6 @@
   :init
   (which-key-add-key-based-replacements
     "C-c o" "org")
-  (setq org-directory "~/Documents/org")
   :bind (("C-c o a" . org-agenda)
          ("C-c o b" . org-switchb)
          ("C-c o c" . org-capture)
@@ -45,9 +44,11 @@
          ("C-c o t" . org-set-tags)
          ("C-c o r" . org-refile))
   :config
-  ;; Do I like this being recursive?
-  (setq csb/org-files (find-lisp-find-files  org-directory "\.org$"))
-  (setq org-default-notes-file (concat org-directory "/inbox.org"))
+  (setq csb/main-org-directory "~/Documents/org")
+  ;; Used for default relative path for capture templates and agenda
+  (setq org-directory csb/main-org-directory)
+  (setq csb/org-files (find-lisp-find-files  csb/main-org-directory "\.org$"))
+  (setq org-default-notes-file (concat csb/main-org-directory "/inbox.org"))
   (setq org-log-done t)
   (setq org-todo-keywords '("TODO(t)" "WAITING(w)" "|"
                             "DONE(d)" "CANCELED(c)"))
