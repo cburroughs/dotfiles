@@ -2,6 +2,8 @@
 
 ;; Functions and such
 
+(require 'cl-lib)
+
 ;; Insertion of Dates.
 (defun insert-date-string ()
   "Insert a nicely formated date string."
@@ -35,7 +37,7 @@
   "Moves both current buffer and file it's visiting to DIR."
   (interactive "DNew directory: ")
   (let* ((name (buffer-name))
-         (filename (buffer-file-name))
+         (filename (buffer-file-name)1)
          (dir
           (if (string-match dir "\\(?:/\\|\\\\)$")
               (substring dir 0 -1) dir))
@@ -49,6 +51,8 @@
                 (set-buffer-modified-p nil) 	t))))
 
 
+;; NOTE: Emacs now (since 24.1) has built in support count-words and
+;; count-words-region
 (defun wc-w ()
   "Print stats on current blog column, or blogollum, or whatever"
   (interactive)
@@ -57,7 +61,7 @@
     (let ((char-count 0))
       (while (not (eobp))
         (unless (looking-at "[ \t\r\n]")
-          (incf char-count))
+          (cl-incf char-count))
         (forward-char 1))
       (message "%d chars, %d words" char-count (/ char-count 5)))))
 
