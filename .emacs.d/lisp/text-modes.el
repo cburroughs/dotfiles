@@ -50,8 +50,8 @@
   (setq csb/org-files (find-lisp-find-files  csb/main-org-directory "\.org$"))
   (setq org-default-notes-file (concat csb/main-org-directory "/inbox.org"))
   (setq org-log-done t)
-  (setq org-todo-keywords '("TODO(t)" "WAITING(w)" "|"
-                            "DONE(d)" "CANCELED(c)"))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
   (setq org-agenda-files csb/org-files)
   (setq org-agenda-include-all-todo t)
   (setq org-agenda-include-diary t)
