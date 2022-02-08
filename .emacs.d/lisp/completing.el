@@ -33,7 +33,13 @@
   :init
   (setq mct-hide-completion-mode-line t)
   (setq mct-completion-passlist '(switch-to-buffer))
-  (mct-minibuffer-mode 1))
+  (mct-minibuffer-mode 1)
+  :config
+  ;; disable this behavior
+  (defun mct-backward-updir ()
+    (interactive nil mct-minibuffer-mode)
+    (call-interactively 'backward-delete-char)))
+
 
 
 (use-package marginalia
