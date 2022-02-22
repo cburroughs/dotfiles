@@ -90,7 +90,7 @@
         '("◉" "✸" "✻" "✿" "★" "◆" "🞛" "○" "◇"))) 
 
 
-
+;; TODO: Rename file from slug
 (use-package org-roam
   :straight t
   :custom
