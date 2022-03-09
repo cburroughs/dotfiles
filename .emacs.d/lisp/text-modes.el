@@ -73,7 +73,9 @@
           ("z" "Zettel (slipbox notes)" entry
            (file+headline "" "Zettel (slipbox) notes")
            "* %?\n  %u\n  %a" :kill-buffer t)))
-  (setq org-refile-targets '((csb/org-files :maxlevel . 4))))
+  (setq org-refile-targets '((csb/org-files :maxlevel . 4)))
+  (setq org-image-actual-width (list  600)))
+
 
 
 ;; pseudo-successor to org-bullets
