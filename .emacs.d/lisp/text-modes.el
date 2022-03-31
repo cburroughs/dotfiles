@@ -160,9 +160,9 @@
            (file-relative-name (org-roam-node-file node) org-roam-directory))))
       (error "")))
   ;; from https://jethrokuan.github.io/org-roam-guide/
-  (defun csb/tag-new-node-as-draft ()
-    (org-roam-tag-add '("draft")))
-  (add-hook 'org-roam-capture-new-node-hook #'csb/tag-new-node-as-draft)
+  (defun csb/tag-new-node-as-stub ()
+    (org-roam-tag-add '("stub")))
+  (add-hook 'org-roam-capture-new-node-hook #'csb/tag-new-node-as-stub)
   ;; If you're using a vertical completion framework, you might want a more
   ;; informative completion interface
   (setq org-roam-node-display-template
