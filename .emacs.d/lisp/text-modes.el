@@ -34,6 +34,7 @@
   (which-key-add-key-based-replacements
     "C-c o" "org")
   :bind (("C-c o a" . org-agenda)
+         ("C-c o A" . csb/org-mega-agenda)
          ("C-c o b" . org-switchb)
          ("C-c o c" . org-capture)
          ("C-c o g" . counsel-org-goto)
@@ -42,25 +43,46 @@
          ("C-c o o" . org-open-at-point)
          ("C-c o p" . org-set-property)
          ("C-c o t" . org-set-tags)
-         ("C-c o r" . org-refile))
+         ("C-c o r" . org-refile)
+         ("C-c o R" . csb/org-broad-refile))
   :config
   (setq csb/main-org-directory "~/Documents/org")
+  (setq csb/gtd-org-directory "~/Documents/gtd")
   ;; Used for default relative path for capture templates and agenda
   (setq org-directory csb/main-org-directory)
-  (setq csb/org-files (find-lisp-find-files  csb/main-org-directory "\.org$"))
-  (setq org-default-notes-file (concat csb/main-org-directory "/inbox.org"))
-  (setq org-log-done t)
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
-  (setq org-agenda-files csb/org-files)
+  (setq csb/main-org-files (find-lisp-find-files  csb/main-org-directory "\.org$"))
+  ;; agenda and file targets
+  (setq csb/gtd-agenda-files '("~/Documents/gtd/projects.org"
+                               "~/Documents/gtd/tickler.org"))
+  (setq org-agenda-files csb/gtd-agenda-files)
+  (setq csb/gtd-refile-targets '(("~/Documents/gtd/projects.org" :maxlevel . 3)
+                                 ("~/Documents/gtd/tickler.org" :maxlevel . 3)
+                                 ("~/Documents/gtd/someday.org" :level . 3)))
+  (setq org-refile-targets csb/gtd-refile-targets)
+  (defun csb/org-mega-agenda ()
+    (interactive)
+    (let ((org-agenda-files (append csb/gtd-agenda-files csb/main-org-files)))
+      (org-agenda)))
+  (defun csb/org-broad-refile ()
+    (interactive)
+    (let ((org-refile-targets (append csb/gtd-refile-targets
+                                      '((csb/main-org-files :maxlevel . 4)))))
+      (org-refile)))
+  ;; other agenda and refiles
   (setq org-agenda-include-all-todo t)
   (setq org-agenda-include-diary t)
   (setq org-agenda-span 'fortnight)
   (setq org-deadline-warning-days 14)
-  ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-  (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-use-outline-path 'file)
   (setq org-refile-allow-creating-parent-nodes 'confirm)
+  ;; more general settings
+  (setq org-log-done t)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
+  ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-image-actual-width (list  600))
+  ;; capure and friends
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "" "Tasks")
            "* TODO %?\n  %u\n  %a" :kill-buffer t)
@@ -73,9 +95,7 @@
           ("z" "Zettel (slipbox notes)" entry
            (file+headline "" "Zettel (slipbox) notes")
            "* %?\n  %u\n  %a" :kill-buffer t)))
-  (setq org-refile-targets '((csb/org-files :maxlevel . 4)))
-  (setq org-image-actual-width (list  600)))
-
+  (setq org-default-notes-file (concat csb/main-org-directory "/inbox.org")))
 
 
 ;; pseudo-successor to org-bullets
