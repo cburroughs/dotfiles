@@ -69,7 +69,6 @@
                                       '((csb/main-org-files :maxlevel . 4)))))
       (org-refile)))
   ;; other agenda and refiles
-  (setq org-agenda-include-all-todo t)
   (setq org-agenda-include-diary t)
   (setq org-agenda-span 'fortnight)
   (setq org-deadline-warning-days 14)
