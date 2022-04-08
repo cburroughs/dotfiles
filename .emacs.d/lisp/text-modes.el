@@ -85,8 +85,16 @@
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "" "Tasks")
            "* TODO %?\n  %u\n  %a" :kill-buffer t)
-          ("j" "Journal" entry (file+olp+datetree "" "Journal")
-           "* %?\nEntered on %u\n  %i\n  %a" :kill-buffer t)
+          ("j" "journals")
+          ("jd" "default main journal" entry
+           (file+olp+datetree "~/Documents/org/journal/default.org")
+           "* %?\n  %i\n  %a" :kill-buffer t)
+          ("jl" "call log etc" entry
+           (file+olp+datetree "~/Documents/org/journal/log.org")
+           "* %?\nEntered on %U\n  %i\n  %a" :kill-buffer t)
+          ("jz" "kids" entry
+           (file+olp+datetree "~/Documents/org/journal/zomgkids.org")
+           "* %?\n  %i\n  %a" :kill-buffer t)
           ("n" "Note" entry (file+headline "" "Notes")
            "* %?\n  %u\n  %a" :kill-buffer t)
           ("u" "URL" entry (file+headline "" "URLs")
