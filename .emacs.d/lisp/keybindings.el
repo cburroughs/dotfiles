@@ -42,10 +42,6 @@
 ;; hey the keyboard does say open on that key
 (global-set-key [f5] 'browse-url-at-point)
 
-;; move between buffers with meta --> arrow
-(require 'windmove)
-(windmove-default-keybindings 'meta)
-
 ;; esk: Align your code in a pretty way.
 (global-set-key (kbd "C-x \\") 'align-regexp)
 
