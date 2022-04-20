@@ -1,0 +1,7 @@
+To get dates displaying nicely in Thunderbird
+
+https://support.mozilla.org/en-US/kb/customize-date-time-formats-thunderbird
+(in particular  intl.date_time.pattern_override.date_short )
+
+
+http://kb.mozillazine.org/Change_the_Date_Format
