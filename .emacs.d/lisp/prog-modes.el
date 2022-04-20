@@ -151,6 +151,11 @@
   :mode "\\.groovy$")
 
 
+(use-package dockerfile-mode
+  :straight t
+  :mode "Dockerfile\\'")
+
+
 ;; Language Server Time
 
 
