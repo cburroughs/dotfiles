@@ -283,6 +283,7 @@
 (setq undo-strong-limit (* 2 undo-limit))
 (setq undo-outer-limit 24000000)
 
-
+;; Experiment with starting weeks Monday (ISO week date)
+(setq calendar-week-start-day 1)
 
 (provide 'csb/sundry)
