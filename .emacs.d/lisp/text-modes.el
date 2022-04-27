@@ -46,6 +46,7 @@
          ("C-c o r" . org-refile)
          ("C-c o R" . csb/org-broad-refile))
   :config
+  (add-hook 'org-mode-hook 'visual-line-mode)
   (setq csb/main-org-directory "~/Documents/org")
   (setq csb/gtd-org-directory "~/Documents/gtd")
   ;; Used for default relative path for capture templates and agenda
