@@ -4,9 +4,12 @@
 
 (require 'use-package)
 
-;; defaults to showing parens
+;; defaults to showing parens in prog modes
+(show-paren-mode -1)
 (setq show-paren-delay 0)
-(show-paren-mode t)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (show-paren-local-mode t)))
 
 
 (transient-mark-mode t) ; redundant, still does not work in ubuntu
