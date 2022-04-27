@@ -14,6 +14,13 @@
   :init
   (add-hook 'visual-line-mode-hook #'visual-fill-column-mode))
 
+;; Mirrors indentation of first line of paragraph.  Like visual-fill-column
+;; for the left side
+(use-package adaptive-wrap
+  :straight t
+  :init
+  (add-hook 'visual-line-mode-hook #'adaptive-wrap-prefix-mode))
+
 
 ;; -------------
 ;; org mode stuff
