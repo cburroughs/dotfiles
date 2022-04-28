@@ -42,7 +42,3 @@ hw:
 xfce4-keyboard-shortcuts:
 	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
 	cp -a xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
-
-xfce4-applications:
-	mkdir -p ~/.local/share/applications/
-	cp -a desktop-applications/* ~/.local/share/applications/
