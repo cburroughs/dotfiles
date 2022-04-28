@@ -41,3 +41,6 @@
 
 "rofi -show window -match fuzzy"
    Mod4 + space
+
+"dm-tool switch-to-greeter"
+  Mod4 + Shift + g
