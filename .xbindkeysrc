@@ -38,3 +38,6 @@
 # avoid gnome-keyring nonesense
 "chromium --password-store=basic"
   Mod4 + c
+
+"rofi -show window -match fuzzy"
+   Mod4 + space

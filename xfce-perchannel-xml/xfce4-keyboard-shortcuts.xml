@@ -140,7 +140,7 @@
       <property name="&lt;Shift&gt;&lt;Super&gt;d" type="string" value="show_desktop_key"/>
       <property name="&lt;Super&gt;l" type="string" value="tile_down_left_key"/>
       <property name="&lt;Super&gt;semicolon" type="string" value="tile_down_right_key"/>
-      <property name="&lt;Super&gt;space" type="string" value="maximize_window_key"/>
+      <property name="&lt;Super&gt;m" type="string" value="maximize_window_key"/>
       <property name="&lt;Super&gt;n" type="string" value="maximize_horiz_key"/>
       <property name="&lt;Super&gt;y" type="string" value="maximize_vert_key"/>
       <property name="&lt;Shift&gt;&lt;Super&gt;c" type="string" value="close_window_key"/>

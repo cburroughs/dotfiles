@@ -1,0 +1,11 @@
+configuration {
+	modi: "window,windowcd,keys";
+	font: "Dejavu Sans Mono 16";
+	show-icons: true;
+	kb-clear-line: "";
+	kb-remove-word-back: "Control+W,Control+BackSpace";
+    timeout {
+      action: "kb-cancel";
+      delay:  15;
+  }
+}
