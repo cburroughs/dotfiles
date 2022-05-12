@@ -44,3 +44,7 @@
 
 "dm-tool switch-to-greeter"
   Mod4 + Shift + g
+
+"xfce4-session-logout"
+  Mod4 + Shift + l
+
