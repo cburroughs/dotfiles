@@ -145,6 +145,12 @@ function __prompt_command() {
     local GIT_PROMT='$(__git_ps1 " (%s)")'
     local SUFFIX="${BlueBold} \$${NoColor} "
 
+    # https://unix.stackexchange.com/questions/570419/python-venv-module-cannot-add-virtual-environment-name-to-ps1-when-using-prompt
+    local VENV=""
+    if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ]; then
+         VENV="(`basename \"$VIRTUAL_ENV\"`) "
+    fi
+
     if [[ $EXIT -gt 0 ]]; then
         # Tried (Explosion U+1F4A5  💥) but it makes things wonky
         PS1+="${RedBold}${EXIT}${NoColor} "
@@ -152,7 +158,7 @@ function __prompt_command() {
     if [[ $(command jobs 2>/dev/null) ]]; then
         PS1+="${YellowLight}[\j] "
     fi
-    PS1+=$USER_AT_DIR
+    PS1+=${VENV}${USER_AT_DIR}
     PS1+="${BlueBold}$GIT_PROMT${NoColor}"
     if [[ $TWO_LINE_PROMT -gt 0 ]] || [[ ${#PWD} -gt $MAX_PATH_LEN ]]; then
         PS1+="\n"
