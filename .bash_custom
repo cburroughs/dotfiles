@@ -158,7 +158,8 @@ function __prompt_command() {
     if [[ $(command jobs 2>/dev/null) ]]; then
         PS1+="${YellowLight}[\j] "
     fi
-    PS1+=${VENV}${USER_AT_DIR}
+    PS1+="${NoColor}${VENV}"
+    PS1+=${USER_AT_DIR}
     PS1+="${BlueBold}$GIT_PROMT${NoColor}"
     if [[ $TWO_LINE_PROMT -gt 0 ]] || [[ ${#PWD} -gt $MAX_PATH_LEN ]]; then
         PS1+="\n"
