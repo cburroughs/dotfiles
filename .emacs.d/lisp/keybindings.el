@@ -151,6 +151,34 @@ Emacs buffers are those whose name starts with *."
 (global-set-key (kbd "<C-S-next>") 'csb/ergoemacs-next-emacs-buffer)
 
 
+;; https://github.com/radian-software/ctrlf/issues/112
+;; https://github.com/radian-software/radian/blob/2d3a1f8c62ce4804bda94f26d7f70674bec941bf/emacs/radian.el#L1029-L1051
+(defun csb/advice-keyboard-quit-minibuffer-first (&rest args)
+  "Cause \\[keyboard-quit] to exit the minibuffer, if it is active.
+Normally, \\[keyboard-quit] will just act in the current buffer.
+This advice modifies the behavior so that it will instead exit an
+active minibuffer, even if the minibuffer is not selected."
+  (if-let ((minibuffer (active-minibuffer-window)))
+      (progn
+        (switch-to-buffer (window-buffer minibuffer))
+        (cond
+         ((featurep 'delsel)
+          (progn
+            (eval-when-compile
+              (require 'delsel))
+            (minibuffer-keyboard-quit)))
+         ;; Emacs 28 and later
+         ((fboundp 'abort-minibuffers)
+          (abort-minibuffers))
+         ;; Emacs 27 and earlier
+         (t
+          (abort-recursive-edit))))
+    (funcall keyboard-quit)))
+
+(advice-add 'keyboard-quit :around #'csb/advice-keyboard-quit-minibuffer-first)
+
+
+
 ;; meta
 
 (use-package which-key
