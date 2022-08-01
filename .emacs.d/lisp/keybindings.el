@@ -153,7 +153,7 @@ Emacs buffers are those whose name starts with *."
 
 ;; https://github.com/radian-software/ctrlf/issues/112
 ;; https://github.com/radian-software/radian/blob/2d3a1f8c62ce4804bda94f26d7f70674bec941bf/emacs/radian.el#L1029-L1051
-(defun csb/advice-keyboard-quit-minibuffer-first (&rest args)
+(defun csb/advice-keyboard-quit-minibuffer-first (orig-fn &rest args)
   "Cause \\[keyboard-quit] to exit the minibuffer, if it is active.
 Normally, \\[keyboard-quit] will just act in the current buffer.
 This advice modifies the behavior so that it will instead exit an
@@ -173,7 +173,7 @@ active minibuffer, even if the minibuffer is not selected."
          ;; Emacs 27 and earlier
          (t
           (abort-recursive-edit))))
-    (funcall keyboard-quit)))
+    (apply orig-fn args)))
 
 (advice-add 'keyboard-quit :around #'csb/advice-keyboard-quit-minibuffer-first)
 
