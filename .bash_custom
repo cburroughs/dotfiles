@@ -6,8 +6,10 @@
 # TODO: eix colors https://projects.gentooexperimental.org/eix/wiki/FAQ
 # TODO: PIPESTATUS http://www.jonno.org/drupal/node/4
 
-# -rw-------
-umask 077
+# https://blogs.gentoo.org/mgorny/2011/10/18/027-umask-a-compromise-between-security-and-simplicity/
+
+# -rw-r-----
+umask 027
 
 # Include local ~/bin in PATH, and local python bin
 PATH=~/bin/:~/.local/bin:$PATH
