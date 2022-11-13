@@ -594,7 +594,7 @@ if __name__ == '__main__':
 
 # Example permissions
 # root@yggdrasil[~]# zfs allow  backup_y54 create,mount tank/backups/chris/y54
-# root@yggdrasil[~]# zfs allow -c allow,atime,clone,compression,create,destroy,diff,hold,logbias,mount,mountpoint,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
+# root@yggdrasil[~]# zfs allow -c allow,clone,compression,create,destroy,diff,hold,logbias,mount,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
 
 # NOTE: Because mountpoint is replicated (seemed good to avoid errors) then
 # canmount=noauto needs to be set or multiple datasets try to mount in the same
