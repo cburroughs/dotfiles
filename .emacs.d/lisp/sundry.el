@@ -289,4 +289,8 @@
 ;; Experiment with starting weeks Monday (ISO week date)
 (setq calendar-week-start-day 1)
 
+(use-package revbufs
+  :defer 1)
+
+
 (provide 'csb/sundry)
