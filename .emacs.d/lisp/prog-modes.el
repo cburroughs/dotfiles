@@ -156,6 +156,10 @@
   :mode "Dockerfile\\'")
 
 
+(use-package hcl-mode
+  :straight t
+  :mode ("\\.hcl$" "\\.tf$"))
+
 ;; Language Server Time
 
 
