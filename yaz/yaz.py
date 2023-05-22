@@ -306,14 +306,21 @@ class RecvCmd(ShellCmd):
     # a manual run with --force-recv, or a separate less frequent cron, is thus
     # needed
 
-    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False):
+    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False, canmount: str | None=None):
         self.dest = dest
         self.force = force
         self.force_flag = '-F ' if force else ''
         self.resume_flag = 's' if resume else ''
+        self.canmount = canmount
 
     def cmd_line(self):
-        return f'zfs recv {self.force_flag} -{self.resume_flag}du {self.dest.dataset}'
+        def _prop():
+            if self.canmount:
+                return f'-o canmount={self.canmount}'
+            else:
+                return ''
+
+        return f'zfs recv {_prop()} {self.force_flag} -{self.resume_flag}du {self.dest.dataset}'
 
 
 ##### cmds #####
@@ -409,7 +416,7 @@ def cmd_initial_seed(args):
     assert (config.pool + '@') in seed_snaps[0]
     cmds.append(RemotePipeShellCmd(InitialSendCmd(seed_snaps[0]),
                                    config.destination,
-                                   RecvCmd(config.destination, force=True, resume=True)))
+                                   RecvCmd(config.destination, force=True, resume=True, canmount='noauto')))
 
     for seed_snap in seed_snaps[1:]:  # skip special first one that is just the pool name
         if not seed_snap:
@@ -418,7 +425,7 @@ def cmd_initial_seed(args):
         if snap.as_str() in seed_snap:
             cmd = RemotePipeShellCmd(InitialSendCmd(seed_snap),
                                      config.destination,
-                                     RecvCmd(config.destination, resume=True))
+                                     RecvCmd(config.destination, resume=True, canmount='noauto'))
             cmds.append(cmd)
     LOG.info('upcoming commands...')
     for cmd in cmds:
@@ -466,7 +473,7 @@ def cmd_backup(args):
                                                         prev,
                                                         yaz_snap.as_str()),
                                      config.destination,
-                                     RecvCmd(config.destination, force=args.force_recv))
+                                     RecvCmd(config.destination, force=args.force_recv, canmount='noauto'))
             cmds.append(cmd)
     if not cmds:
         LOG.info('remote up to date, nothing to send')
