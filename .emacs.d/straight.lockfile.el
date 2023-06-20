@@ -87,6 +87,7 @@
  ("use-package" . "a6e856418d2ebd053b34e0ab2fda328abeba731c")
  ("vcl-mode" . "2f6aada80c2567fe4bc831de6c10145c6d05a6fb")
  ("visual-fill-column" . "695a59789209c42fa08a5bce92963ee32f4455be")
+ ("vundo" . "5a78dd59edfd8ba9cfcbd1135177e5c8bc4b1394")
  ("web-mode" . "57856ba64b9382811b35df0d9ab0a24aede0c1f0")
  ("with-editor" . "edf4445edb613c8355c45209264f691268116f0f")
  ("zenburn-emacs" . "8a1f9d28f503615e5d9b3eac59a2f3c14e75fc20"))

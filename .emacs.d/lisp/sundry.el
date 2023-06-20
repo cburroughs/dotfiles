@@ -268,6 +268,11 @@
   :straight t
   :bind ("M-C-y" . kill-ring-search))
 
+(use-package vundo
+  :straight t
+  :defer 1
+  :config
+  (setq vundo-glyph-alist vundo-unicode-symbols))
 
 
 ;; see https://github.com/syl20bnr/spacemacs/issues/12110
