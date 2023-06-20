@@ -78,7 +78,11 @@
 (use-package ctrlf
   :straight t
   :init
-  (ctrlf-mode +1))
+  (ctrlf-mode -1))
+
+(setq isearch-lazy-count 't
+      lazy-count-prefix-format nil
+      lazy-count-suffix-format " [%s/%s]")
 
 ;; Flaky with emacs > 26 https://github.com/jschaf/esup/issues/54
 (use-package esup
