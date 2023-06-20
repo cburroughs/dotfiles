@@ -12,6 +12,7 @@
  ("ctrlf" . "38b5e94bf718eeea0b880a78ed52926dec89fea9")
  ("dash.el" . "da167c51e9fd167a48d06c7c0ee8e3ac7abd9718")
  ("diminish.el" . "6b7e837b0cf0129e9d7d6abae48093cf599bb9e8")
+ ("dockerfile-mode" . "b63a3d12b7dea0cb9efc7f78d7ad5672ceab2a3f")
  ("dumb-jump" . "dbb915441a2b66f2fbb954ff5de2723c5a4771d4")
  ("el-get" . "9353309744e4f8a7c9b1adf22ec99536fb2146b0")
  ("emacs" . "a7a3becaf11488eee36d50c06a692f3fa4201297")
