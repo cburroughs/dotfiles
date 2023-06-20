@@ -151,8 +151,7 @@
   (
    ;; + 12 over background (vibrant +- 8)  (contrast with text drops to 8.58:1 )
    (hl-line :background "#282b34")
-   (lin-hl :background (doom-darken region 0.1))
-   (mct-highlight-candidate :background (doom-darken region 0.1))
+   (mct-highlight-candidate :background (doom-darken 'hl-line 0.1))
 
    (cursor :background palette/monokai/yellow)
 

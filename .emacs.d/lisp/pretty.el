@@ -45,8 +45,8 @@
 (use-package lin
   :straight (lin :type git :host gitlab :repo "protesilaos/lin")
   :config
-  (add-to-list 'lin-foreign-hooks 'completion-list-mode-hook)
-  (lin-add-to-many-modes))
+  (add-to-list 'lin-mode-hooks 'completion-list-mode-hook)
+  (lin-global-mode 1))
 
 
 (defun csb/real-ish-buffer-p (&optional buffer)
@@ -92,7 +92,7 @@
 (defun light-theme ()
   (interactive)
   (mapcar #'disable-theme custom-enabled-themes)
-  (modus-themes-load-operandi))
+  (load-theme 'modus-operandi))
 
 (use-package spacemacs-theme
   :straight t
@@ -123,12 +123,7 @@
 
 ;; Note: built into emacs-28
 (use-package modus-themes
-  :straight t
-  :init
-  ;; Load the theme files before enabling a theme
-  (modus-themes-load-themes))
-
-
+  :straight t)
 
 ;; https://emacs.stackexchange.com/questions/7151/is-there-a-way-to-detect-that-emacs-is-running-in-a-terminal
 (if (display-graphic-p)

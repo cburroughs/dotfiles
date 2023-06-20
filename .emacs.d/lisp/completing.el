@@ -33,13 +33,7 @@
   :init
   (setq mct-hide-completion-mode-line t)
   (setq mct-completion-passlist '(switch-to-buffer))
-  (mct-minibuffer-mode 1)
-  :config
-  ;; disable this behavior
-  (defun mct-backward-updir ()
-    (interactive nil mct-minibuffer-mode)
-    (call-interactively 'backward-delete-char)))
-
+  (mct-mode 1))
 
 
 (use-package marginalia
@@ -121,9 +115,6 @@ more generic outline version"
   ;; This adds thin lines, sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  ;; Optionally replace `completing-read-multiple' with an enhanced version.
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-
   ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
@@ -200,7 +191,7 @@ more generic outline version"
   :init
   (which-key-add-key-based-replacements
     "C-c c" "capfs")
-  (corfu-global-mode))
+  (global-corfu-mode))
 
 
 ;; for kind-icon
