@@ -73,7 +73,7 @@
  ("spacemacs-theme" . "a09347a354a14f5407e99fa730e01345d03e03fd")
  ("spinner" . "34905eae12a236753fa88abc831eff1e41e8576e")
  ("sql-indent" . "3498cf4b2716dd641875e2b4c89ce4d6e0be8040")
- ("straight.el" . "af5437f2afd00936c883124d6d3098721c2d306c")
+ ("straight.el" . "039e5c9a9b5c00749602afb41341e9e77ba09429")
  ("string-inflection" . "fd7926ac17293e9124b31f706a4e8f38f6a9b855")
  ("svg-lib" . "7e12ca3eebcebe7085e0d54d6f592ed856f1d713")
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
