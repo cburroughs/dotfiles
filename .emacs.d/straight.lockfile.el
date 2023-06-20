@@ -84,7 +84,6 @@
  ("tablist" . "faab7a035ef2258cc4ea2182f67e3aedab7e2af9")
  ("themes" . "e4f0b006a516a35f53df2dce2ec116876c5cd7f9")
  ("transient" . "440a341831398b825dc2288a10821cf7be1999ca")
- ("undo-tree" . "16f4121032d09ef44b3d7d02c4d02c3c2f18041f")
  ("use-package" . "a6e856418d2ebd053b34e0ab2fda328abeba731c")
  ("vcl-mode" . "2f6aada80c2567fe4bc831de6c10145c6d05a6fb")
  ("visual-fill-column" . "695a59789209c42fa08a5bce92963ee32f4455be")

@@ -270,16 +270,6 @@
 
 
 
-(use-package undo-tree
-  :straight t
-  :defer 1
-  :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-enable-undo-in-region nil)
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
-
 ;; see https://github.com/syl20bnr/spacemacs/issues/12110
 ;; Setting to about 10x the default
 (setq undo-limit (* 1024 80 10))
