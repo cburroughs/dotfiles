@@ -33,6 +33,7 @@
   :init
   (setq mct-hide-completion-mode-line t)
   (setq mct-completion-passlist '(switch-to-buffer))
+  (add-hook 'completion-list-mode-hook (lambda () (setq-local global-hl-line-mode nil)))
   (mct-mode 1))
 
 

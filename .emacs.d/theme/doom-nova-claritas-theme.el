@@ -151,7 +151,8 @@
   (
    ;; + 12 over background (vibrant +- 8)  (contrast with text drops to 8.58:1 )
    (hl-line :background "#282b34")
-   (mct-highlight-candidate :background (doom-darken 'hl-line 0.1))
+   (lin-blue :background (doom-blend bg blue 0.8))
+   (mct-highlight-candidate :inherit 'lin-blue)
 
    (cursor :background palette/monokai/yellow)
 
@@ -204,7 +205,7 @@
    (corfu-current :background (doom-darken region 0.1))
 
    (isearch :background (doom-darken orange 0.15) :foreground base8)
-   (ctrlf-highlight-line :inherit 'lin-hl)
+   (ctrlf-highlight-line :inherit 'lin-blue)
    (ctrlf-in-buffer-message-face :foreground orange)
    )
 
