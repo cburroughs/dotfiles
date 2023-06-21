@@ -130,7 +130,7 @@
     (dark-theme)
   (progn
     (global-hl-line-mode 0)
-    (modus-themes-load-vivendi)))
+    (load-theme 'modus-vivendi :no-confirm)))
 
 
 ; TODO: What if the system does not have this font?
