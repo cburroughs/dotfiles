@@ -1,9 +1,5 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
-
 /* https://support.mozilla.org/en-US/questions/1422908 */
 @import url("chrome://messenger/content/unifiedtoolbar/unifiedToolbarWebextensions.css");
-
 /* Position Menu Bar above Unified Toolbar */
 #toolbar-menubar {
 order: -1 !important;
