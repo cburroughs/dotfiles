@@ -10,3 +10,19 @@ order: -1 !important;
 .main-header-area {
     background-color: var(--color-gray-20) !important;
 }
+
+/* Get rid of distracting blue attention economy blue distraction */
+/* https://bugzilla.mozilla.org/show_bug.cgi?id=1682065 */
+/*:root { */
+*|*:root {
+    --folderpane-unread-new-count-background: var(--color-gray-50) !important;
+}
+
+.unread > .container > .name,
+.new-messages > .container > .name {
+    color: black !important;
+}
+
+.new-messages > .container > .name {
+    color: black !important;
+}
