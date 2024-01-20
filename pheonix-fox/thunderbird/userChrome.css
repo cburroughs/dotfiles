@@ -26,3 +26,9 @@ order: -1 !important;
 .new-messages > .container > .name {
     color: black !important;
 }
+
+
+/* and that orange dot */
+.new-messages:not([data-server-type]) > .container > .icon::after {
+  content: unset !important;
+}
