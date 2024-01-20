@@ -4,3 +4,9 @@
 #toolbar-menubar {
 order: -1 !important;
 }
+
+
+/* Try adding some contrast back in */
+.main-header-area {
+    background-color: var(--color-gray-20) !important;
+}
