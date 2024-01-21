@@ -1,46 +1,39 @@
 #!/bin/bash
 
 
-# https://1000logos.net/mozilla-firefox-logo/
-# https://en.wikipedia.org/wiki/Firefox#Branding_and_visual_identity
-#https://web.archive.org/web/20130425030923/https://www.mozilla.org/en-US/styleguide/identity/firefox/branding/
+# Thunderbird from https://archive.mozilla.org/pub/thunderbird/releases/31.0/linux-x86_64/en-US/
 
-LOGO="firefox_logo-only_RGB_trim.png"
-# ^^ Manually cut out some whitespace around edges and made actually square
-
-
-allSizes="16 22 24 32 48 64 128 256"
-ffDirSizes="16 32 48 64 128 "
-
-for size in ${allSizes}
-do
-    convert -resize ${size}x${size} ${LOGO} default${size}.png
-done
-
-for size in ${allSizes}
-do
-    optipng "default${size}.png"
-done
-
+ffSizes="16 22 24 32 48 64 128 256"
+tbSizes="16 22 24 32 48 256"
 
 echo " "
-echo "copy to FF dir comands! (root)"
+echo "copy to dir comands! (root)"
 echo " "
-for size in ${ffDirSizes}
+
+for size in ${ffSizes}
 do
-    echo "cp default${size}.png /usr/lib64/firefox/browser/chrome/icons/default/default${size}.png"
+    echo "cp ff/default${size}.png /usr/lib64/firefox/browser/chrome/icons/default/default${size}.png"
 done
 
-
-# /usr/share/icons/hicolor/ magical default theme
-echo " "
-echo "install icon commands (root)"
-echo " "
-for size in ${allSizes}
+# /usr/share/icons/hicolor/ magical default theme?
+for size in ${ffSizes}
 do
-    echo "xdg-icon-resource install --novendor --size ${size} default${size}.png firefox"
+    echo "xdg-icon-resource install --novendor --size ${size} ff/default${size}.png firefox"
 done
-echo "cp default48.png /usr/share/pixmaps/firefox.png"
+echo "cp ff/default48.png /usr/share/pixmaps/firefox.png"
+
+
+for size in ${tbSizes}
+do
+    echo "cp tb/default${size}.png /usr/lib64/thunderbird/chrome/icons/default/default${size}.png"
+done
+
+# /usr/share/icons/hicolor/ magical default theme?
+for size in ${tbSizes}
+do
+    echo "xdg-icon-resource install --novendor --size ${size} tb/default${size}.png thunderbird"
+done
+echo "cp tb/default48.png /usr/share/pixmaps/thunderbird.png"
 
 
 
