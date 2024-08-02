@@ -44,6 +44,7 @@ export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 export PAGER='less'
 export LESS="-R -M --shift 5"
+unset LESSOPEN
 
 # aliases
 alias ll='ls -lh'
