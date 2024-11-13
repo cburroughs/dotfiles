@@ -108,7 +108,7 @@
 ;; duh; only do this when you have x
 (when window-system
   (setq x-select-enable-clipboard t)
-  (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
+  (setq interprogram-paste-function 'x-selection-value))
 
 ;; change spelling
 (setq-default ispell-program-name "aspell")
