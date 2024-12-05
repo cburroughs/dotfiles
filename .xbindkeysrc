@@ -48,3 +48,5 @@
 "xfce4-session-logout"
   Mod4 + Shift + l
 
+"yakuake"
+  Mod4 + grave
