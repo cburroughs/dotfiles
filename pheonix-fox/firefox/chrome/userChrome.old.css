@@ -2,22 +2,28 @@
 
 
 
-/* https://github.com/Aris-t2/CustomCSSforFx/blob/master/classic/css/locationbar/megabar_expanding_breakout_disabled.css */
+/* Firefox userChrome.css tweaks ********************************************************/
+/* Github: https://github.com/aris-t2/customcssforfx ************************************/
+/****************************************************************************************/
+
+
+/* Megabar: disable breakout / expanding onto toolbar *********************************************/
 #urlbar[breakout][breakout-extend] {
-  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
-  left: unset !important;
-  width: calc(100% + 0 * 5px + 0 * 2px) !important;
+  top: calc((var(--urlbar-container-height,--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+  left: 0px !important;
+  width: calc(100% - 0px) !important;
 }
 
 #urlbar[breakout][breakout-extend] > #urlbar-background {
-  box-shadow: unset !important;
   animation-name: unset !important;
 }
 
-#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+#urlbar[breakout][breakout-extend] > :is(#urlbar-input-container,.urlbar-input-container) {
   height: var(--urlbar-height) !important;
-  padding-block: unset !important;
-  padding-inline: unset !important;
+  padding-block: 1px !important;
+  padding-inline: 1px !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
 /* disable result item roundness */
@@ -26,33 +32,30 @@
 }
 
 /* disable 'breakout' animation */
-#urlbar[breakout] {
+#urlbar[breakout],
+#urlbar[breakout] * {
   animation: unset !important;
-  duration: unset !important;
+  duration: 0s !important;
+  animation-duration: 0s !important;
 }
 
-/* remove 'border' between urlbar and results */
 .urlbarView-body-inner {
   border-top: 0px !important;
 }
 
+/* Firefox userChrome.css tweaks ********************************************************/
+/* Github: https://github.com/aris-t2/customcssforfx ************************************/
+/****************************************************************************************/
 
-/* https://github.com/Aris-t2/CustomCSSforFx/blob/master/classic/css/locationbar/megabar_disable_openviewonfocus.css */
 
-#urlbar[focused="true"]:not([usertyping="true"]) .urlbarView {
+#urlbar[focused]:not([usertyping]) .urlbarView {
   display: none !important;
 }
 
-
-/* https://github.com/Aris-t2/CustomCSSforFx/blob/master/classic/css/locationbar/locationbar_border_roundness.css */
-
-/* #urlbar.megabar:not([open]) #urlbar-background, */
-/* #urlbar,#urlbar-input-container, */
-/* #searchbar, .searchbar-textbox { */
-/*   border-radius: 20px !important; */
-/* } */
-
-/* https://github.com/Aris-t2/CustomCSSforFx/blob/master/classic/css/locationbar/ac_popup_megabar_compact_results.css */
+#urlbar[focused]:not([usertyping]) :is(#urlbar-input-container,.urlbar-input-container) {
+  border: 1px solid var(--urlbar_border_color) !important;
+  border-radius: var(--toolbarbutton-border-radius) !important;
+}
 
 
 /* Firefox Quantum userChrome.css tweaks ************************************************/

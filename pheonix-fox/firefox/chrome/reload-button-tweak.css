@@ -1,0 +1,14 @@
+
+#stop-reload-button .toolbarbutton-animatable-box {
+  display: none !important;
+}
+
+
+
+#stop-button {
+  list-style-image: url("./image/icons_fx88/stop.svg") !important;
+}
+
+#reload-button {
+  list-style-image: url("./image/icons_fx88/reload.svg") !important;
+}
