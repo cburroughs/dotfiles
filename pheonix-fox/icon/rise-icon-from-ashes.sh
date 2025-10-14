@@ -12,28 +12,28 @@ echo " "
 
 for size in ${ffSizes}
 do
-    echo "cp ff/default${size}.png /usr/lib64/firefox/browser/chrome/icons/default/default${size}.png"
+    echo "cp ${PWD}/ff/default${size}.png /usr/lib64/firefox/browser/chrome/icons/default/default${size}.png"
 done
 
 # /usr/share/icons/hicolor/ magical default theme?
 for size in ${ffSizes}
 do
-    echo "xdg-icon-resource install --novendor --size ${size} ff/default${size}.png firefox"
+    echo "xdg-icon-resource install --novendor --size ${size} ${PWD}/ff/default${size}.png firefox"
 done
-echo "cp ff/default48.png /usr/share/pixmaps/firefox.png"
+echo "cp ${PWD}/ff/default48.png /usr/share/pixmaps/firefox.png"
 
 
 for size in ${tbSizes}
 do
-    echo "cp tb/default${size}.png /usr/lib64/thunderbird/chrome/icons/default/default${size}.png"
+    echo "cp ${PWD}/tb/default${size}.png /usr/lib64/thunderbird/chrome/icons/default/default${size}.png"
 done
 
 # /usr/share/icons/hicolor/ magical default theme?
 for size in ${tbSizes}
 do
-    echo "xdg-icon-resource install --novendor --size ${size} tb/default${size}.png thunderbird"
+    echo "xdg-icon-resource install --novendor --size ${size} ${PWD}/tb/default${size}.png thunderbird"
 done
-echo "cp tb/default48.png /usr/share/pixmaps/thunderbird.png"
+echo "cp ${PWD}/tb/default48.png /usr/share/pixmaps/thunderbird.png"
 
 
 
