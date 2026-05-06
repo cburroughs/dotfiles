@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 
 # https://1000logos.net/mozilla-firefox-logo/
@@ -15,7 +15,7 @@ ffDirSizes="16 32 48 64 128 "
 mkdir -p ff
 for size in ${allSizes}
 do
-    convert -resize ${size}x${size} ${LOGO} ff/default${size}.png
+    magick convert -resize ${size}x${size} ${LOGO} ff/default${size}.png
 done
 
 for size in ${allSizes}
