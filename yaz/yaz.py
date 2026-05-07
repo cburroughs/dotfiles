@@ -279,22 +279,24 @@ class InitialSendCmd(ShellCmd):
     # per dataset, you can't resume the full -R recursion.  Thus we pass in each
     # full "pool/dataset@snap" from `zfs list` instead of interpolating it.
 
-    def __init__(self, snap_name: str):
+    def __init__(self, snap_name: str, raw: bool = False):
         self.snap_name = snap_name
+        self.raw_flag = 'w' if raw else ''
 
     def cmd_line(self):
-        return f"zfs send -pc {self.snap_name}"
+        return f"zfs send -pc{self.raw_flag} {self.snap_name}"
 
 
 class IncrementalSendCmd(ShellCmd):
 
-    def __init__(self, pool: str, from_snap: str, to_snap: str):
+    def __init__(self, pool: str, from_snap: str, to_snap: str, raw: bool = False):
         self.pool = pool
         self.from_snap = from_snap
         self.to_snap = to_snap
+        self.raw_flag = 'w' if raw else ''
 
     def cmd_line(self):
-        return f"zfs send -cR -I {self.from_snap} {self.pool}@{self.to_snap}"
+        return f"zfs send -cR{self.raw_flag} -I {self.from_snap} {self.pool}@{self.to_snap}"
 
 
 ## TODO: Why does -F seem to destory old snapshots from my laptop, but not desktop?
@@ -306,12 +308,13 @@ class RecvCmd(ShellCmd):
     # a manual run with --force-recv, or a separate less frequent cron, is thus
     # needed
 
-    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False, canmount: str | None=None):
+    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False, canmount: str | None=None, prepend_dest: bool = True):
         self.dest = dest
         self.force = force
         self.force_flag = '-F ' if force else ''
         self.resume_flag = 's' if resume else ''
         self.canmount = canmount
+        self.prepend_flag = 'd' if prepend_dest else ''
 
     def cmd_line(self):
         def _prop():
@@ -320,7 +323,7 @@ class RecvCmd(ShellCmd):
             else:
                 return ''
 
-        return f'zfs recv {_prop()} {self.force_flag} -{self.resume_flag}du {self.dest.dataset}'
+        return f'zfs recv {_prop()} {self.force_flag} -{self.resume_flag}{self.prepend_flag}u {self.dest.dataset}'
 
 
 ##### cmds #####
@@ -402,7 +405,11 @@ def cmd_initial_seed(args):
         msg = 'snapshots present! can not take initial seed'
         LOG.error(msg)
         raise Exception(msg)
-    verify_remote_dataset_exits_but_empty(config)
+
+    if not args.raw_for_encrypted:
+        verify_remote_dataset_exits_but_empty(config)
+    else:
+        LOG.info('raw-for-encrypted: skipping remote dataset verification; recv will create the target')
 
     snap = snapshots.begin_sequence(config)
     TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
@@ -414,16 +421,23 @@ def cmd_initial_seed(args):
     cmds = []
 
     assert (config.pool + '@') in seed_snaps[0]
-    cmds.append(RemotePipeShellCmd(InitialSendCmd(seed_snaps[0]),
+    # For raw/encrypted seed, the destination must NOT pre-exist: -F can't
+    # overwrite unencrypted with encrypted, and -d requires the dest to exist.
+    # So for the pool-root recv, omit both -F and -d so recv creates the dataset.
+    cmds.append(RemotePipeShellCmd(InitialSendCmd(seed_snaps[0], raw=args.raw_for_encrypted),
                                    config.destination,
-                                   RecvCmd(config.destination, force=True, resume=True, canmount='noauto')))
+                                   RecvCmd(config.destination,
+                                           force=not args.raw_for_encrypted,
+                                           resume=True,
+                                           canmount='noauto',
+                                           prepend_dest=not args.raw_for_encrypted)))
 
     for seed_snap in seed_snaps[1:]:  # skip special first one that is just the pool name
         if not seed_snap:
             continue
         # One of the seed snaps just created above
         if snap.as_str() in seed_snap:
-            cmd = RemotePipeShellCmd(InitialSendCmd(seed_snap),
+            cmd = RemotePipeShellCmd(InitialSendCmd(seed_snap, raw=args.raw_for_encrypted),
                                      config.destination,
                                      RecvCmd(config.destination, resume=True, canmount='noauto'))
             cmds.append(cmd)
@@ -471,7 +485,8 @@ def cmd_backup(args):
             prev = snapshots.snapshots[idx-1].as_str()
             cmd = RemotePipeShellCmd(IncrementalSendCmd(config.pool,
                                                         prev,
-                                                        yaz_snap.as_str()),
+                                                        yaz_snap.as_str(),
+                                                        raw=args.raw_for_encrypted),
                                      config.destination,
                                      RecvCmd(config.destination, force=args.force_recv, canmount='noauto'))
             cmds.append(cmd)
@@ -551,6 +566,9 @@ def make_parser():
     js_p.set_defaults(func=cmd_just_snap)
 
     is_p = subparsers.add_parser('initial-seed')
+    is_p.add_argument('--raw-for-encrypted', dest='raw_for_encrypted', action='store_true')
+    is_p.add_argument('--no-raw-for-encrypted', dest='raw_for_encrypted', action='store_false')
+    is_p.set_defaults(raw_for_encrypted=False)
     is_p.set_defaults(func=cmd_initial_seed)
 
     b_p = subparsers.add_parser('backup')
@@ -560,9 +578,12 @@ def make_parser():
     b_p.add_argument('--no-force-recv', dest='force_recv', action='store_false')
     b_p.add_argument('--prune', dest='prune', action='store_true')
     b_p.add_argument('--no-prune', dest='prune', action='store_false')
+    b_p.add_argument('--raw-for-encrypted', dest='raw_for_encrypted', action='store_true')
+    b_p.add_argument('--no-raw-for-encrypted', dest='raw_for_encrypted', action='store_false')
     b_p.set_defaults(force_snapshot=False)
     b_p.set_defaults(force_recv=False)
     b_p.set_defaults(prune=True)
+    b_p.set_defaults(raw_for_encrypted=False)
     b_p.set_defaults(func=cmd_backup)
 
     rps_p = subparsers.add_parser('remote-prune-stale')
