@@ -9,7 +9,7 @@ import subprocess
 import sys
 import time
 
-from typing import Dict, List
+from typing import Dict, List, Set
 
 
 # Yet Another ZFS replication script
@@ -53,17 +53,28 @@ class Config():
             return Config.Destination(d['user'], d['hostname'], d['dataset'])
 
     def __init__(self, sigil: str, pool: str,
-                 snapshots, destination):
+                 snapshots, destination,
+                 ignore_datasets: List[str] = None):
         self.sigil = sigil
         self.pool = pool
         self.snapshots = snapshots
         self.destination = destination
+        self.ignore_datasets = ignore_datasets if ignore_datasets is not None else []
+
+    def is_ignored(self, dataset: str) -> bool:
+        # path-prefix with boundary: "tank/HOME" matches "tank/HOME" and
+        # "tank/HOME/csb" but not "tank/HOMEX"
+        for entry in self.ignore_datasets:
+            if dataset == entry or dataset.startswith(entry + '/'):
+                return True
+        return False
 
     @staticmethod
     def from_json(d: Dict):
         return Config(d['sigil'], d['pool'],
                       Config.Snapshots.from_json(d['snapshots']),
-                      Config.Destination.from_json(d['destination']))
+                      Config.Destination.from_json(d['destination']),
+                      d.get('ignore_datasets', []))
 
     @staticmethod
     def load_config(fname: str):
@@ -78,6 +89,26 @@ def parse_features(lines: str) -> Dict[str, str]:
             columns = line.split('\t')
             features[columns[1]] = columns[2]
     return features
+
+
+def group_snapshots_by_dataset(output: str) -> Dict[str, Set[str]]:
+    # zfs list -Hp -r -t snapshot -o name <ds> yields lines "<ds>@<snap>".
+    by_ds: Dict[str, Set[str]] = {}
+    for line in output.split('\n'):
+        if '@' not in line:
+            continue
+        ds, snap = line.split('@', 1)
+        by_ds.setdefault(ds, set()).add(snap)
+    return by_ds
+
+
+def map_local_to_remote(local_dataset: str, local_pool: str, remote_root: str) -> str:
+    if local_dataset == local_pool:
+        return remote_root
+    assert local_dataset.startswith(local_pool + '/'), \
+        f'local dataset {local_dataset!r} not under pool {local_pool!r}'
+    suffix = local_dataset[len(local_pool) + 1:]
+    return f'{remote_root}/{suffix}'
 
 
 class RootYazSnapshot():
@@ -288,15 +319,21 @@ class InitialSendCmd(ShellCmd):
 
 
 class IncrementalSendCmd(ShellCmd):
+    # Per-dataset incremental. The old -cR shape silently dropped child-dataset
+    # snapshots from raw streams when no data changed between two snaps; we now
+    # send each dataset in its own stream. -R is gone; -p kept explicitly so
+    # dataset properties (recordsize, compression, mountpoint, etc.) still
+    # propagate.
 
-    def __init__(self, pool: str, from_snap: str, to_snap: str, raw: bool = False):
-        self.pool = pool
+    def __init__(self, dataset: str, from_snap: str, to_snap: str, raw: bool = False):
+        self.dataset = dataset
         self.from_snap = from_snap
         self.to_snap = to_snap
         self.raw_flag = 'w' if raw else ''
 
     def cmd_line(self):
-        return f"zfs send -cR{self.raw_flag} -I {self.from_snap} {self.pool}@{self.to_snap}"
+        return (f"zfs send -pc{self.raw_flag} -I "
+                f"{self.dataset}@{self.from_snap} {self.dataset}@{self.to_snap}")
 
 
 ## TODO: Why does -F seem to destory old snapshots from my laptop, but not desktop?
@@ -437,6 +474,10 @@ def cmd_initial_seed(args):
             continue
         # One of the seed snaps just created above
         if snap.as_str() in seed_snap:
+            ds = seed_snap.split('@')[0]
+            if config.is_ignored(ds):
+                LOG.info(f'skipping ignored dataset {ds}')
+                continue
             cmd = RemotePipeShellCmd(InitialSendCmd(seed_snap, raw=args.raw_for_encrypted),
                                      config.destination,
                                      RecvCmd(config.destination, resume=True, canmount='noauto'))
@@ -456,14 +497,8 @@ def cmd_backup(args):
     raw_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
     snapshots = YazSnapshots.from_cmd_output(raw_snaps, config.sigil)
 
-    # TODO: Need to rejiger logic (maybe with a flag?) so that we can see if
-    # there is work to do and do that before taking another snapshot.  Otherwise
-    # if there has been an error with a child dataset, on the backup destination
-    # we will keep building up snapshots on the parent, but never make any
-    # progress.  As a possible alternative or compliment, adjust the
-    # remote_snapshots log below so that instead of just looking at the remote
-    # parent, we look at the snapshots of all child datasets, and use the one
-    # that is missing the most.  Unsure how this would interact with -F recv.
+    # TODO: Decide on work before snapshotting, so a stuck child dataset
+    # doesn't cause the parent to accumulate snapshots indefinitely.
     snap = snapshots.next_in_seq(args.force_snapshot)
     if snap is None:
         LOG.info('most recent snapshot is new enough, nothing to do')
@@ -471,34 +506,76 @@ def cmd_backup(args):
     check_feature_compatibility(config)
     TakePoolSnapshotCmd(config.pool, snap.as_str()).check_call()
 
+    # Enumerate local datasets in tree order; drop any matched by ignore_datasets.
+    raw_local_ds = ListPoolDatasetsCmd(config.pool, recursive=True).check_output().decode()
+    local_datasets = [d for d in raw_local_ds.split('\n') if d]
+    active_datasets = [d for d in local_datasets if not config.is_ignored(d)]
+    ignored = [d for d in local_datasets if config.is_ignored(d)]
+    if ignored:
+        LOG.info(f'ignoring {len(ignored)} datasets per ignore_datasets: {ignored}')
+
+    # Local snapshot picture (after pool-recursive snapshot), grouped per dataset.
+    raw_local_snaps = ListPoolSnapshotsCmd(config.pool).check_output().decode()
+    local_snaps_by_ds = group_snapshots_by_dataset(raw_local_snaps)
+
+    # Remote picture in one ssh round trip; lookups are O(1) thereafter.
     raw_remote_snaps = RemoteShellCmd(
         config.destination,
-        ListDatasetSnapshotsCmd(config.destination.dataset)).check_output().decode()
-    remote_snapshots = list(map(lambda s: s.split('@')[1],
-                                filter(lambda s: s, raw_remote_snaps.split('\n'))))
-    LOG.debug(f'remote snapshots: {remote_snapshots}')
+        ListPoolSnapshotsCmd(config.destination.dataset, recursive=True)
+    ).check_output().decode()
+    remote_snaps_by_ds = group_snapshots_by_dataset(raw_remote_snaps)
+
+    to_snap = snap.as_str()
+    yaz_prefix = f'yaz-{config.sigil}-'
+
     cmds = []
-    for idx, yaz_snap in enumerate(snapshots.snapshots):
-        if yaz_snap.as_str() in remote_snapshots:
+    errors: List[str] = []
+    for ds in active_datasets:
+        remote_ds = map_local_to_remote(ds, config.pool, config.destination.dataset)
+        remote_yaz = {s for s in remote_snaps_by_ds.get(remote_ds, set())
+                      if s.startswith(yaz_prefix)}
+        if not remote_yaz:
+            errors.append(
+                f'{ds}: no yaz snapshots on remote {remote_ds} '
+                f'(add to ignore_datasets, or rerun initial-seed for this dataset)')
             continue
-        else:
-            prev = snapshots.snapshots[idx-1].as_str()
-            cmd = RemotePipeShellCmd(IncrementalSendCmd(config.pool,
-                                                        prev,
-                                                        yaz_snap.as_str(),
-                                                        raw=args.raw_for_encrypted),
-                                     config.destination,
-                                     RecvCmd(config.destination, force=args.force_recv, canmount='noauto'))
-            cmds.append(cmd)
+
+        local_yaz = {s for s in local_snaps_by_ds.get(ds, set())
+                     if s.startswith(yaz_prefix)}
+        common = local_yaz & remote_yaz
+        if not common:
+            errors.append(
+                f'{ds}: no yaz snapshot in common with remote {remote_ds} (divergence)')
+            continue
+
+        latest_common = max(common, key=lambda s: RootYazSnapshot.decode_from_str(s).seq)
+        if latest_common == to_snap:
+            continue  # up to date for this ds
+
+        # force-recv now applies per-dataset, not a -R subtree. Much smaller
+        # blast radius than the old -R -F could have on the remote.
+        send = IncrementalSendCmd(ds, latest_common, to_snap,
+                                  raw=args.raw_for_encrypted)
+        recv = RecvCmd(config.destination, force=args.force_recv,
+                       resume=True, canmount='noauto', prepend_dest=True)
+        cmds.append(RemotePipeShellCmd(send, config.destination, recv))
+
+    if errors:
+        for e in errors:
+            LOG.error(e)
+        raise Exception(
+            f'{len(errors)} dataset(s) cannot be backed up; aborting before any send')
+
     if not cmds:
         LOG.info('remote up to date, nothing to send')
-        return
-    LOG.info('upcoming commands...')
-    for cmd in cmds:
-        LOG.info(f'     {cmd.cmd_line()}')
-    for cmd in cmds:
-        cmd.check_call()
-    LOG.info('all incremental sends complete')
+    else:
+        LOG.info('upcoming commands...')
+        for cmd in cmds:
+            LOG.info(f'     {cmd.cmd_line()}')
+        for cmd in cmds:
+            cmd.check_call()
+        LOG.info('all incremental sends complete')
+
     while args.prune and snapshots.should_prune_eldest(config):
         eldest = snapshots.pop_eldest()
         remain = len(snapshots.snapshots)

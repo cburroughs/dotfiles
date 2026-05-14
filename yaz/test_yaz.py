@@ -127,9 +127,113 @@ class TestInitialSendCmd(unittest.TestCase):
 
 class TestIncrementalSendCmd(unittest.TestCase):
     def test(self):
-        c = IncrementalSendCmd('cauldron', 'gall-of-goat', 'slip-of-yew')
-        self.assertEqual('zfs send -cR -I gall-of-goat cauldron@slip-of-yew',
-                         c.cmd_line())
+        c = IncrementalSendCmd('cauldron/eyes', 'gall-of-goat', 'slip-of-yew')
+        self.assertEqual(
+            'zfs send -pc -I cauldron/eyes@gall-of-goat cauldron/eyes@slip-of-yew',
+            c.cmd_line())
+
+    def test_raw(self):
+        c = IncrementalSendCmd('cauldron/eyes', 'gall-of-goat', 'slip-of-yew', raw=True)
+        self.assertEqual(
+            'zfs send -pcw -I cauldron/eyes@gall-of-goat cauldron/eyes@slip-of-yew',
+            c.cmd_line())
+
+
+class TestConfigIgnoreDatasets(unittest.TestCase):
+    def _cfg(self, ignore):
+        return Config('s', 'tank',
+                      Config.Snapshots(7),
+                      Config.Destination('u', 'h', 'zroot/backup'),
+                      ignore)
+
+    def test_default_empty(self):
+        d = {
+            'sigil': 's', 'pool': 'tank',
+            'snapshots': {'daily': 7},
+            'destination': {'user': 'u', 'hostname': 'h', 'dataset': 'zroot/backup'},
+        }
+        cfg = Config.from_json(d)
+        self.assertEqual([], cfg.ignore_datasets)
+        self.assertFalse(cfg.is_ignored('tank/HOME'))
+
+    def test_from_json_with_list(self):
+        d = {
+            'sigil': 's', 'pool': 'tank',
+            'snapshots': {'daily': 7},
+            'destination': {'user': 'u', 'hostname': 'h', 'dataset': 'zroot/backup'},
+            'ignore_datasets': ['tank/HOME/cache'],
+        }
+        cfg = Config.from_json(d)
+        self.assertEqual(['tank/HOME/cache'], cfg.ignore_datasets)
+
+    def test_exact_match(self):
+        cfg = self._cfg(['tank/HOME'])
+        self.assertTrue(cfg.is_ignored('tank/HOME'))
+
+    def test_prefix_match(self):
+        cfg = self._cfg(['tank/HOME'])
+        self.assertTrue(cfg.is_ignored('tank/HOME/csb'))
+        self.assertTrue(cfg.is_ignored('tank/HOME/csb/cache'))
+
+    def test_no_boundary_false_positive(self):
+        cfg = self._cfg(['tank/HOME'])
+        self.assertFalse(cfg.is_ignored('tank/HOMEX'))
+        self.assertFalse(cfg.is_ignored('tank/HOMEY/sub'))
+
+    def test_sibling_not_ignored(self):
+        cfg = self._cfg(['tank/HOME'])
+        self.assertFalse(cfg.is_ignored('tank/var'))
+        self.assertFalse(cfg.is_ignored('tank'))
+
+    def test_multi_entry(self):
+        cfg = self._cfg(['tank/HOME', 'tank/var/tmp'])
+        self.assertTrue(cfg.is_ignored('tank/HOME/csb'))
+        self.assertTrue(cfg.is_ignored('tank/var/tmp'))
+        self.assertTrue(cfg.is_ignored('tank/var/tmp/foo'))
+        self.assertFalse(cfg.is_ignored('tank/var'))
+
+
+class TestGroupSnapshotsByDataset(unittest.TestCase):
+    def test_groups(self):
+        out = (
+            'tank@yaz-a-daily-0-1\n'
+            'tank@yaz-a-daily-1-2\n'
+            'tank/HOME@yaz-a-daily-0-1\n'
+            'tank/HOME@yaz-a-daily-1-2\n'
+            'tank/var@yaz-a-daily-0-1\n'
+        )
+        by_ds = group_snapshots_by_dataset(out)
+        self.assertEqual({'yaz-a-daily-0-1', 'yaz-a-daily-1-2'}, by_ds['tank'])
+        self.assertEqual({'yaz-a-daily-0-1', 'yaz-a-daily-1-2'}, by_ds['tank/HOME'])
+        self.assertEqual({'yaz-a-daily-0-1'}, by_ds['tank/var'])
+
+    def test_empty_and_blank_lines(self):
+        self.assertEqual({}, group_snapshots_by_dataset(''))
+        self.assertEqual({}, group_snapshots_by_dataset('\n\n'))
+
+    def test_ignores_non_snapshot_lines(self):
+        out = 'tank\ntank/HOME\ntank@s1\n'
+        by_ds = group_snapshots_by_dataset(out)
+        self.assertEqual({'tank': {'s1'}}, by_ds)
+
+
+class TestMapLocalToRemote(unittest.TestCase):
+    def test_pool_root(self):
+        self.assertEqual('zroot/backup/ys76/alpha',
+                         map_local_to_remote('tank', 'tank', 'zroot/backup/ys76/alpha'))
+
+    def test_child(self):
+        self.assertEqual('zroot/backup/ys76/alpha/HOME',
+                         map_local_to_remote('tank/HOME', 'tank', 'zroot/backup/ys76/alpha'))
+
+    def test_grandchild(self):
+        self.assertEqual('zroot/backup/ys76/alpha/HOME/csb',
+                         map_local_to_remote('tank/HOME/csb', 'tank',
+                                             'zroot/backup/ys76/alpha'))
+
+    def test_outside_pool_asserts(self):
+        with self.assertRaises(AssertionError):
+            map_local_to_remote('other/dataset', 'tank', 'zroot/backup')
 
 class TestRecvCmd(ShellCmd):
     def test_simple(self):

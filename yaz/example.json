@@ -8,5 +8,6 @@
         "user": "root",
         "hostname": "192.168.1.220",
         "dataset": "zroot/backup/ys76/alpha"
-    }    
+    },
+    "ignore_datasets": []
 }
