@@ -322,8 +322,9 @@ class IncrementalSendCmd(ShellCmd):
     # Per-dataset incremental. The old -cR shape silently dropped child-dataset
     # snapshots from raw streams when no data changed between two snaps; we now
     # send each dataset in its own stream. -R is gone; -p kept explicitly so
-    # dataset properties (recordsize, compression, mountpoint, etc.) still
-    # propagate.
+    # dataset properties (recordsize, compression, encryption, etc.) still
+    # propagate. NOTE: -p also carries mountpoint, which we deliberately strip on
+    # the receive side via `zfs recv -x mountpoint` (see RecvCmd).
 
     def __init__(self, dataset: str, from_snap: str, to_snap: str, raw: bool = False):
         self.dataset = dataset
@@ -345,22 +346,32 @@ class RecvCmd(ShellCmd):
     # a manual run with --force-recv, or a separate less frequent cron, is thus
     # needed
 
-    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False, canmount: str | None=None, prepend_dest: bool = True):
+    # We send with -p (carries recordsize, compression, encryption, etc.) but we
+    # do NOT want the source's mountpoint values landing on the backup: a laptop's
+    # mountpoint=/ or /home poisons TrueNAS share path-matching and flags datasets
+    # "locked" at boot. -x mountpoint strips it on receive so each dataset inherits
+    # a sane path under the backup root. This is permanent and survives a later
+    # -R -F resend, unlike a local `zfs set mountpoint=...` override.
+    def __init__(self, dest: Config.Destination, force: bool = False, resume: bool = False,
+                 canmount: str | None = None, prepend_dest: bool = True,
+                 exclude_mountpoint: bool = True):
         self.dest = dest
         self.force = force
         self.force_flag = '-F ' if force else ''
         self.resume_flag = 's' if resume else ''
         self.canmount = canmount
         self.prepend_flag = 'd' if prepend_dest else ''
+        self.exclude_mountpoint = exclude_mountpoint
 
     def cmd_line(self):
-        def _prop():
-            if self.canmount:
-                return f'-o canmount={self.canmount}'
-            else:
-                return ''
+        props = []
+        if self.canmount:
+            props.append(f'-o canmount={self.canmount}')
+        if self.exclude_mountpoint:
+            props.append('-x mountpoint')
+        prop_str = ' '.join(props)
 
-        return f'zfs recv {_prop()} {self.force_flag} -{self.resume_flag}{self.prepend_flag}u {self.dest.dataset}'
+        return f'zfs recv {prop_str} {self.force_flag} -{self.resume_flag}{self.prepend_flag}u {self.dest.dataset}'
 
 
 ##### cmds #####
@@ -701,15 +712,25 @@ if __name__ == '__main__':
 # root@yggdrasil[~]# zfs allow  backup_y54 create,mount tank/backups/chris/y54
 # root@yggdrasil[~]# zfs allow -c allow,clone,compression,create,destroy,diff,hold,logbias,mount,primarycache,promote,receive,recordsize,refreservation,release,rollback,secondarycache,send,setuid,snapdir,snapshot,sync,userprop,volsize,clone,compression,destroy,diff,hold,mountpoint,promote,receive,release,rollback,send,snapshot tank/backups/chris/y54
 
-# NOTE: Because mountpoint is replicated (seemed good to avoid errors) then
-# canmount=noauto needs to be set or multiple datasets try to mount in the same
-# place
+# NOTE: mountpoint is NOT replicated -- we send with -p but RecvCmd strips it
+# with `zfs recv -x mountpoint`, so received datasets inherit a sane path under
+# the backup root instead of the source's (e.g. / or /home). Replicating the
+# source mountpoint poisons TrueNAS share path-matching and flags datasets
+# "locked" at boot. canmount=noauto is still set as belt-and-suspenders so the
+# backup datasets never auto-mount.
 
 # DEBUG:  mount -o ro -t zfs zroot/backup/ys76/alpha/HOME /mnt/backup
 # ^^ zfs magic (delete queue?) may result in modifications when mounted
 
-# NOTE: I ended up just not replicating mountpoint because of hard to debug
-# issues
+# To repair a backup already poisoned by replicated mountpoints (pre -x fix),
+# override locally on the receive side, then restart the TrueNAS middleware:
+#   zfs set mountpoint=legacy tank/backups/chris/fw16/gamma/ROOT/gentoo
+#   zfs set mountpoint=legacy tank/backups/chris/fw16/gamma/HOME/ecsb
+#   ... (whichever report a rogue mountpoint) ...
+#   systemctl restart middlewared && midclt call service.restart cifs
+
+# Historical: an earlier attempt to actively *receive* the mountpoint property
+# hit permission errors, which is partly why it was abandoned:
 # cannot receive mountpoint property on tank/backups/chris/y54/delta: permission denied
 # cannot receive atime property on tank/backups/chris/y54/delta: permission denied
 # cannot receive compression property on tank/backups/chris/y54/delta: permission denied
